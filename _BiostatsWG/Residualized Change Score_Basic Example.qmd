@@ -1,0 +1,55 @@
+---
+title: "Residualized Change Score_Basic Example"
+format: html
+editor: visual
+---
+
+```{r}
+#| include: FALSE
+#Preliminary Setup
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#| class.source: 'fold-hide'
+#| echo: FALSE
+
+# Install necessary packages (if not already installed)
+if (!("rstatix" %in% installed.packages())) install.packages("rstatix")
+if (!("lme4" %in% installed.packages())) install.packages("lme4")
+if (!("lmerTest" %in% installed.packages())) install.packages("lmerTest")
+if (!("tidyverse" %in% installed.packages())) install.packages("tidyverse")
+if (!("ggpubr" %in% installed.packages())) install.packages("ggpubr")
+if (!("emmeans" %in% installed.packages())) install.packages("emmeans")
+```
+
+```{r}
+#| class.source: 'fold-hide'
+
+#Load packages
+library(rstatix)
+library(lme4)
+library(lmerTest)
+library(tidyverse)
+library(ggpubr)
+library(emmeans)
+```
+
+```{r}
+
+df_wide %>%
+            summarise(mean_grade = mean(cbcl_extern_Baseline),
+            sd_grade = sd(cbcl_extern_Baseline),
+            mean_exam = mean(cbcl_extern_Year_1),
+            sd_exam = sd(cbcl_extern_Year_1))
+
+# Boxplot of CBCL Externalizing scores at baseline and 1-Year follow-up 
+boxplot_cbclExt <- boxplot(cbcl_extern_Baseline,data = df_wide,
+main = "CBCL Externalizing Score",
+xlab = "Event",ylab = "CBCL Externalizing Score",
+col = "red",border = "black")
+
+suppressWarnings(print(boxplot_cbclExt))
+
+```
+

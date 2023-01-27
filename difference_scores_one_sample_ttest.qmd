@@ -1,0 +1,80 @@
+# Difference Scores_One Sample t-test {.unnumbered}
+
+```{r}
+#| message: FALSE
+#| warning: FALSE
+#| echo: FALSE
+
+# Install necessary packages (if not already installed)
+if (!("lme4" %in% installed.packages())) install.packages("lme4")
+if (!("lmerTest" %in% installed.packages())) install.packages("lmerTest")
+if (!("tidyverse" %in% installed.packages())) install.packages("tidyverse")
+if (!("ggpubr" %in% installed.packages())) install.packages("ggpubr")
+```
+
+```{r}
+#class.source: 'fold-hide'
+#| message: FALSE
+#| warning: FALSE
+#| echo: FALSE
+
+#Load packages
+library(lme4)
+library(lmerTest)
+library(tidyverse)
+library(ggpubr)
+```
+
+```{r}
+#eval=FALSE
+#class.source = 'fold-show'
+#| warning=FALSE
+#| echo=FALSE
+
+df_long<- read_csv("./df_long.csv")
+df_wide<- read_csv("./df_wide.csv")
+str(df_long)
+hist(df_long$Weekly_Gaming_Hour)
+# Compute difference score based on CBCL Externalizing subscale scores at baseline (t1) and 1-Year Follow-up (t2)
+df_wide$diffscore = df_wide$Externalizing_T1 - df_wide$Externalizing_T0
+
+#Compute statistical summaries for the difference score variable
+summary(df_wide$diffscore)
+
+#Scatterplot to visualize relationship between t1 & t2 data used to create difference score
+scatterplot <- ggplot (df_wide, aes(x = Externalizing_T0, y = Externalizing_T1)) + geom_point(size = 3) + geom_smooth(method = lm, se = F) +
+xlab("CBCL Externalizing (x) Baseline") +
+ylab("CBCL Externalizing (x) 1-Year Follow-up")
+
+suppressWarnings(print(scatterplot))
+```
+
+```{r}
+#eval=FALSE
+#class.source = 'fold-show'
+#| warning=FALSE
+#| echo=FALSE
+
+#One-sample t-test to determine whether the average difference score is significantly different than 0.
+result <- t.test(df_wide$diffscore, mu = 0, alternative = "two.sided")
+# Print the results
+result 
+
+#boxplot
+library(ggpubr)
+diffscore_boxplot <- ggboxplot(df_wide$diffscore, 
+          ylab = "Externalizing Difference Score", xlab = FALSE,
+          ggtheme = theme_minimal())
+
+suppressWarnings(print(diffscore_boxplot))
+
+#Shapiro-Wilk test and normality (Q-Q) plot (visualization of correlation between a given sample and the normal distribution)
+shapiro.test(df_wide$diffscore[0:5000])
+
+library("ggpubr")
+qqplot <- ggqqplot(df_wide$diffscore, 
+         ylab = "Externalizing Difference Score", xlab = FALSE,
+         ggtheme = theme_minimal())
+
+suppressWarnings(print(qqplot))
+```

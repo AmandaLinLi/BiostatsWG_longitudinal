@@ -1,0 +1,172 @@
+{
+  "index.qmd": {
+    "index.html": "30f55737"
+  },
+  "intro.qmd": {
+    "intro.html": "9e53be58"
+  },
+  "summary.qmd": {
+    "summary.html": "afcc0286"
+  },
+  "references.qmd": {
+    "references.html": "c2aadcd1"
+  },
+  "resources.qmd": {
+    "resources.html": "ed68e5d3"
+  },
+  "basics.qmd": {
+    "basics.html": "cd88e352"
+  },
+  "packages.qmd": {
+    "packages.html": "fc46fca5"
+  },
+  "x1.qmd": {
+    "x1.html": "911a1160"
+  },
+  "x2.qmd": {
+    "x2.html": "53f5c2a0"
+  },
+  "Examples.qmd": {
+    "Examples.html": "be8e27f2"
+  },
+  "Difference Score_Basic Example.qmd": {
+    "Difference Score_Basic Example.html": "a3ec22e5"
+  },
+  "Traditional Linear Models.qmd": {
+    "Traditional Linear Models.html": "6c3c06cc"
+  },
+  "Difference Scores_Basic Example.qmd": {
+    "Difference Scores_Basic Example.html": "4069c34e"
+  },
+  "Difference Scores_Main.qmd": {
+    "Difference Scores_Main.html": "5e44e1f4"
+  },
+  "Traditional Non-Linear Models.qmd": {
+    "Traditional Non-Linear Models.html": "31ec0ebd"
+  },
+  "Difference Scores_One Sample t-test.qmd": {
+    "Difference Scores_One Sample t-test.html": "c6c75729"
+  },
+  "Difference Scores_Paired Samples t-test.qmd": {
+    "Difference Scores_Paired Samples t-test.html": "0b887014"
+  },
+  "Difference Scores_Simple Regression.qmd": {
+    "Difference Scores_Simple Regression.html": "5d3dc840"
+  },
+  "Change Scores_Main.qmd": {
+    "Change Scores_Main.html": "26763377"
+  },
+  "Change Scores_ANCOVA.qmd": {
+    "Change Scores_ANCOVA.html": "25c560b9"
+  },
+  "Change Scores_Multiple Regression.qmd": {
+    "Change Scores_Multiple Regression.html": "fc759b33"
+  },
+  "LMM_Main.qmd": {
+    "LMM_Main.html": "6b08df02"
+  },
+  "manuscript_working draft.qmd": {
+    "manuscript_working draft.html": "1d633bfb"
+  },
+  "_Data_Wrangling.qmd": {
+    "_Data_Wrangling.html": "5edcc10a"
+  },
+  "paired_samples_t-test.qmd": {
+    "paired_samples_t-test.html": "4eacdd28"
+  },
+  "repeated_measures_anova.qmd": {
+    "repeated_measures_anova.html": "d165edaf"
+  },
+  "difference_scores_main.qmd": {
+    "difference_scores_main.html": "369e05af"
+  },
+  "change_scores_main.qmd": {
+    "change_scores_main.html": "fa4acad3"
+  },
+  "lmm_main.qmd": {
+    "LMM_Main.html": "867f78cb",
+    "lmm_main.html": "f8d8561a"
+  },
+  "_data_wrangling.qmd": {
+    "_Data_Wrangling.html": "e2ddf8ec",
+    "_data_wrangling.html": "281060e2"
+  },
+  "paired_samples_t-test_main.qmd": {
+    "paired_samples_t-test_main.html": "9c450d21"
+  },
+  "repeated_measures_anova_main.qmd": {
+    "repeated_measures_anova_main.html": "651a9e7e"
+  },
+  "signed_ranksum_test_main.qmd": {
+    "signed_ranksum_test_main.html": "5f017278"
+  },
+  "marginal_models_main.qmd": {
+    "marginal_models_main.html": "c9951f17"
+  },
+  "generalized_estimating_equations_main.qmd": {
+    "generalized_estimating_equations_main.html": "52ebd389"
+  },
+  "generalized_linear_mixed_models_main.qmd": {
+    "generalized_linear_mixed_models_main.html": "3709572d"
+  },
+  "autoregressive_cross-lagged_panel_models_main.qmd": {
+    "autoregressive_cross-lagged_panel_models_main.html": "27864aef"
+  },
+  "latent_change_scores_main.qmd": {
+    "latent_change_scores_main.html": "07e5c198"
+  },
+  "latent_growth_curves_main.qmd": {
+    "latent_growth_curves_main.html": "60b8deff"
+  },
+  "multivariate_latent_growth_curves_main.qmd": {
+    "multivariate_latent_growth_curves_main.html": "ca494413"
+  },
+  "latent_transition_analysis_main.qmd": {
+    "latent_transition_analysis_main.html": "430432db"
+  },
+  "growth_mixture_modeling_main.qmd": {
+    "growth_mixture_modeling_main.html": "162d876d"
+  },
+  "statetrait_models_main.qmd": {
+    "statetrait_models_main.html": "6b2c9ca1"
+  },
+  "random_intercept_cross-lagged_panel_models_main.qmd": {
+    "random_intercept_cross-lagged_panel_models_main.html": "55255686"
+  },
+  "latent_curve_model_with_structured_residuals_main.qmd": {
+    "latent_curve_model_with_structured_residuals_main.html": "c670fc03"
+  },
+  "tbd.qmd": {
+    "tbd.html": "d438a6d1"
+  },
+  "latent_statetrait_models_main.qmd": {
+    "latent_statetrait_models_main.html": "65539ff7"
+  },
+  "data_wrangling.qmd": {
+    "data_wrangling.html": "2d25cc2b"
+  },
+  "difference_scores_one_sample_ttest.qmd": {
+    "difference_scores_one_sample_ttest.html": "1d1f95f2"
+  },
+  "difference_scores_paired_samples_ttest.qmd": {
+    "difference_scores_paired_samples_ttest.html": "3f77ad90"
+  },
+  "difference_scores_simple_regression.qmd": {
+    "difference_scores_simple_regression.html": "6abb867d"
+  },
+  "change_scores_ancova.qmd": {
+    "change_scores_ancova.html": "9519720d"
+  },
+  "change_scores_multiple_regression.qmd": {
+    "change_scores_multiple_regression.html": "dec200bb"
+  },
+  "lmm_intercept_only.qmd": {
+    "lmm_intercept_only.html": "5e08a8ee"
+  },
+  "lmm_intercept_and_slope.qmd": {
+    "lmm_intercept_and_slope.html": "c7af98a3"
+  },
+  "manuscript_working_draft.qmd": {
+    "manuscript_working_draft.html": "6cd41433"
+  }
+}

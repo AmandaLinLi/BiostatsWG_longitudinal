@@ -1,0 +1,115 @@
+project:
+  type: book
+
+book:
+  #title: "Longitudinal Analysis with the ABCD Study Data"
+  author: "Biostatistics Working Group of the ABCD Study"
+  chapters:
+    - index.qmd
+    - part: "1 **Manuscript**"
+      chapters: 
+        - manuscript_working_draft.qmd
+    - part: "2 **Data Wrangling**"
+      chapters: 
+        - data_wrangling.qmd
+    - part: "3 **Traditional Linear Models**"
+      chapters: 
+        - paired_samples_t-test_main.qmd
+        - repeated_measures_anova_main.qmd
+        #- rnova_single_group_design.qmd
+        #- rnova_multiple_group_design.qmd
+        - difference_scores_main.qmd
+       # - difference_scores_one_sample_t-test.qmd
+       # - difference_scores_paired_samples_t-test.qmd
+       # - difference_scores_simple_regression.qmd
+        - change_scores_main.qmd
+        #- change_scores_ancova.qmd
+        #- change_scores_multiple_regression.qmd
+        - lmm_main.qmd
+        #- lmm_intercept_only.qmd
+        #- lmm_intercept_and_slope.qmd
+    - part: "**Traditional Non-Linear Models**"
+      chapters:
+        - signed_ranksum_test_main.qmd
+        - marginal_models_main.qmd
+        - generalized_estimating_equations_main.qmd
+        - generalized_linear_mixed_models_main.qmd
+    - part: "**Longitudinal SEM**"
+      chapters: 
+        - autoregressive_cross-lagged_panel_models_main.qmd
+        - latent_change_scores_main.qmd
+        - latent_growth_curves_main.qmd
+        - multivariate_latent_growth_curves_main.qmd
+        - latent_transition_analysis_main.qmd
+        - growth_mixture_modeling_main.qmd
+        - latent_statetrait_models_main.qmd
+        - random_intercept_cross-lagged_panel_models_main.qmd
+        - latent_curve_model_with_structured_residuals_main.qmd
+    - part: "**Examples using ABCD Data**"
+      #chapters: 
+        #- difference_scores_one_sample_ttest.qmd
+        #- difference_scores_paired_samples_ttest.qmd
+        #- difference_scores_simple_regression.qmd
+        #- change_scores_ancova.qmd
+        #- change_scores_multiple_regression.qmd
+        #- lmm_intercept_only.qmd
+        #- lmm_intercept_and_slope.qmd
+
+    - part: "TBD"
+      chapters:
+        - tbd.qmd
+        #- longitudinal_twin_analysis
+        #- longitudinal_stability_analysis
+        #- psychometrics
+        #- missing data
+        - references.qmd
+  appendices:
+    - resources.qmd
+  page-navigation: true
+  #repo-url: https://github.com/
+  #repo-actions: [edit]
+  downloads: [pdf, epub]
+  sharing: [twitter, facebook]
+  navbar:
+    search: true
+    title: Longitudinal Analysis using ABCD Study data
+    pinned: true
+    collapsed: true
+    right:
+      - icon: github
+        href: https://github.com/
+        aria-label: GitHub
+        #text: blip
+  page-footer:
+    center: 
+      - text: "About"
+        href: resources.qmd
+      - text: "xxxxx"
+        href: resources.qmd
+      - text: "xxxxxx"
+        href: resources.qmd
+  #cover-image: cover.png
+  #abstract
+
+comments:
+  hypothesis: true
+
+bibliography: references.bib
+#csl: citestyle.csl
+
+format:
+  html:
+    theme: cosmo
+    code-copy: true
+  pdf:
+    documentclass: scrreprt
+    include-in-header: 
+      text: |
+        \usepackage{makeidx}
+        \makeindex
+    include-after-body: 
+      text: |
+        \printindex
+
+
+

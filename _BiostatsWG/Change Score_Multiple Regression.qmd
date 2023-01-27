@@ -1,0 +1,59 @@
+---
+title: "Change Score_Multiple Regression"
+format: html
+editor: visual
+---
+
+```{r}
+#| include: FALSE
+#Preliminary Setup
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#| class.source: 'fold-hide'
+#| message: FALSE
+#| warning: FALSE
+
+# Install necessary packages (if not already installed)
+if (!("lme4" %in% installed.packages())) install.packages("lme4")
+if (!("lmerTest" %in% installed.packages())) install.packages("lmerTest")
+if (!("tidyverse" %in% installed.packages())) install.packages("tidyverse")
+if (!("ggpubr" %in% installed.packages())) install.packages("ggpubr")
+if (!("emmeans" %in% installed.packages())) install.packages("emmeans")
+```
+
+```{r}
+#| class.source: 'fold-hide'
+#| message: FALSE
+#| warning: FALSE
+#| echo: FALSE
+
+#Load packages
+library(lme4)
+library(lmerTest)
+library(tidyverse)
+library(ggpubr)
+library(emmeans)
+```
+
+```{r}
+#| eval:FALSE
+#| class.source: 'fold-show'
+#| warning:FALSE
+#| echo:FALSE
+
+#A multiple regression approach can be used to examine effects of a continuous covariate  when controlling for autoregressive effects (t1->t2) 
+
+#Multiple regression model
+result = lm(cbcl_extern_Year_1 ~ cbcl_extern_Baseline + scrntme_wkdy_Baseline, data = df_wide)
+summary(result)
+
+# fit ML model including mean structure to make comparable with FIML fit below
+# (means are always included with FIML model fits)
+#sem.mod.fit <- sem(sem.mod, data=tpb.df, meanstructure=TRUE)
+
+# fit again including missing data also
+#sem.mod.fit.fiml <- sem(sem.mod, data=tpb.df, missing="ML")
+
+```

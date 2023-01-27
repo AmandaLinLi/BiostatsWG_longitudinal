@@ -1,0 +1,7 @@
+# **Welcome** {.unnumbered}
+
+This is the current landing page for the Biostats Working Group Longitudinal Analysis Project 
+
+<!-- NOTES
+approach- each method is presented according to the following triplet: (1) when to apply it and what is it doing, (2) how to compute it in R, and (3) how to present, visualize, and interpret the results?. [@Mair]
+-->

@@ -1,0 +1,157 @@
+---
+title: "Linear Mixed-Effects Models"
+#subtitle: "Linear Mixed-Effects Models"
+title-block-banner: true
+filters:
+   - nutshell
+---
+
+::: {.column-body-outset}
+## Overview
+**`Linear mixed-effects models (LMM)`** are an extension of the General Linear Model (GLM) that allow for analyzing complex data including clustered observations and repeated measurements. 
+
+<code><span>LMMs</span></code> offer a flexible framework for fitting longitudinal models and provide several benefits compared to traditional ANOVA and regression approaches. One particular advantage of the <code>LMM</code> framework is the ability to account for instances of non-independence among some subset(s) of observations in the data. A source of @non-indep common to longitudinal designs is data that is collected from the same participants at multiple measurement occasions. This introduces a correlated error structure into the data, violating the independence assumption–– a critical assumption of many statistical tests that indicates the observations in a data set must be independent; that is, they cannot be correlated with one another [see @non-indep section of more info on assumption of indepencence xxxxx].
+
+LMM explicitly account for these dependencies among data by extending the general regression "fixed effects" model to allow both, fixed and random effects. Specifically, this approach simultaneously models an overall sample mean trajectory (fixed effect) and subject-specific (random) effects that vary randomly about the sample mean trajectory. 
+
+It is this "mixture" of fixed and random effects for which these models derive their name. In turn, LMMs provide better prediction, more precise and generalizable effect estimates, reduced Type I errors (i.e., false positives), and improved statistical power.
+:::
+
+::: {.column-body}
+
+<div class="bd-callout bd-callout-info">
+<h3 id="dealing-with-specificity", style="color:light"> Model Assumptions</h3>
+<p>
+
+[:Brief Overview](#briefoverview)</p>
+<p>
+
+[:Normally Distributed Residuals](#normallydistributedresiduals)</p>
+<p>
+
+[:Linear Assocations](#linearassociations)</p>
+<p>
+
+[:Non-Independnce](#non-independnce)</p>
+<p>
+
+[:Fixed vs Random Effects](#fixedvsrandomeffects)</p>
+<p>
+
+[:Missing Data](#missingdata)
+</p>
+</div>
+
+<!-- #### To embed a section,
+test test test... [:LIKE THIS](#modelassumptions)
+[:This example](#ToEmbedASection) -->
+
+#### :x Brief Overview
+Core assumptions of LMM is that the residuals and random effects are independent and identically distributed. This assumption states that the observations in a data set must be independent; that is, they cannot be correlated with one another. Violations of distributional assumptions introduce bias into the model and the impact of missing random effects components on model estimates leads to increased prediction error and attenuate overall model validity. As standard regression techniques (e.g., multiple regression) would violate the independence assumption, repeated measures ANOVA is commonly used for analyzing this type of data. However, xxxxxx. 
+
+repeated-measures pose a problem to most standard statistical procedures such as ordinary least-squares regression or (between-subjects) ANOVA as those procedures assume that the data points are independent and identically distributed (henceforth iid). The independence assumption states that the probability of a data point taking on a specific value is independent of the values taken by all other data points.
+
+> compared to violations of other assumptions, traditional statistical procedures are usually not robust to violations of the independence assumption (Judd et al., 2012; Kenny & Judd, 1986), which can lead to reduced standard errors and in turn, notable increases in Type I (false positives) errors, potentially biasing/skewing results positively.
+
+#### :x Normally distributed residuals
+xxxxxxx
+
+#### :x Linear Assocations
+Linear relationship between explanatory/predictor variables and the response variable.
+
+#### :x Non-Independnce
+The assumption of non-independence asserts that observations in a dataset must be independent; that is, they cannot be correlated with one another. Unlike other assumptions, this one is important because xxxxxxxx not robust against xxxx it is.
+In longitudnal analyses, repeated observations from the same person are expected to be correlated–– that is, be more alike than two observations coming from two different participants–– and in turn, violate this assumption. THAT IS A participant’s rank in at one measurement occasion is predictive of their rank at another measurement occasion. Consider the hypothetical outlined above. When measuring response time across multiple measurement occasions, some individuals will generally demonstrate slower response times than others. That is, on average some participants will be slower than others (and vice-versa). The data points that reflect these response time values *within* a given individual will be correlated and non-independent. Compared to other model assumptions, standard statistical procedures are usually not robust to violations of the independence assumption (Judd et al., 2012; Kenny & Judd, 1986). Therefore, it is important that these data are analyzed using a statistical test that takes the dependencies in the data into account. [LMM fits this criteria by explicitly capturing the dependency among data points via inclusion of a [random effects] parameters]. 
+
+Here, statistical independence is defined in terms of conditional probabilities.
+That is, the assumption of independence does not pertain to individual's actual data points, but rather is concerned with the residuals or errors ϵi (i.e., conditional distribution) after adjusting for the statistical model (e.g., fixed effects; random effects. Specifically, this assumption is considered to not be violated if the residuals are *independent and identically distributed* (IID), follow a normal distribution with a mean of 0 and a standard deviation σϵ. IID ensures that errors are independent when (P(x|θ)=P(x|θ,􏱂 x). i i j􏱁ij) "their distribution, conditional upon knowing the value of the predictors and the error of any other case, is the same as the distribution conditional upon just knowing the value of the predictors". That is, for any observation i, the probability that it takes on a specific value xi is the same regardless of the values taken on by all the other observations j 􏱁 i, and a statistical model with parameter vector θ: (P(x|θ)=P(x|θ,􏱂 x). i i j􏱁ij). LMM accomplishes this by explicitly capturing the dependency among data points via inclusion of a [random effects] parameters.
+
+#### :x Fixed vs Random Effects
+Traditional regression techniques estimate a group mean (fixed-effect) linear function to explain the relationship between a set of predictor values and an outcome. That is, the same regression line (both intercept and slope) is "fixed" to the group average trajectory for the entire sample. For example, in our hypothetical scenario, a traditional fixed-effects model estimates the mean intercept xx and slope xx of the reaction time trajectory. These analyses provides us information on the overall sample mean trajectory, such as xxxxxxx (see FIGURE X). LMM extends this traditional approach by simultaneously modeling an overall sample mean trajectory (fixed effect) **and** subject-specific (random) effects that vary randomly about this average trajectory. In our hypothetical example, inclusion of a subject-specific random intercept allows each participant's reaction time trajectory to deviate from the mean-level (fixed-effect) trajectory. These deviations (random-effects) are assumed to follow a normal distribution with a mean of zero and an estimated variance parameter.
+
+xxxxxxx
+repeated measures ANOVAs cannot simultaneously model between-person and within-person variability, so observations must be collapsed across xxxxx (groups or time?). However, aggregating data in this manner can be problematic as important information about variability within participants or conditions is lost. The results in a reduction of statistical power to detect true effects.
+
+This model shares considerable (conceptual and statistical) overlap with a traditional regression approach. A standard linear regression models the average (fixed) trajectory for some repeatedly measured outcome by estimating mean intercept and slope parameter values.
+
+This subject-specific (random) effect has a mean of zero and is normally distributed around the overall intercept (fixed effect) value.
+
+In multiple regression, in contrast, the same regression line (both intercept and slope) is applied to all participants, so predictions tend to be less accurate than in mixed-effects regression, and residual error tends to be larger.
+
+#### :x Missing Data
+MCAR
+
+::: 
+
+::: {.column-body-outset}
+## Explanation
+
+#### **Linear Mixed Model with Random Intercept:** {#sec-equation}
+
+</p>
+
+*add figure @sec-equation
+The random intercept LMM is similar (conceptually and statistically) to traditional (fixed-effect) linear regression. A key difference is that random intercept LMM extends the traditional fixed-effects approach by including a subject-specific random-effect that allows each participant to have their own unique intercept value, in addition to the overall mean-level (fixed-effect) intercept value. More formally: 
+$$
+{Y} = b_{intercept} + b_{time}⋅time + \epsilon
+$$ {#eq-stddev}
+
+
+  A standard linear fixed-effects regression model includes coefficients ($b$) for the model intercept and the effect of time. The error term ($\epsilon$) is assumed to be normally distributed with a mean of zero and a standard deviation ($\sigma$). A random intercept LMM extends the standard fixed effects regression by including subject-specific random-effect for each participant. The random-effect is assumed to be normally distributed with a mean of zero and a standard deviation ($\sigma$).
+
+
+$$
+{Y}  = b_{intercept} + b_{time}⋅time + (effect_{subject}+\epsilon)
+$$
+
+This equation can be rearranged such that the random-effect estimates subject-specific intercepts that are unique to each participant. This allows the model to simultaneously estimate 1) a fixed-intercept coefficient that represents the sample average intercept value; and 2) a random-effects variance parameter that allows each participant to have their own unique intercept that deviates from the average intercept value.
+
+$$
+{Y}  = (b_{intercept} + effect_{subject}) + b_{time}⋅time + \epsilon
+$$
+
+<p class="text-center" style="background-color: aliceblue">
+`r fontawesome::fa('lightbulb',height='30px',fill='steelblue')` Hypothetical Scenario:
+A study investigates trajectories of scores on a measure of happiness obtained across five measurement occasions in a sample of youth (i.e., repeated observations are clustered within participants). The study aims to characterize stability and change in happiness across assessments, while accounting for observations that are clustered within youth over time.</p>
+
+<p class="text-center" style="background-color: gray">Figure x: The overall group-mean (fixed effects) trajectory is shown in blue. The faded lines represent each individual youth's estimated trajectory. An examination of this figure shows happiness scores to be increasing across measurement occasions, however, there appears to be substantial variability in the youth's initial happiness scores.</p>
+
+#### Linear Mixed Model with Random Intercepts & Slopes
+* add figure
+Extending the random intercept LMM to include a subject-specific random-slope parameter allows each participant to have their own unique intercept & slope value. Relative to intercept-only LMM, this model estimates an addtional variance parameter that captures each participant's variability around the overall mean-level (fixed-effect) slope value. More formally:
+$$
+{Y} = (b_{intercept} + effect_{subject}) + (b_{time}⋅time + effect_{subject} +\epsilon)
+$$
+
+    A random intercept and slope LMM extends the intercept-only model by also including a subject-specific random-effect for each participant's slope value.This model simultaneously estimates 1) a fixed-intercept coefficient that represents the sample average intercept value; and 2) a random-effect (i.e., variance parameter around the intercept) that allows each participant to have their own unique intercept that deviates from the average intercept value; 3) a random-effect (i.e., variance parameter around the slope) that allows each participant to have their own unique slope that deviates from the average slope value
+
+<p class="text-center" style="background-color: aliceblue">
+`r fontawesome::fa('lightbulb',height='30px',fill='steelblue')`
+Hypothetical Scenario:
+A study investigates trajectories of scores on a measure of happiness obtained across five measurement occasions in a sample of youth (i.e., repeated observations are clustered within participants). The study aims to characterize stability and change in happiness across assessments, while accounting for observations that are clustered within youth over time.
+</p>
+
+<p class="text-center" style="background-color: gray"> Figure x:
+The overall group-mean (fixed effects) trajectory is shown in blue. The faded lines represent each individual youth's estimated trajectory. An examination of this figure shows happiness scores to be increasing across measurement occasions, however, there appears to be substantial variability in the youth's initial happiness scores and in how these scores change across measurement occasions.
+</p>
+
+## References
+
+[@brown2021]
+<!-- [@Singmann2019]
+[@sarafian]
+[#@https://m-clark.github.io/]
+[#@Fitzmaurice]
+[#@mspeekenbrink.github.io]
+[#https://cran.r-project.org/web/packages/lme4/lme4.pdf] -->
+
+<div class="bd-callout bd-callout-info">
+<h4 id="dealing-with-specificity", style="color:light"> Dealing with specificity</h4>
+
+<p>This is filler text <code class="highlighter-rouge">&lt;insert code&gt;</code> with the class.</p>
+</div>
+
+<!-- ::: {.content-hidden when-format="html"}
+### Load/View/Wrangle data section? tidyverse?
+
+::: -->

@@ -1,0 +1,91 @@
+---
+title: "Difference Scores_Paired Samples t-test"
+format: html
+editor: visual
+---
+
+```{r}
+#| include: FALSE
+#Preliminary Setup
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#| class.source: 'fold-hide'
+#| message: FALSE
+#| warning: FALSE
+
+# Install necessary packages (if not already installed)
+if (!("lme4" %in% installed.packages())) install.packages("lme4")
+if (!("lmerTest" %in% installed.packages())) install.packages("lmerTest")
+if (!("tidyverse" %in% installed.packages())) install.packages("tidyverse")
+if (!("ggpubr" %in% installed.packages())) install.packages("ggpubr")
+if (!("rstatix" %in% installed.packages())) install.packages("rstatix")
+```
+
+```{r}
+#| class.source: 'fold-hide'
+#| message: FALSE
+#| warning: FALSE
+#| echo: FALSE
+
+#Load packages
+library(rstatix)
+library(lme4)
+library(lmerTest)
+library(tidyverse)
+library(ggpubr)
+```
+
+```{r}
+#| class.source: 'fold-hide'
+#| message: FALSE
+#| warning: FALSE
+#| echo: FALSE
+
+# Compute difference score based on CBCL Externalizing subscale scores at baseline (t1) and 1-Year Follow-up (t2)
+df_wide$diffscore = df_wide$cbcl_extern_Year_1 - df_wide$cbcl_extern_Baseline
+
+#Compute statistical summaries for the difference score variable
+summary(df_wide$diffscore)
+
+```
+
+```{r}
+#| class.source: 'fold-hide'
+#| message: FALSE
+#| warning: FALSE
+#| echo: FALSE
+
+#Paired samples t-test is used to determine whether the average difference score on some outcome computed across two time points, differs between groups.
+
+stat.test <- df_long %>%
+  group_by(sex) %>%
+  pairwise_t_test(
+    cbcl_extern ~ event, paired = FALSE, 
+    p.adjust.method = "bonferroni"
+    ) #%>%
+stat.test
+
+# Box Plot Visualization based on variables used in paired samples t-test
+boxplot <- ggboxplot(
+  df_long, x = "sex", y = "cbcl_extern",
+  color = "event", palette = "jco"
+  )
+suppressWarnings(print(boxplot))
+
+# Add statistical test p-values and hide ns
+stat.test <- stat.test %>% add_xy_position(x = "sex")
+boxplot + stat_pvalue_manual(
+  stat.test, label = "p.adj.signif", 
+  step.increase = 0.08, hide.ns = TRUE, tip.length = 0
+  )
+suppressWarnings(print(boxplot))
+
+#Scatterplot to visualize relationship between difference scores across groups
+scatterplot <- ggplot (df_wide, aes(x = cbcl_extern_Baseline, y = cbcl_extern_Year_1, shape = sex)) + geom_point(size = 3) + geom_smooth(method = lm, se = F) +
+xlab("CBCL Externalizing (x) Baseline") +
+ylab("CBCL Externalizing (x) 1-Year Follow-up")
+
+suppressWarnings(print(scatterplot))
+```

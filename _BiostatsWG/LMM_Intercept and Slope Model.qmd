@@ -1,0 +1,196 @@
+---
+title: "LMM_Intercept & Slope"
+#subtitle: "Linear Mixed-Effects Models"
+title-block-banner: true
+filters:
+   - nutshell
+---
+
+ids, event, site_id, fam_id, sex, age, mature_vg, vg_total, vg_group, cbcl_agg, cbcl_extern
+
+### Preliminary Setup
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Install packages**
+```{r}
+#| class.source: 'fold-hide'
+#| message: FALSE
+#| warning: FALSE
+
+# Install necessary packages (if not already installed)
+if (!("lme4" %in% installed.packages())) install.packages("lme4")
+if (!("lmerTest" %in% installed.packages())) install.packages("lmerTest")
+if (!("tidyverse" %in% installed.packages())) install.packages("tidyverse")
+if (!("afex" %in% installed.packages())) install.packages("afex")
+if (!("sdamr" %in% installed.packages())) install.packages("sdamr")
+```
+
+**Load packages**
+```{r}
+#| class.source: 'fold-hide'
+#| bg-color: aliceblue 
+#| message: FALSE
+#| warning: FALSE
+
+# Load packages
+library(lme4)
+library(lmerTest)
+library(tidyverse)
+library(afex)
+library(janitor)
+library(skimr)
+library(sdamr)
+```
+
+**Load Data**
+
+```{r}
+#| class.source: 'fold-hide'
+#| message: FALSE
+#| warning: FALSE
+
+# read in column names only
+df_cbclnames <- ("./abcd_cbcls01.csv") %>% 
+  read_csv(n_max = 0) %>% # default: col_names = TRUE
+  names()
+
+# read in data dictionary
+df_cbcldict <- read_csv("./abcd_cbcls01.csv", n_max = 1)
+
+# read in data, set column names
+df <- ("./abcd_cbcls01.csv") %>% 
+  read_csv(skip = 2, col_names = df_cbclnames) %>%
+  select(subjectkey, eventname, sex, cbcl_scr_syn_somatic_t, cbcl_scr_syn_aggressive_r) %>%
+  rename(event = eventname, cbcl1 = cbcl_scr_syn_somatic_t, cbcl2 = cbcl_scr_syn_aggressive_r)
+  #clean_names()
+
+## set character columns to factors
+df$subjectkey <- as.factor(df$subjectkey)
+df$sex <- as.factor(df$sex)
+df$event <- as.factor(df$event)
+
+df$event<-recode(df$event, 'baseline_year_1_arm_1'=0, '1_year_follow_up_y_arm_1'=1, '2_year_follow_up_y_arm_1'=2, '3_year_follow_up_y_arm_1'=3)
+
+df <- as.data.frame(df)
+df
+```
+
+**View Data**
+
+```{r, label='my-chunk2_viewdata', class.output="bg-light"}
+#| class.source: 'fold-hide'
+#| message: FALSE
+#| warning: FALSE
+#| bg-color: aliceblue 
+# View the first six rows of the data frame
+# head(df)
+# str(df)
+```
+
+::: column-body-outset
+### LMM with Random Intercepts and Slopes
+:::
+
+**Bulid Model**
+
+```{r}
+#| message: FALSE
+#| warning: FALSE
+
+#really still an intercept only model
+#random_slopes <- lmer(cbcl1 ~ 1 + event + (1|subjectkey), data = df, REML=F)
+
+random_slopes <- lmer ( cbcl1 ~ event + ( event | subjectkey ) , data = df)
+```
+
+The code above is very similar to the code for the random intercept model, except that now we use the code (1 + Days \| Subject) to specify a random intercept for each Subject, and a random slope of Days for each Subject. This allows both the intercept and the slope of days to vary across participants.
+
+**Model Output**
+
+```{r}
+#| message: FALSE
+#| warning: FALSE
+#| class.output: bg-light
+
+summary(random_slopes)
+```
+
+The summary function is used to print out the results from the random intercept model and
+
+```{r}
+#| message: FALSE
+#| warning: FALSE
+#| class.output: bg-light
+
+confint(random_slopes, level = 0.95, method = "Wald")
+```
+
+#### Plots
+
+Build Plots Extract the individual participant intercepts and slopes from this model and add them to the data frame
+
+```{r}
+#| message: FALSE
+#| warning: FALSE
+intercepts2 <- rep(coef(random_slopes)$subjectkey[,1], each = 4)
+slopes2 <- rep(coef(random_slopes)$subjectkey[,2], each = 4)
+```
+
+```{r}
+#| message: FALSE
+#| warning: FALSE
+
+ggplot(df, aes(x = event, y = cbcl1)) + 
+  geom_abline(slopes2 = model_slope, intercepts2 = model_intercept, 
+              linetype = "solid", color = "black", linewidth = 1) + 
+  # geom_abline(mapping = aes(slopes2 = model_slope, intercepts2 = model_intercept, linetype = PID), 
+  #             linetype = "dashed", color = "grey70", linewidth = .4) +
+  geom_point(aes(shape = subjectkey), size = 3.25, color = "grey70") + 
+  #scale_shape_manual() + 
+  # geom_segment(aes(x = event, xend = event, 
+  #                  y = cbcl1, yend = fitted(model_slope)), 
+  #              color = "grey70") +
+  scale_y_continuous(expand = c(0, 0), breaks = c(0, 100, 200, 300, 400, 500), 
+                     limits = c(0, 500)) +
+  scale_x_continuous(expand = c(0, 0), breaks = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), 
+                     limits = c(-0.5, 10.5)) +
+  theme(panel.background = element_blank(),         
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_rect(colour = "black", fill = NA),
+        legend.position = "none", 
+        axis.text = element_text(size = 14),
+        axis.title = element_text(size = 14)) +
+  labs (x = "event", y = "cbcl1") 
+
+#Save the figure
+ggsave("random_slopes.png", units = "in", width = 9, height = 6, dpi = 300)
+```
+
+#### Interpretation
+
+From the fixed effects section of the model summary, we can conclude that there is strong evidence that number of days of sleep deprivation significantly increased reaction time under a significance level of 0.05. On average, for each additional day of sleep deprivation, reaction time increased by 10.47ms (b = 10.47, SE = 1.55, p \< .001).
+
+We are 95% confident that the average increase was between 7.44 and 13.50.
+
+From the fixed effects section, we estimated the average intercept and average effect of days of sleep deprivation (slopes of Days). We also estimated the corresponding 95% confidence intervals. Using the results from the random effects section, we can calculate the coverage intervals for both the intercept and the slope.
+
+The variance of the intercept and for the slope of Days is 612.1 and 35.1 respectively. Taking their square root, the corresponding standard deviations are 24.7 and 5.9. The 95% coverage interval of the intercept is 251.4 ± 1.96\*24.7. The lower bound is 203.0 and the upper bound is 299.8. It is therefore estimated that 95% of the participants had a reaction time between 203.0 and 299.8 at Day 0.
+
+The 95% coverage interval of the slope of Days is 10.5 ± 1.96\*5.9. The lower bound is -1.1 and the upper bound is 22.1. It is therefore estimated that for 95% of the participants, the effect of each additional day of sleep deprivation was between -1.1 and 22.1. This is not to be confused with the 95% confidence interval (7.4 and 13.5), which means that we are 95% confident that average effect (across all participants) of each additional day of sleep deprivation on reaction time was between 7.4 and 13.5. The model now estimates a variance of the random slopes effects, as well as a correlation between the random intercept and slope effects. :::
+
+#### Mock Write-up
+
+A random slope model is used to test if sleep deprivation affects reaction time. To account for the repeated measures design, a random intercept was specified for participants. The random slope for days of sleep deprivation was included in the model to allow the effect of sleep deprivation to vary across participants. Results are shown in Table 1. Using a significant level of 0.05, results indicate that sleep deprivation significantly increased reaction time. On average, each additional day of sleep deprivation increased reaction time by 10.47ms (b = 10.47, 95% CI = \[7.44, 13.50\], p \< .001). Model fit comparison between model with and without random slope for sleep deprivation shows that the effect of sleep deprivation varied across participants, χ2(2)= 42.14, p \< .001. The 95% coverage interval for the random slope of sleep deprivation is (-1.14, 22.07), indicating that the effect of sleep deprivation was between -1.14 and 22.07 for 95% of the participants.
+
+## References
+
+[@brown2021] <!-- [@Singmann2019]
+[@sarafian]
+[#@https://m-clark.github.io/]
+[#@Fitzmaurice]
+[#@mspeekenbrink.github.io]
+[#https://cran.r-project.org/web/packages/lme4/lme4.pdf] -->
