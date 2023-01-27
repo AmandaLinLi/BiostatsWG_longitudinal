@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.258">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>RI-CLPM</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./latent_curve_model_with_structured_residuals_main.html" rel="next">
+<link href="./latent_statetrait_models_main.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Longitudinal Analysis using ABCD Study data</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item dropdown  compact">
+    <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-download" role="img">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="">    
+        <li>
+    <a class="dropdown-item" href="./BiostatsWG.pdf"><i class="bi bi-file-pdf" role="img">
+</i> 
+ <span class="dropdown-text">Download PDF</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./BiostatsWG.epub"><i class="bi bi-journal" role="img">
+</i> 
+ <span class="dropdown-text">Download ePub</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown  compact">
+    <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-share" role="img">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="">    
+        <li>
+    <a class="dropdown-item" href="https://twitter.com/intent/tweet?url=|url|"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="dropdown-text">Twitter</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|"><i class="bi bi-facebook" role="img">
+</i> 
+ <span class="dropdown-text">Facebook</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">RI-CLPM</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><strong>Welcome</strong></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">1 <strong>Manuscript</strong></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./manuscript_working_draft.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Biostats WG Manuscript</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">2 <strong>Data Wrangling</strong></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data_wrangling.html" class="sidebar-item-text sidebar-link">Data Wrangling</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">3 <strong>Traditional Linear Models</strong></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./paired_samples_t-test_main.html" class="sidebar-item-text sidebar-link">Paired Samples T-test</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./repeated_measures_anova_main.html" class="sidebar-item-text sidebar-link">Repeated Measures Anova</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./difference_scores_main.html" class="sidebar-item-text sidebar-link">Difference Scores</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./change_scores_main.html" class="sidebar-item-text sidebar-link">Change Scores</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lmm_main.html" class="sidebar-item-text sidebar-link">Linear Mixed Models</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true"><strong>Traditional Non-Linear Models</strong></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./signed_ranksum_test_main.html" class="sidebar-item-text sidebar-link">Signed Rank-Sum Test</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./marginal_models_main.html" class="sidebar-item-text sidebar-link">Marginal Models</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./generalized_estimating_equations_main.html" class="sidebar-item-text sidebar-link">Generalized Estimating Equations</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./generalized_linear_mixed_models_main.html" class="sidebar-item-text sidebar-link">Generalized Linear Mixed Models</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true"><strong>Longitudinal SEM</strong></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./autoregressive_cross-lagged_panel_models_main.html" class="sidebar-item-text sidebar-link">ARCL Models</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./latent_change_scores_main.html" class="sidebar-item-text sidebar-link">Latent Change Scores</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./latent_growth_curves_main.html" class="sidebar-item-text sidebar-link">Latent Growth Curves</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multivariate_latent_growth_curves_main.html" class="sidebar-item-text sidebar-link">Multivariate Latent Growth Curves</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./latent_transition_analysis_main.html" class="sidebar-item-text sidebar-link">Latent Transition Analysis</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./growth_mixture_modeling_main.html" class="sidebar-item-text sidebar-link">Growth Mixture Modeling</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./latent_statetrait_models_main.html" class="sidebar-item-text sidebar-link">Latent State-Trait Models</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./random_intercept_cross-lagged_panel_models_main.html" class="sidebar-item-text sidebar-link active">RI-CLPM</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./latent_curve_model_with_structured_residuals_main.html" class="sidebar-item-text sidebar-link">LCM-SR</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">**Examples using ABCD Data**</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">TBD</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tbd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">tbd.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">resources.html</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#autoregressive-and-cross-lagged-panel-analysis-arcl" id="toc-autoregressive-and-cross-lagged-panel-analysis-arcl" class="nav-link active" data-scroll-target="#autoregressive-and-cross-lagged-panel-analysis-arcl">Autoregressive and cross-lagged panel analysis (ARCL)</a></li>
+  <li><a href="#what-it-is-and-when-to-use-it" id="toc-what-it-is-and-when-to-use-it" class="nav-link" data-scroll-target="#what-it-is-and-when-to-use-it">What it is and when to use it</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">RI-CLPM</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Fortunately, there exists a range of models that have been proposed to distinguish between- and within-person relations across time <span class="citation" data-cites="littlefield2021 orth2021">(see <a href="references.html#ref-littlefield2021" role="doc-biblioref"><strong>littlefield2021?</strong></a>; <a href="references.html#ref-orth2021" role="doc-biblioref"><strong>orth2021?</strong></a>)</span>. Most of these alternative models stem from latent state-trait models <span class="citation" data-cites="schmitt1993">(<a href="references.html#ref-schmitt1993" role="doc-biblioref"><strong>schmitt1993?</strong></a>)</span>, where a latent variable (typically referred to as a “trait) captures between-person sources of variance and covariance among a series of repeated assessments across time. After accounting for this source of variance, relations among specific assessments across time (e.g., the relation between Construct 1 at Time 1 with Construct 2 at Time 2) can be modeled akin to the CLPM that are thought to capture”state” relations. More contemporary models, such as the Random-Intercept Cross-Lagged Panel Model [RI-CLPM; <span class="citation" data-cites="hamaker2015">(<a href="references.html#ref-hamaker2015" role="doc-biblioref"><strong>hamaker2015?</strong></a>)</span>] and the Latent Curve with Structured Residuals [LCM-SR; <span class="citation" data-cites="curran2014a">(<a href="references.html#ref-curran2014a" role="doc-biblioref"><strong>curran2014a?</strong></a>)</span>] utilize structured residuals, or time-specific latent variables that capture within-person deviations around an individual’s mean (or trait) level across time. For example, when a random intercept (i.e., within a SEM framework, a latent variable where each assessment serves as an indicator and all factor loadings are constrained to unity) is added to a series of repeated assessments, the estimated score for a given individual at a given timepoint becomes a function of: 1) the mean at a given timeframe and 2) the latent variable score for a given individual. Any difference, or residual, between the actual scores and estimated score for a given individual at a given point of assessment can be thought of as within-person variance at that timepoint, and this within-person variance is captured by the structured residual <span class="citation" data-cites="littlefield2021">(see <a href="references.html#ref-littlefield2021" role="doc-biblioref"><strong>littlefield2021?</strong></a>, for an example with actual data)</span>. The RI-CLPM proposed by <span class="citation" data-cites="hamaker2015">(<a href="references.html#ref-hamaker2015" role="doc-biblioref"><strong>hamaker2015?</strong></a>)</span>] only includes a random intercept, whereas the LCM-SR proposed by <span class="citation" data-cites="curran2014a">(<a href="references.html#ref-curran2014a" role="doc-biblioref"><strong>curran2014a?</strong></a>)</span> also includes additional growth factors, such as a random linear slope (such that the LCM-SR could be considered as a hybrid between traditional latent growth modeling with autoregressive and cross-lagged relations among structured residuals). Variants of these models <span class="citation" data-cites="littlefield2021">(see <a href="references.html#ref-littlefield2021" role="doc-biblioref"><strong>littlefield2021?</strong></a>, for more details)</span>, such as relaxing the assumption of unit factor loadings inherent in a random-intercept model, can also be estimated given an adequate number of assessments (typically four or more) are acquired <span class="citation" data-cites="mulder2021">(<a href="references.html#ref-littlefield2021" role="doc-biblioref"><strong>littlefield2021?</strong></a>)</span>.</p>
+<p>It is important to realize the various assumptions inherent in these models <span class="citation" data-cites="littlefield2021">(see <a href="references.html#ref-littlefield2021" role="doc-biblioref"><strong>littlefield2021?</strong></a>, for more details)</span>. For example, a random-intercept only model assumes equivalent covariances among repeated assessments (as does compound symmetry described above), and the only way to relax this assumption is through the inclusion of relations among the structured residuals. Indeed, when the assumption of covariance stationarity holds (i.e., the assumption inherent in the oft-used repeated measures ANOVA), all the relations among the structured residuals become zero <span class="citation" data-cites="littlefield2021">(see <a href="references.html#ref-littlefield2021" role="doc-biblioref"><strong>littlefield2021?</strong></a>, for a demonstration)</span>. Conversely, the LCM-SR can relax the assumption of stationarity of covariances by the inclusion of additional growth factors (e.g., a random linear slope) in addition to the relations among structured residuals. Thus, as demonstrated in <span class="citation" data-cites="littlefield2021">(<a href="references.html#ref-littlefield2021" role="doc-biblioref"><strong>littlefield2021?</strong></a>)</span>, different relations among variables thought to capture within-person sources of variance can be obtained in the same data depending on the choice of growth factors (i.e., intercept-only vs.&nbsp;models that include additional growth factors) and if mean structure is also considered <span class="citation" data-cites="littlefield2021">(see <a href="references.html#ref-littlefield2021" role="doc-biblioref"><strong>littlefield2021?</strong></a>)</span>. Evidence also suggests that achieving model convergence is more difficult for some models (e.g., the LCM-SR) compared to other models (e.g., the RI-CLPM; see <span class="citation" data-cites="orth2020">(<a href="references.html#ref-orth2020" role="doc-biblioref"><strong>orth2020?</strong></a>)</span>) when modeling is based on default specifications. In sum, the importance of isolating the appropriate level of analysis in prospective data has been stressed by several researchers (particularly among Patrick Curran and colleagues within SEM frameworks). Despite this, models such as the CLPM remain common within various extant literatures. There are multiple alternatives that have been recommended, though these models require multiple assessments waves (e.g., four or more to fully specify the LCM-SR), additional expertise to overcome issues with model convergence, and appreciation of modeling assumptions when attempting to adjudicate among potential models in each research context <span class="citation" data-cites="littlefield2021">(see <a href="references.html#ref-littlefield2021" role="doc-biblioref"><strong>littlefield2021?</strong></a>, for further discussion)</span>.</p>
+<section id="autoregressive-and-cross-lagged-panel-analysis-arcl" class="level3">
+<h3 class="anchored" data-anchor-id="autoregressive-and-cross-lagged-panel-analysis-arcl">Autoregressive and cross-lagged panel analysis (ARCL)</h3>
+<p>Rank-order stability can be used to model interindividual stability over time as an autoregressive process,. That is, the rank-order stability can be used to model continuity of a behavior. Assuming equal intervals, the correlations between T0 and T1, and between T1 and T2 could be used to estimate the correlation between T2 and T3.</p>
+<p>Multilevel modeling approaches have often stressed methods to tease apart different sources of variance [e.g., distinguishing level-1, or within-person, variables from level-2, or between-person, variables in the context of prospective data; see <span class="citation" data-cites="raudenbush2002">(<a href="references.html#ref-raudenbush2002" role="doc-biblioref"><strong>raudenbush2002?</strong></a>)</span>]. However, models common in SEM, such as the CLPM, have been criticized extensively on the grounds this modeling approach cannot delineate between- and within-person sources of variation and covariations <span class="citation" data-cites="littlefield2021">(see <a href="references.html#ref-littlefield2021" role="doc-biblioref"><strong>littlefield2021?</strong></a>, for a review)</span>. Briefly, the CLPM assumes no stable between-person differences (beyond the implied relations among the auto-regressive paths) among the constructs that are assessed repeated ly. As noted by <span class="citation" data-cites="hamaker2015">(<a href="references.html#ref-hamaker2015" role="doc-biblioref"><strong>hamaker2015?</strong></a>)</span>, “…if stability of the constructs is to some extent of a trait-like, time-invariant nature, the inclusion of autoregressive parameters will fail to adequately control for this. As a result, the estimates of the cross-lagged regression coefficients will be biased, which may lead to erroneous conclusions regarding the underlying causal pattern.” (p.&nbsp;10 2). As demonstrated by <span class="citation" data-cites="littlefield2021">(<a href="references.html#ref-littlefield2021" role="doc-biblioref"><strong>littlefield2021?</strong></a>)</span>, the CLPM assumes relations identical to a series of two-predictor regression models in terms of estimating variances and covariances among measurements across ti me. As described above, regression models based on two waves of assessment are limited on several fronts, including being able to tease apart between- and within-person sources of variance. <span class="citation" data-cites="hoffman2015">(<a href="references.html#ref-hoffman2015" role="doc-biblioref"><strong>hoffman2015?</strong></a>)</span> notes the cross-lagged estimate “smushes” the between- and within-person effects together as a single estima te. <span class="citation" data-cites="berry2017a">(<a href="references.html#ref-berry2017a" role="doc-biblioref"><strong>berry2017a?</strong></a>)</span> notes this results in CLPM estimates “…that are difficult (or impossible) to interpret meaningfully.” (p.&nbsp;118 7). Given these observations, and that prospective data are often used to inform theories involving clear within-person processes <span class="citation" data-cites="curran2011">(e.g., see <a href="references.html#ref-curran2011" role="doc-biblioref"><strong>curran2011?</strong></a>)</span>, models that more optimally delineate between- and within-person sources of variance are need ed.</p>
+</section>
+<section id="what-it-is-and-when-to-use-it" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-is-and-when-to-use-it">What it is and when to use it</h2>
+<p>The cross lagged panel model (CLPM) is a flexible analytic approach that is commonly applied when researchers are interested in understanding how variables influence each other over time. This framework requires at least two variables assessed across two measurement occassions. Consider the most basic – and eponymously named– CLPM, which models the lagged associations between two variables (x, y). Let ‘x1’ and ‘y1’ denote variables x and y at time 1 and allow ‘x2’ and ‘y2’ denote variables x and y at time 2. This model compares the relative effects of x and y on each other (‘x1-&gt;y2’, ‘y1-&gt;x2’) (see Figure x) and can be easily extended to evaluate other hypothesized relationships. For example, evaluating contemporaneous associations between variables assessed during the same measurement occassion (e.g., ‘x1 &lt;-&gt; y1’; ‘x2 &lt;-&gt; y2’; see Figure x) is straightforward. Another common CLPM extension is the inclusion of autoregressive effects (e.g., ‘x1-&gt;x2’, ‘y1-&gt;y2’; see Figure x). Also referred to as an autoregressive cross-lagged [ARCL] model, this extension provides an estimate of a variable’s temporal (i.e., rank order) stability over time. The larger the value of the autoregressive coefficient (closer to 1) the more stable (greater % of variance explained in) the variable across measurement occasions. When contemporaneous (e.g., x1 &lt;-&gt; y1) and autoregressive effects (e.g., x1 -&gt; x2) are included, the standardized cross-lagged parameters of an ARCL model are often inferred as representing the bidirectional ‘between-person’ effects of ‘x1-&gt;y2’ (when controlling for y1) and ‘y1-&gt;x2’ (when controlling for x1).</p>
+<p>One advantage of longitudinal analyses with multiple waves of data collection is that such processes can be modeled over time. Understanding transactional effects effects can be useful in devising strategies to intervene in various types of escalating cycles of violence such as child maltreatment [<span class="citation" data-cites="cicchetti2006a">(<a href="references.html#ref-cicchetti2006a" role="doc-biblioref"><strong>cicchetti2006a?</strong></a>)</span>) or the effects of intimate partner violence on child behavior problems <span class="citation" data-cites="chung2021">(<a href="references.html#ref-chung2021" role="doc-biblioref"><strong>chung2021?</strong></a>)</span>. Such processes could be modeled statistically in a number of ways by relying on estimating cross-lagged relations but require at least three times of measurement in order to distinguish beween-subject and within-sources of measurement [<span class="citation" data-cites="hamaker2015">(<a href="references.html#ref-hamaker2015" role="doc-biblioref"><strong>hamaker2015?</strong></a>)</span>; see discussion below).</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./latent_statetrait_models_main.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Latent State-Trait Models</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./latent_curve_model_with_structured_residuals_main.html" class="pagination-link">
+        <span class="nav-page-text">LCM-SR</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">
+        <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link active" href="./resources.html" aria-current="page">xxxxxx</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="./resources.html">xxxxxx</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="./resources.html">xxxxxx</a>
+  </li>  
+</ul>
+      </div>
+  </div>
+</footer>
+
+
+
+</body></html>
