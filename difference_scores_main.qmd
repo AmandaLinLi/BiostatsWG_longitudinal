@@ -1,13 +1,19 @@
-# Difference Scores {.unnumbered}
+# Difference Scores
 
 ## Overview
-Difference scores (gain scores) are one of the earliest developed and most commonly used approaches for analyzing data collected across multiple measurement occasions (e.g., pre-test/post-test scores) [@castro-schilo2018; @jennings2016]. This approach computes a raw difference score as an index change ($\Delta$) in relation to some variable ($x$) by subtracting the variable's value obtained at a prior measurement occasion (t1) from the value of the same variable obtained at a subsequent  occasion (t2). This difference value ($\Delta$ = $x_{t2}$ - $x_{t1}$) can then be used as the outcome in a GLM to test for differences in the amount of change over time and between groups of interest.
-
+Difference scores (gain scores) are one of the earliest developed and most commonly used approaches for analyzing data collected across multiple measurement occasions[@castro-schilo2018; @jennings2016]. This approach computes a raw difference score as an index change ($\Delta$) in relation to some variable ($x$) by subtracting the variable's value obtained at a prior measurement occasion (t1) from the value of the same variable obtained at a subsequent  occasion (t2). This difference value ($\Delta$ = $x_{t2}$ - $x_{t1}$) can then be used as the outcome in a GLM to test for differences in the amount of change over time and between groups of interest.
 
 ::: {.panel-tabset}
 
 # Model Assumptions
 test test
+
+<!-- NOTES
+approach- each method is presented according to the following triplet: 
+(1) when to apply it and what is it doing
+(2) how to compute it in R 
+(3) how to present, visualize, and interpret the results
+-->
 
 # Notes_TBD
 Since the data being compared at exactly two points in time is paired (non-independent), the paired t-test analysis is appropriate. With the exception of this aspect of (non)independence in paired, longitudinal data, the underlying assumptions for this type of analysis are exactly the same as for the independent samples t-test:
@@ -95,3 +101,4 @@ where RSn2 􏰫 RSn1 is the difference between Time 2 and Time 1 scores, g0 is t
 
 ## Explanation of Model Code & Plots
 ### Model code
+

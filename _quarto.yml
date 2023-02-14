@@ -6,55 +6,80 @@ book:
   author: "Biostatistics Working Group of the ABCD Study"
   chapters:
     - index.qmd
-    - part: "1 **Manuscript**"
-      chapters: 
+    - part: "**Manuscript**"
+      chapters:
         - manuscript_working_draft.qmd
-    - part: "2 **Data Wrangling**"
-      chapters: 
+    - part: data_wrangling.qmd
+      chapters:
         - data_wrangling.qmd
-    - part: "3 **Traditional Linear Models**"
-      chapters: 
-        - paired_samples_t-test_main.qmd
-        - repeated_measures_anova_main.qmd
+    - part: paired_samples_t-test_main.qmd
+      chapters:
+        - paired_samples_t-test_main_example_1.qmd
+    - part: repeated_measures_anova_main.qmd
+      chapters:
+        - repeated_measures_anova_main_example_1.qmd
         #- rnova_single_group_design.qmd
         #- rnova_multiple_group_design.qmd
-        - difference_scores_main.qmd
-       # - difference_scores_one_sample_t-test.qmd
-       # - difference_scores_paired_samples_t-test.qmd
-       # - difference_scores_simple_regression.qmd
-        - change_scores_main.qmd
-        #- change_scores_ancova.qmd
-        #- change_scores_multiple_regression.qmd
-        - lmm_main.qmd
-        #- lmm_intercept_only.qmd
-        #- lmm_intercept_and_slope.qmd
-    - part: "**Traditional Non-Linear Models**"
+    - part: difference_scores_main.qmd
       chapters:
-        - signed_ranksum_test_main.qmd
-        - marginal_models_main.qmd
-        - generalized_estimating_equations_main.qmd
-        - generalized_linear_mixed_models_main.qmd
-    - part: "**Longitudinal SEM**"
-      chapters: 
-        - autoregressive_cross-lagged_panel_models_main.qmd
-        - latent_change_scores_main.qmd
-        - latent_growth_curves_main.qmd
-        - multivariate_latent_growth_curves_main.qmd
-        - latent_transition_analysis_main.qmd
-        - growth_mixture_modeling_main.qmd
-        - latent_statetrait_models_main.qmd
-        - random_intercept_cross-lagged_panel_models_main.qmd
-        - latent_curve_model_with_structured_residuals_main.qmd
-    - part: "**Examples using ABCD Data**"
-      #chapters: 
-        #- difference_scores_one_sample_ttest.qmd
-        #- difference_scores_paired_samples_ttest.qmd
-        #- difference_scores_simple_regression.qmd
-        #- change_scores_ancova.qmd
-        #- change_scores_multiple_regression.qmd
-        #- lmm_intercept_only.qmd
-        #- lmm_intercept_and_slope.qmd
-
+        - difference_scores_one_sample_ttest.qmd
+        - difference_scores_paired_samples_ttest.qmd
+        - difference_scores_simple_regression.qmd
+    - part: change_scores_main.qmd
+      chapters:
+        - change_scores_ancova.qmd
+        - change_scores_multiple_regression.qmd
+    - part: lmm_main.qmd
+      chapters:
+        - lmm_intercept_only.qmd
+        - lmm_intercept_and_slope.qmd
+    - part: signed_ranksum_test_main.qmd
+      chapters:
+        - data_wrangling.qmd
+    - part: marginal_models_main.qmd
+      chapters:
+        - data_wrangling.qmd
+    - part: generalized_estimating_equations_main.qmd
+      chapters:
+        - data_wrangling.qmd
+    - part: generalized_linear_mixed_models_main.qmd
+      chapters:
+        - data_wrangling.qmd
+    - part: autoregressive_cross-lagged_panel_models_main.qmd
+      chapters:
+        - data_wrangling.qmd
+    - part: latent_change_scores_main.qmd
+      chapters:
+        - data_wrangling.qmd
+    - part: latent_growth_curves_main.qmd
+      chapters:
+        - data_wrangling.qmd
+    - part: multivariate_latent_growth_curves_main.qmd
+      chapters:
+        - data_wrangling.qmd
+    - part: latent_transition_analysis_main.qmd
+      chapters:
+        - data_wrangling.qmd
+    - part: growth_mixture_modeling_main.qmd
+      chapters:
+        - data_wrangling.qmd
+    - part: latent_statetrait_models_main.qmd
+      chapters:
+        - data_wrangling.qmd
+    - part: random_intercept_cross-lagged_panel_models_main.qmd
+      chapters:
+        - data_wrangling.qmd
+    - part: latent_curve_model_with_structured_residuals_main.qmd
+      chapters:
+        - data_wrangling.qmd
+      #chapters:
+      #- difference_scores_one_sample_ttest.qmd
+      #- difference_scores_paired_samples_ttest.qmd
+      #- difference_scores_simple_regression.qmd
+      #- change_scores_ancova.qmd
+      #- change_scores_multiple_regression.qmd
+      #- lmm_intercept_only.qmd
+      #- lmm_intercept_and_slope.qmd
     - part: "TBD"
       chapters:
         - tbd.qmd
@@ -81,7 +106,7 @@ book:
         aria-label: GitHub
         #text: blip
   page-footer:
-    center: 
+    center:
       - text: "About"
         href: resources.qmd
       - text: "xxxxx"
@@ -103,13 +128,10 @@ format:
     code-copy: true
   pdf:
     documentclass: scrreprt
-    include-in-header: 
+    include-in-header:
       text: |
         \usepackage{makeidx}
         \makeindex
-    include-after-body: 
+    include-after-body:
       text: |
         \printindex
-
-
-

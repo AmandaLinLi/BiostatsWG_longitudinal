@@ -1,4 +1,4 @@
-# Difference Scores_One Sample t-test {.unnumbered}
+# Difference Scores One Sample t-test
 
 ```{r}
 #| message: FALSE

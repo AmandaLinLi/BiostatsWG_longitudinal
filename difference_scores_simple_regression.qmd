@@ -1,4 +1,4 @@
-# Difference Scores_Simple Regression {.unnumbered}
+# Difference Scores Simple Regression
 
 ```{r}
 #| include: FALSE

@@ -168,5 +168,11 @@
   },
   "manuscript_working_draft.qmd": {
     "manuscript_working_draft.html": "6cd41433"
+  },
+  "repeated_measures_anova_main_example_1.qmd": {
+    "repeated_measures_anova_main_example_1.html": "ffd5af0a"
+  },
+  "paired_samples_t-test_main_example_1.qmd": {
+    "paired_samples_t-test_main_example_1.html": "3da8e4ad"
   }
 }

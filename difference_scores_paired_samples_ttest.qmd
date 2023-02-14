@@ -1,4 +1,4 @@
-# Difference Scores_Paired Sample t-test {.unnumbered}
+# Difference Scores Paired Sample t-test
 
 ```{r}
 #| include: FALSE
