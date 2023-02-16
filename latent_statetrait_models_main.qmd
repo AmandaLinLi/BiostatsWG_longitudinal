@@ -1,1 +1,0 @@
-# Latent State-Trait Models {.unnumbered}

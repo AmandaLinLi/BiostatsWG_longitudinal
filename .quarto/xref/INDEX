@@ -174,5 +174,92 @@
   },
   "paired_samples_t-test_main_example_1.qmd": {
     "paired_samples_t-test_main_example_1.html": "3da8e4ad"
+  },
+  "differenceScores/difference_scores_main.qmd": {
+    "difference_scores_main.html": "99c1d687"
+  },
+  "differenceScores/difference_scores_one_sample_ttest.qmd": {
+    "difference_scores_one_sample_ttest.html": "edef8702"
+  },
+  "differenceScores/difference_scores_paired_samples_ttest.qmd": {
+    "difference_scores_paired_samples_ttest.html": "beebadc7"
+  },
+  "differenceScores/difference_scores_simple_regression.qmd": {
+    "difference_scores_simple_regression.html": "6e215b1e"
+  },
+  "dataWrangling/data_wrangling.qmd": {
+    "data_wrangling.html": "6441eeee"
+  },
+  "pairedSamplesTtest/paired_samples_t-test_main.qmd": {
+    "paired_samples_t-test_main.html": "c6eceebc"
+  },
+  "pairedSamplesTtest/paired_samples_t-test_main_example_1.qmd": {
+    "paired_samples_t-test_main_example_1.html": "6369d271"
+  },
+  "repeatedMeasuresAnova/repeated_measures_anova_main.qmd": {
+    "repeated_measures_anova_main.html": "a6acd7d7"
+  },
+  "repeatedMeasuresAnova/repeated_measures_anova_main_example_1.qmd": {
+    "repeated_measures_anova_main_example_1.html": "3d185877"
+  },
+  "changeScores/change_scores_main.qmd": {
+    "change_scores_main.html": "d28f87d2"
+  },
+  "changeScores/change_scores_ancova.qmd": {
+    "change_scores_ancova.html": "08237df0"
+  },
+  "changeScores/change_scores_multiple_regression.qmd": {
+    "change_scores_multiple_regression.html": "9b117ff5"
+  },
+  "linearMixedModels/lmm_main.qmd": {
+    "lmm_main.html": "6ac2d6c7"
+  },
+  "linearMixedModels/lmm_intercept_only.qmd": {
+    "lmm_intercept_only.html": "b76572ba"
+  },
+  "linearMixedModels/lmm_intercept_and_slope.qmd": {
+    "lmm_intercept_and_slope.html": "f1f1a35c"
+  },
+  "signedRankSumTest/signed_ranksum_test_main.qmd": {
+    "signed_ranksum_test_main.html": "55f15523"
+  },
+  "marginalModels/marginal_models_main.qmd": {
+    "marginal_models_main.html": "0f180854"
+  },
+  "generalizedEstimatingEquations/generalized_estimating_equations_main.qmd": {
+    "generalized_estimating_equations_main.html": "bb810d79"
+  },
+  "generalizedLinearMixedModels/generalized_linear_mixed_models_main.qmd": {
+    "generalized_linear_mixed_models_main.html": "77690088"
+  },
+  "autoregressiveCLPM/autoregressive_cross-lagged_panel_models_main.qmd": {
+    "autoregressive_cross-lagged_panel_models_main.html": "e34c3c9b"
+  },
+  "latentChangeScores/latent_change_scores_main.qmd": {
+    "latent_change_scores_main.html": "6fcbd922"
+  },
+  "latentGrowthCurves/latent_growth_curves_main.qmd": {
+    "latent_growth_curves_main.html": "85fb1556"
+  },
+  "multivariateLatentGrowthCurve/multivariate_latent_growth_curves_main.qmd": {
+    "multivariate_latent_growth_curves_main.html": "c4d74834"
+  },
+  "latentTransitionAnalysis/latent_transition_analysis_main.qmd": {
+    "latent_transition_analysis_main.html": "5342576f"
+  },
+  "growthMixtureModels/growth_mixture_modeling_main.qmd": {
+    "growth_mixture_modeling_main.html": "6b13a953"
+  },
+  "latentStateTraitModels/latent_statetrait_models_main.qmd": {
+    "latent_statetrait_models_main.html": "4d270b44"
+  },
+  "randomInterceptCLPM/random_intercept_cross-lagged_panel_models_main.qmd": {
+    "random_intercept_cross-lagged_panel_models_main.html": "606a0339"
+  },
+  "latentCurveModelStructuredResiduals/latent_curve_model_with_structured_residuals_main.qmd": {
+    "latent_curve_model_with_structured_residuals_main.html": "7b59a099"
+  },
+  "repeatedMeasuresAnova/rnova_single_group_design.qmd": {
+    "rnova_single_group_design.html": "8d5223c8"
   }
 }

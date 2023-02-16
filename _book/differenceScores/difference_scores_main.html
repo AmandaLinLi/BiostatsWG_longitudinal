@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.258">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4. Difference Scores</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../differenceScores/difference_scores_simple_regression.html" rel="next">
+<link href="../repeatedMeasuresAnova/rnova_single_group_design.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Longitudinal Analysis using ABCD Study data</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item dropdown  compact">
+    <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-download" role="img" aria-label="Download">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="">    
+        <li>
+    <a class="dropdown-item" href="../BiostatsWG.pdf"><i class="bi bi-file-pdf" role="img">
+</i> 
+ <span class="dropdown-text">Download PDF</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../BiostatsWG.epub"><i class="bi bi-journal" role="img">
+</i> 
+ <span class="dropdown-text">Download ePub</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown  compact">
+    <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-share" role="img" aria-label="Share">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="">    
+        <li>
+    <a class="dropdown-item" href="https://twitter.com/intent/tweet?url=|url|"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="dropdown-text">Twitter</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|"><i class="bi bi-facebook" role="img">
+</i> 
+ <span class="dropdown-text">Facebook</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">4. Difference Scores</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><strong>Welcome</strong></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true"><strong>Manuscript</strong></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../manuscript_working_draft.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Biostats WG Manuscript</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../dataWrangling/data_wrangling.html" class="sidebar-item-text sidebar-link">Data Wrangling</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataWrangling/data_wrangling.html" class="sidebar-item-text sidebar-link">Data Wrangling</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../pairedSamplesTtest/paired_samples_t-test_main.html" class="sidebar-item-text sidebar-link">**Paired Samples T-test**</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pairedSamplesTtest/paired_samples_t-test_main_example_1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title"><strong>Paired_t-test_example_1</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../repeatedMeasuresAnova/repeated_measures_anova_main.html" class="sidebar-item-text sidebar-link">Repeated Measures Anova</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../repeatedMeasuresAnova/repeated_measures_anova_main_example_1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">rANOVA_Example1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../repeatedMeasuresAnova/rnova_single_group_design.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Test</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../differenceScores/difference_scores_main.html" class="sidebar-item-text sidebar-link active">4. Difference Scores</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../differenceScores/difference_scores_simple_regression.html" class="sidebar-item-text sidebar-link">Difference Scores Simple Regression</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Change Scores</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Linear Mixed Models</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../signedRankSumTest/signed_ranksum_test_main.html" class="sidebar-item-text sidebar-link">Signed Rank-Sum Test</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataWrangling/data_wrangling.html" class="sidebar-item-text sidebar-link">Data Wrangling</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../marginalModels/marginal_models_main.html" class="sidebar-item-text sidebar-link">Marginal Models</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../generalizedEstimatingEquations/generalized_estimating_equations_main.html" class="sidebar-item-text sidebar-link">Generalized Estimating Equations</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../generalizedLinearMixedModels/generalized_linear_mixed_models_main.html" class="sidebar-item-text sidebar-link">Generalized Linear Mixed Models</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../autoregressiveCLPM/autoregressive_cross-lagged_panel_models_main.html" class="sidebar-item-text sidebar-link">ARCL Models</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../latentChangeScores/latent_change_scores_main.html" class="sidebar-item-text sidebar-link">Latent Change Scores</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../latentGrowthCurves/latent_growth_curves_main.html" class="sidebar-item-text sidebar-link">Latent Growth Curves</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../multivariateLatentGrowthCurve/multivariate_latent_growth_curves_main.html" class="sidebar-item-text sidebar-link">Multivariate Latent Growth Curves</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../latentTransitionAnalysis/latent_transition_analysis_main.html" class="sidebar-item-text sidebar-link">Latent Transition Analysis</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../growthMixtureModels/growth_mixture_modeling_main.html" class="sidebar-item-text sidebar-link">Growth Mixture Modeling</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../latentStateTraitModels/latent_statetrait_models_main.html" class="sidebar-item-text sidebar-link">Latent State-Trait Models</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../randomInterceptCLPM/random_intercept_cross-lagged_panel_models_main.html" class="sidebar-item-text sidebar-link">RI-CLPM</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../latentCurveModelStructuredResiduals/latent_curve_model_with_structured_residuals_main.html" class="sidebar-item-text sidebar-link">LCM-SR</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" aria-expanded="true">TBD</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-21" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tbd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">tbd.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../resources.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">resources.html</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#explanation" id="toc-explanation" class="nav-link" data-scroll-target="#explanation">Explanation</a></li>
+  <li><a href="#explanation-of-model-code-plots" id="toc-explanation-of-model-code-plots" class="nav-link" data-scroll-target="#explanation-of-model-code-plots">Explanation of Model Code &amp; Plots</a>
+  <ul class="collapse">
+  <li><a href="#model-code" id="toc-model-code" class="nav-link" data-scroll-target="#model-code">Model code</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">4. Difference Scores</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>Difference scores are one of the earliest developed and most commonly used approaches for analyzing data collected across multiple measurement occasions<span class="citation" data-cites="castro-schilo2018 jennings2016">(<a href="../references.html#ref-castro-schilo2018" role="doc-biblioref"><strong>castro-schilo2018?</strong></a>; <a href="../references.html#ref-jennings2016" role="doc-biblioref"><strong>jennings2016?</strong></a>)</span>. This approach computes a raw difference score as an index change in relation to some variable by subtracting the variable’s value obtained at a prior measurement occasion from the value of the same variable obtained at a subsequent occasion. This difference value is then be used as the outcome in a GLM to test for differences in the amount of change over time and between groups of interest.</p>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Model Assumptions</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Notes_TBD</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>test test</p>
+<!-- NOTES
+approach- each method is presented according to the following triplet: 
+(1) when to apply it and what is it doing
+(2) how to compute it in R 
+(3) how to present, visualize, and interpret the results
+-->
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Since the data being compared at exactly two points in time is paired (non-independent), the paired t-test analysis is appropriate. With the exception of this aspect of (non)independence in paired, longitudinal data, the underlying assumptions for this type of analysis are exactly the same as for the independent samples t-test:</p>
+<p>non-independence means that a portion of the variance in the data is due to the individual differences that existed at the first point in time, not due to intervention-caused differences across the two points in time</p>
+<p>Type of (Outcome) Variable: The scale of measurement for the dependent variable is continuous (interval). Normal Distribution: The dependent variable is normally distributed in the population, or a sufficiently large sample size was drawn to allow approximation of the normal distribution. Note: the “rule of thumb” is that neither group should be smaller than 6, and ideally has more. Independent Observations: Individuals within each sample and between the two groups are independent of each other—random selection indicates that the chances of any one “unit” being sampled are independent of the chances for any other being sampled. Homogeneity of Variance: Variance is the same for the two groups, as indicated by equal standard deviations in the two samples.</p>
+</div>
+</div>
+</div>
+<div class="bd-callout bd-callout-info">
+<h3 id="dealing-with-specificity" ,="" style="color:light" class="anchored"> test </h3>
+<blockquote class="blockquote">
+<p>!Important Note. These models (t-test, ANOVA, and regression) are equivalent and all are subsumed by the GLM framework. More specifically, ANOVA is a special case of regression analysis where all the predictor variables are categorical. For the two-group case, the ANOVA model can be written as the following regression model <span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>=<span class="math inline">\(β_0\)</span> + <span class="math inline">\(β_1\)</span> <em>C</em> + <span class="math inline">\(\epsilon\)</span> (<span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>) where <span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span> is the difference between Time 2 (<span class="math inline">\(_{t2}\)</span>) and Time 1 (<span class="math inline">\(_{t1}\)</span>) scores, <span class="math inline">\(β_0\)</span> is the intercept or average predicted value of the difference across time for individuals in group = 0, ’‘<span class="math inline">\(β_1\)</span>’ is the regression coefficient for <em>C</em> indicating the difference in difference scores between between group = 0 and group = 1, and <span class="math inline">\(\epsilon\)</span>(<span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>) is the residual (i.e., error) score (normally distributed with zero mean) that captures all other factors not accounted for by the grouping predictor. Typically, the effect of interest is “<span class="math inline">\(β_1\)</span>”, which represents the difference between the average difference scores of the two groups. ___</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Key Considerations &amp; Limitations</strong> + Imbalanced baseline scores + If baseline scores are imbalanced across groups, effect estimates of the mean difference score may become biased (via regression to the mean). This can lead individual studies to produce different conclusions regarding equivalent models. + Reliability and Stability + Increased stability (over time) can lead to decreased reliability of difference scores. That is, the stronger the Time 1–Time 2 correlation, the less variability in the difference score there is to detect (can’t predict/detect what’s not there). + See Cronbach and Furby (1970)<span class="citation" data-cites="cronbach1970">(<a href="../references.html#ref-cronbach1970" role="doc-biblioref"><strong>cronbach1970?</strong></a>)</span>; but also Jennings &amp; Cribbie, 2016<span class="citation" data-cites="jennings2016">(<a href="../references.html#ref-jennings2016" role="doc-biblioref"><strong>jennings2016?</strong></a>)</span>; Rogosa, Brandt, &amp; Zimowski, 1982<span class="citation" data-cites="rogosa1982">(<a href="../references.html#ref-rogosa1982" role="doc-biblioref"><strong>rogosa1982?</strong></a>)</span>; Wright, 2006<span class="citation" data-cites="wright2006">(<a href="../references.html#ref-wright2006" role="doc-biblioref"><strong>wright2006?</strong></a>)</span> + Raw Scores + Prestandardizing variables discards important variance information and as such, raw scores should be used when computing difference scores + Types of change + A concern more broadly with studies that include only two measurement occasions is that only rank-order changes in levels of a variable can be measured <span class="citation" data-cites="king2018">(<a href="../references.html#ref-king2018" role="doc-biblioref"><strong>king2018?</strong></a>)</span>.</p>
+</blockquote>
+</div></section>
+<section id="explanation" class="level2">
+<h2 class="anchored" data-anchor-id="explanation">Explanation</h2>
+<section id="difference-scores" class="level5">
+<h5 class="anchored" data-anchor-id="difference-scores">Difference Scores</h5>
+<p>In a repeated measures design, a difference score <span class="math inline">\((\Delta)\)</span> can be calculated by subtracting pairs of values on some variable (<span class="math inline">\(x\)</span>) produced by the same individual across two (or more) timepoints <span class="math inline">\((x_{t1}, x_{t2})\)</span>. First, compute the difference (<span class="math inline">\(\Delta\)</span>) between the score (<span class="math inline">\(x\)</span>) obtained at baseline (<span class="math inline">\(x_{t1}\)</span>) and follow-up (<span class="math inline">\(x_{t2}\)</span>) for each individual (<span class="math inline">\((\Delta = x_{t2} − x_{t1})\)</span>). This difference value (<span class="math inline">\(\Delta\)</span> = <span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>) can then be used as the outcome in a GLM to test for differences in the amount of change over time and between groups of interest.</p>
+</section>
+<section id="sec-equation" class="level4">
+<h4 class="anchored" data-anchor-id="sec-equation"><strong>Single-Group Repeated Measures Design:</strong></h4>
+<p>The most basic repeated measures design the involves a single-group repeated measures design. In this design, we have n repeated measures of the response on each of N subjects.</p>
+<section id="paired-samples-t-test" class="level5">
+<h5 class="anchored" data-anchor-id="paired-samples-t-test">(Paired Samples T-test)</h5>
+<p>The paired samples t-test can be used to determine whether the difference between some pair of values produced by the same individual across two measurement occasions, differs significantly from 0. The t-testp is a special case of the one-sample t-test, with the exception that this model needs to be modified to account for the statistical dependence among repeated observations obtained on the same subject, other than the issue of non-independence the underlying assumptions for the t-testp is exactly the same as for the independent samples t-test.</p>
+<p>To compute the t-testp (<span class="math inline">\((\Delta = x_{t2} − x_{t1})\)</span>) the <em>sample average of differences</em> value obtained from the formula provided in step 1 (<span class="math inline">\((\Delta = x_{t2} − x_{t1})\)</span>) will be used as the numerator in your calculation of the t-value. The denominator in this computation is a variance estimate (i.e., the sample standard error), which accounts for the covariance between initial levels and change. A significant t-statistic indicates that change <span class="math inline">\((\Delta)\)</span> from T1 to T2 is significantly greater than 0.</p>
+<blockquote class="blockquote">
+<p>Hypothetical Scenario: Table 1. Raw and difference scores before and after training.</p>
+</blockquote>
+<p>Table 1 shows scores on a quiz that five employees received before they took a training course and after they took the course. The difference between these scores (i.e.&nbsp;the score after minus the score before) represents improvement in the employees’ ability. This third column is what we look at when assessing whether or not our training was effective. We want to see positive scores, which indicate that the employees’ performance went up.</p>
+</section>
+<section id="ranova" class="level5">
+<h5 class="anchored" data-anchor-id="ranova">(rANOVA)</h5>
+<p>The repeated-measures (within-subjects) ANOVA is an extension of the paired-samples t-test that is used to determine whether mean scores on some outcome measured at three or more occasions differs significantly across measurement occasions.</p>
+</section>
+</section>
+<section id="basic-t-testpanova" class="level4">
+<h4 class="anchored" data-anchor-id="basic-t-testpanova"><strong>Basic T-testp/ANOVA:</strong></h4>
+<p>can be extended for multiple groups and 3+ timepoints 1) <strong>T-test</strong>/<strong>ANOVA</strong>: + A t-test can be performed using a grouping variable to examine whether the disparity in the mean difference value differs significantly between two groups. An ANOVA can be used if the grouping variable includes more than 2 groups.</p>
+<p>The basic one-way repeated measure ANOVA can be extended (e.g., two-way, three-way) to evaluate whether or not a significant interaction effect exists between two or more factors (groups/levels) of some within-subjects variable.</p>
+<pre><code>+ Example based on hypothetical 
+    + First we compute the difference ($\Delta$) between the score on the measure of screen time ($x$) assessed at baseline ($x_{t1}$) and follow-up ($x_{t2}$). 
+    + The result of this formula ($\Delta$=$x_{t2}$ - $x_{t1}$) can then be used as an outcome to test the effect of group on  the difference score ($\Delta_{boys}$,  $\Delta_{girls}$ ). 
+    + Figure x.</code></pre>
+<blockquote class="blockquote">
+<p>GLM Equation: <span class="math inline">\(RS{_n}{_2} - RS{_n}{_1} = \gamma_0 + \gamma_1 Cn + e_{n(RS2-RS1)}\)</span></p>
+</blockquote>
+<p>where RSn2 􏰫 RSn1 is the difference between Time 2 and Time 1 scores, g0 is the intercept or average predicted value of the difference across time in relationship satis- faction for those who did not cohabit prior to marriage (Cn 1⁄4 0), g1 is the regression coefficient for Cn indicating the difference in change between Time 1 and Time 2 between those who cohabited and those who did not, and en(RS2􏰫RS1) is the residual score that captures all other factors not accounted for by the cohabited predictor. Importantly, if the key predictor, Cn, was continuous (e.g., number of months couples lived together before marriage), the model in Equation 2 would no longer be called repeated measures ANOVA, but Sofia could compute the difference score variable herself and run a simple linear regression with Cn as the sole predictor to assess whether increases in time cohabiting prior to marriage predict change in relationship satisfaction.</p>
+<blockquote class="blockquote">
+<p>Hypothetical Scenario: A study investigates sex differences on a measure of screen time by examining change in screen time scores obtained across two measurement occasions for boys and girls. The study aims to determine whether sex has an effect on changes in screen time across assessments.</p>
+</blockquote>
+</section>
+<section id="basic-regression" class="level4">
+<h4 class="anchored" data-anchor-id="basic-regression"><strong>Basic Regression:</strong></h4>
+<ol start="2" type="1">
+<li><strong>Regression</strong>:</li>
+</ol>
+<ul>
+<li>A simple regression analysis can be performed using a grouping variable as a predictor of change (<span class="math inline">\(\Delta\)</span>) in an outcome across groups. A significant effect for the grouping variable indicates that average <span class="math inline">\(\Delta\)</span> is significantly different across groups.
+<ul>
+<li>Example based on hypothetical
+<ul>
+<li>First we compute the difference (<span class="math inline">\(\Delta\)</span>) between the score on the measure of screen time (<span class="math inline">\(x\)</span>) assessed at baseline (<span class="math inline">\(x_{t1}\)</span>) and follow-up (<span class="math inline">\(x_{t2}\)</span>).</li>
+<li>The result of this formula (<span class="math inline">\(\Delta\)</span>=<span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>) can be included as the outcome variable in a regression model that analyzes the role of the grouping variable (0 = boy; 1 = girl) on changes in screen time across measurement occassions.</li>
+</ul></li>
+<li>Figure x. :::</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="explanation-of-model-code-plots" class="level2">
+<h2 class="anchored" data-anchor-id="explanation-of-model-code-plots">Explanation of Model Code &amp; Plots</h2>
+<section id="model-code" class="level3">
+<h3 class="anchored" data-anchor-id="model-code">Model code</h3>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../repeatedMeasuresAnova/rnova_single_group_design.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Test</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../differenceScores/difference_scores_simple_regression.html" class="pagination-link">
+        <span class="nav-page-text">Difference Scores Simple Regression</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">
+        <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../resources.html">xxxxxx</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../resources.html">xxxxxx</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../resources.html">xxxxxx</a>
+  </li>  
+</ul>
+      </div>
+  </div>
+</footer>
+
+
+
+</body></html>

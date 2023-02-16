@@ -1,0 +1,72 @@
+# 5. Change Scores
+
+## Overview
+This approach estimates a regression coefficient as an index change ($\Delta$\RES) in relation to some variable ($x$) by regressing the variable's value obtained at a follow-up measurement occasion (t2) on the value of the same variable obtained at a prior (e.g., baseline) occasion (t1). This estimated score ($\Delta$\RES = $x_{t2}$ adjusts for baseline scores while ignoring any group assignment. A common step 2 is for this $\Delta$\RES = $x_{t2}$ to be included in subsequent analysis, such as an examination of pre/post intervention effects (Kisbu-Sakarya et al., 2013).
+
+ˆ RES
+
+#### Brief Overview
+Since the data being compared at exactly two points in time is paired (non-independent), the paired t-test analysis is appropriate. With the exception of this aspect of (non)independence in paired, longitudinal data, the underlying assumptions for this type of analysis are exactly the same as for the independent samples t-test:
+
+non-independence means that a portion of the variance in the data is due to the individual differences that existed at the first point in time, not due to intervention-caused differences across the two points in time
+
+Type of (Outcome) Variable: The scale of measurement for the dependent variable is continuous (interval).
+Normal Distribution: The dependent variable is normally distributed in the population, or a sufficiently large sample size was drawn to allow approximation of the normal distribution. Note: the “rule of thumb” is that neither group should be smaller than 6, and ideally has more.
+Independent Observations: Individuals within each sample and between the two groups are independent of each other—random selection indicates that the chances of any one “unit” being sampled are independent of the chances for any other being sampled.
+Homogeneity of Variance: Variance is the same for the two groups, as indicated by equal standard deviations in the two samples.
+
+> !Important Note.
+>These models (t-test, ANOVA, and regression) are equivalent and all are subsumed by the GLM framework. More specifically, ANOVA is a special case of regression analysis where all the predictor variables are categorical. For the two-group case, the ANOVA model can be written as the following regression model $x_{t2}$ - $x_{t1}$=$β_0$ + $β_1$ *C* + $\epsilon$ ($x_{t2}$ - $x_{t1}$) where $x_{t2}$ - $x_{t1}$ is the difference between Time 2 ($_{t2}$) and Time 1 ($_{t1}$) scores, $β_0$  is the intercept or average predicted value of the difference across time for individuals in group = 0, ''$β_1$' is the regression coefficient for *C* indicating the difference in difference scores between between group = 0 and group = 1, and $\epsilon$($x_{t2}$ - $x_{t1}$) is the residual (i.e., error) score (normally distributed with zero mean) that captures all other factors not accounted for by the grouping predictor. Typically, the effect of interest is "$β_1$", which represents the difference between the average difference scores of the two groups. 
+___
+
+>**Key Considerations & Limitations**
+>+ Imbalanced baseline scores
+>	+ If baseline scores are imbalanced across groups, effect estimates of the mean difference score may become biased (via regression to the mean). This can lead individual studies to produce different conclusions regarding equivalent models.
+>+ Reliability and Stability
+>	+ Increased stability (over time) can lead to decreased reliability of difference scores. That is, the stronger the Time 1–Time 2 correlation, the less variability in the difference score there is to detect (can't predict/detect what's not there).
+		+ See Cronbach and Furby (1970)[@cronbach1970]; but also Jennings & Cribbie, 2016[@jennings2016]; Rogosa, Brandt, & Zimowski, 1982[@rogosa1982]; Wright, 2006[@wright2006]
+	+ Raw Scores
+		+ Prestandardizing variables discards important variance information and as such, raw scores should be used when computing difference scores 
+	+ Types of change
+	+ A concern more broadly with studies that include only two measurement occasions is that only rank-order changes in levels of a variable can be measured [@king2018]. 
+
+## Explanation
+##### Change Scores
+In a repeated measures design, a residualized change score $(\Delta\RES)$ can be calculated by regressing scores on some variable ($x$) produced by the same individual at a follow-up occassion (t2) on their score on that variable at a prior occassion (t1) $(x_{t1}, x_{t2})$. This residuals computed by this approach do not adjust for any a prior group differences.This residualized change score ($\Delta$ = $x_{t2}$ regressed on $x_{t1}$) is then often piped into a second step where it is used as the outcome in subsequent GLM analyses, for example, in a standard two-sample t-test to compare the change score value between groups of interest (e.g., tx vs control groups).
+
+#### **Single-Group Repeated Measures Design:**
+The most basic repeated measures design the involves a single-group measured across two occassions. 
+
+> Hypothetical Scenario:
+Table 1. Residualized change score based on pre- and post-test scores.
+
+Table 1 shows scores on a quiz that five participants received on an xxxx pre-test and then at a follow-up xxxxxx. Regressing the t2 score on the t1 score represents the estimated change in scores over time. The resulting regression coefficient can be subtracted from each particpants observed score at T2 to examine whether particpiants scores went up (positive values of x) or down (negative values of x) across the two measurement occassions. 
+
+#### **Basic ANOVA:**
+1) **T-test**/**ANOVA**:
++ A t-test can be performed using a grouping variable to examine whether the disparity in the residualized change score differs significantly between two groups. The repeated-measures (within-subjects) ANOVA is an extension of the paired-samples t-test that is used to determine whether mean scores on some outcome measured at three or more occasions differs significantly across measurement occasions. The residual change score method (ANOVA on the residual scores) can be expressed as Yi,adjusted = β0 + β1,Groupi + ei, (4) where Yi,adjusted = Yi − Yˆ(= γ0 + γ1Xi). This model evaluates whether there are significant gorup differences on the residual change score, conditional on the pre-test scores where the conditioning occurs in the absence of group membership. This method is similar to an ANCOVA approach in that both models statistically adjust for pre-test (t1) scores. However, the change score model does not adjust for any potential group effects at baseline
+(i.e., the dervied regression coefficient are based on the total sample), whereas the ANCOVA model includes the pooled within slope, across groups [@Jenningsetal2016; @Kisbu-Sakarya2013]. 
+
+> Hypothetical Scenario:
+> 	A study investigates sex differences on a measure of screen time by examining change in screen time scores obtained across two measurement occasions for boys and girls. The study aims to determine whether sex has an effect on changes in screen time across assessments.
++ Example based on hypothetical 
+		+ First we compute the residual change score ($\Delta$) by regressing the score on the measure of screen time ($x$) assessed at follow-up ($x_{t2}$) and on the score measured at baseline ($x_{t1}$). 
+		+ The result of this formula ($\Delta$=$x_{t2}$ regressed on $x_{t1}$) can then be used as an outcome to test the effect of group on the residualized change score ($\Delta_{boys}$,  $\Delta_{girls}$ ). 
+		+ Figure x.
+
+#### **Basic Regression:**
+1) **Regression**:
+
++  A simple regression analysis can be performed using a grouping variable as a predictor of change ($\Delta$) in an outcome across groups. A significant effect for the grouping variable indicates that average $\Delta$ is significantly different across groups.
+
+> Hypothetical Scenario:
+> 	A study investigates sex differences on a measure of screen time by examining change in screen time scores obtained across two measurement occasions for boys and girls. The study aims to determine whether sex has an effect on changes in screen time across assessments.
+
+	+ Example based on hypothetical
+		+ First we compute the difference ($\Delta$) between the score on the measure of screen time ($x$) assessed at baseline ($x_{t1}$) and follow-up ($x_{t2}$). 
+		+ The result of this formula ($\Delta$=$x_{t2}$ - $x_{t1}$) can be included as the outcome variable in a regression model that analyzes the role of the grouping variable (0 = boy; 1 = girl) on changes in screen time across measurement occassions.
+	+ Figure x.
+
+## Explanation of Model Code & Plots
+### Model code
+

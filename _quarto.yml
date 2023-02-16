@@ -6,70 +6,71 @@ book:
   author: "Biostatistics Working Group of the ABCD Study"
   chapters:
     - index.qmd
-    - part: "**Manuscript**"
+    - part: "1. Manuscript"
       chapters:
         - manuscript_working_draft.qmd
-    - part: data_wrangling.qmd
+    - part: dataWrangling/data_wrangling.qmd
       chapters:
-        - data_wrangling.qmd
-    - part: paired_samples_t-test_main.qmd
+        - dataWrangling/data_wrangling.qmd
+    # - part: pairedSamplesTtest/paired_samples_t-test_main.qmd
+    #   chapters:
+    #     - pairedSamplesTtest/paired_samples_t-test_main_example_1.qmd
+    - part: repeatedMeasuresAnova/repeated_measures_anova_main.qmd
       chapters:
-        - paired_samples_t-test_main_example_1.qmd
-    - part: repeated_measures_anova_main.qmd
-      chapters:
-        - repeated_measures_anova_main_example_1.qmd
+        - repeatedMeasuresAnova/repeated_measures_anova_main_example_1.qmd
+        - repeatedMeasuresAnova/rnova_single_group_design.qmd 
         #- rnova_single_group_design.qmd
         #- rnova_multiple_group_design.qmd
-    - part: difference_scores_main.qmd
+    - part: differenceScores/difference_scores_main.qmd
       chapters:
-        - difference_scores_one_sample_ttest.qmd
-        - difference_scores_paired_samples_ttest.qmd
-        - difference_scores_simple_regression.qmd
-    - part: change_scores_main.qmd
+      #- differenceScores/difference_scores_one_sample_ttest.qmd
+      #- differenceScores/difference_scores_paired_samples_ttest.qmd
+      - differenceScores/difference_scores_simple_regression.qmd
+    - part: changeScores/change_scores_main.qmd
       chapters:
-        - change_scores_ancova.qmd
-        - change_scores_multiple_regression.qmd
-    - part: lmm_main.qmd
+      - changeScores/change_scores_ancova.qmd
+      - changeScores/change_scores_multiple_regression.qmd
+    - part: linearMixedModels/lmm_main.qmd
+      #chapters:
+      #- linearMixedModels/lmm_intercept_only.qmd
+      #- linearMixedModels/lmm_intercept_and_slope.qmd
+    - part: signedRankSumTest/signed_ranksum_test_main.qmd
       chapters:
-        - lmm_intercept_only.qmd
-        - lmm_intercept_and_slope.qmd
-    - part: signed_ranksum_test_main.qmd
-      chapters:
-        - data_wrangling.qmd
-    - part: marginal_models_main.qmd
-      chapters:
-        - data_wrangling.qmd
-    - part: generalized_estimating_equations_main.qmd
+        - dataWrangling/data_wrangling.qmd
+    - part: marginalModels/marginal_models_main.qmd
       chapters:
         - data_wrangling.qmd
-    - part: generalized_linear_mixed_models_main.qmd
+    - part: generalizedEstimatingEquations/generalized_estimating_equations_main.qmd
       chapters:
         - data_wrangling.qmd
-    - part: autoregressive_cross-lagged_panel_models_main.qmd
+    - part: generalizedLinearMixedModels/generalized_linear_mixed_models_main.qmd
       chapters:
         - data_wrangling.qmd
-    - part: latent_change_scores_main.qmd
+    - part: autoregressiveCLPM/autoregressive_cross-lagged_panel_models_main.qmd
       chapters:
         - data_wrangling.qmd
-    - part: latent_growth_curves_main.qmd
+    - part: latentChangeScores/latent_change_scores_main.qmd
       chapters:
         - data_wrangling.qmd
-    - part: multivariate_latent_growth_curves_main.qmd
+    - part: latentGrowthCurves/latent_growth_curves_main.qmd
       chapters:
         - data_wrangling.qmd
-    - part: latent_transition_analysis_main.qmd
+    - part: multivariateLatentGrowthCurve/multivariate_latent_growth_curves_main.qmd
       chapters:
         - data_wrangling.qmd
-    - part: growth_mixture_modeling_main.qmd
+    - part: latentTransitionAnalysis/latent_transition_analysis_main.qmd
       chapters:
         - data_wrangling.qmd
-    - part: latent_statetrait_models_main.qmd
+    - part: growthMixtureModels/growth_mixture_modeling_main.qmd
       chapters:
         - data_wrangling.qmd
-    - part: random_intercept_cross-lagged_panel_models_main.qmd
+    - part: latentStateTraitModels/latent_statetrait_models_main.qmd
       chapters:
         - data_wrangling.qmd
-    - part: latent_curve_model_with_structured_residuals_main.qmd
+    - part: randomInterceptCLPM/random_intercept_cross-lagged_panel_models_main.qmd
+      chapters:
+        - data_wrangling.qmd
+    - part: latentCurveModelStructuredResiduals/latent_curve_model_with_structured_residuals_main.qmd
       chapters:
         - data_wrangling.qmd
       #chapters:
@@ -126,6 +127,7 @@ format:
   html:
     theme: cosmo
     code-copy: true
+    number-depth: 4
   pdf:
     documentclass: scrreprt
     include-in-header:

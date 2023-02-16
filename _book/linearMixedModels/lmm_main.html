@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.258">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Linear Mixed Models</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../signedRankSumTest/signed_ranksum_test_main.html" rel="next">
+<link href="../changeScores/change_scores_main.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Longitudinal Analysis using ABCD Study data</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item dropdown  compact">
+    <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-download" role="img">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="">    
+        <li>
+    <a class="dropdown-item" href="../BiostatsWG.pdf"><i class="bi bi-file-pdf" role="img">
+</i> 
+ <span class="dropdown-text">Download PDF</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../BiostatsWG.epub"><i class="bi bi-journal" role="img">
+</i> 
+ <span class="dropdown-text">Download ePub</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown  compact">
+    <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-share" role="img">
+</i> 
+ <span class="menu-text"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="">    
+        <li>
+    <a class="dropdown-item" href="https://twitter.com/intent/tweet?url=|url|"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="dropdown-text">Twitter</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|"><i class="bi bi-facebook" role="img">
+</i> 
+ <span class="dropdown-text">Facebook</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Linear Mixed Models</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><strong>Welcome</strong></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true"><strong>Manuscript</strong></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../manuscript_working_draft.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Biostats WG Manuscript</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../dataWrangling/data_wrangling.html" class="sidebar-item-text sidebar-link">**Data Wrangling**</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataWrangling/data_wrangling.html" class="sidebar-item-text sidebar-link"><strong>Data Wrangling</strong></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../pairedSamplesTtest/paired_samples_t-test_main.html" class="sidebar-item-text sidebar-link">Paired Samples T-test</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pairedSamplesTtest/paired_samples_t-test_main_example_1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Paired_t-test_example_1</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../repeatedMeasuresAnova/repeated_measures_anova_main.html" class="sidebar-item-text sidebar-link">Repeated Measures Anova</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../repeatedMeasuresAnova/repeated_measures_anova_main_example_1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">rANOVA_Example1</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Difference Scores</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Change Scores</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Linear Mixed Models</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../signedRankSumTest/signed_ranksum_test_main.html" class="sidebar-item-text sidebar-link">Signed Rank-Sum Test</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../dataWrangling/data_wrangling.html" class="sidebar-item-text sidebar-link"><strong>Data Wrangling</strong></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../marginalModels/marginal_models_main.html" class="sidebar-item-text sidebar-link">Marginal Models</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../generalizedEstimatingEquations/generalized_estimating_equations_main.html" class="sidebar-item-text sidebar-link">Generalized Estimating Equations</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../generalizedLinearMixedModels/generalized_linear_mixed_models_main.html" class="sidebar-item-text sidebar-link">Generalized Linear Mixed Models</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../autoregressiveCLPM/autoregressive_cross-lagged_panel_models_main.html" class="sidebar-item-text sidebar-link">ARCL Models</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../latentChangeScores/latent_change_scores_main.html" class="sidebar-item-text sidebar-link">Latent Change Scores</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../latentGrowthCurves/latent_growth_curves_main.html" class="sidebar-item-text sidebar-link">Latent Growth Curves</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../multivariateLatentGrowthCurve/multivariate_latent_growth_curves_main.html" class="sidebar-item-text sidebar-link">Multivariate Latent Growth Curves</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../latentTransitionAnalysis/latent_transition_analysis_main.html" class="sidebar-item-text sidebar-link">Latent Transition Analysis</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../growthMixtureModels/growth_mixture_modeling_main.html" class="sidebar-item-text sidebar-link">Growth Mixture Modeling</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../latentStateTraitModels/latent_statetrait_models_main.html" class="sidebar-item-text sidebar-link">Latent State-Trait Models</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../randomInterceptCLPM/random_intercept_cross-lagged_panel_models_main.html" class="sidebar-item-text sidebar-link">RI-CLPM</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../latentCurveModelStructuredResiduals/latent_curve_model_with_structured_residuals_main.html" class="sidebar-item-text sidebar-link">LCM-SR</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../data_wrangling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong>Data Wrangling</strong></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" aria-expanded="true">TBD</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-21" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tbd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">tbd.html</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../resources.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">resources.html</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#explanation" id="toc-explanation" class="nav-link" data-scroll-target="#explanation">Explanation</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Linear Mixed Models</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p><strong><code>Linear mixed-effects models (LMM)</code></strong> are an extension of the General Linear Model (GLM) that allow for analyzing complex data including clustered observations and repeated measurements.</p>
+<p><code><span>LMMs</span></code> offer a flexible framework for fitting longitudinal models and provide several benefits compared to traditional ANOVA and regression approaches. One particular advantage of the <code>LMM</code> framework is the ability to account for instances of non-independence among some subset(s) of observations in the data. A source of <span class="citation" data-cites="non-indep">(<a href="../references.html#ref-non-indep" role="doc-biblioref"><strong>non-indep?</strong></a>)</span> common to longitudinal designs is data that is collected from the same participants at multiple measurement occasions. This introduces a correlated error structure into the data, violating the independence assumption–– a critical assumption of many statistical tests that indicates the observations in a data set must be independent; that is, they cannot be correlated with one another <span class="citation" data-cites="non-indep">(see <a href="../references.html#ref-non-indep" role="doc-biblioref"><strong>non-indep?</strong></a> section of more info on assumption of indepencence xxxxx)</span>.</p>
+<p>LMM explicitly account for these dependencies among data by extending the general regression “fixed effects” model to allow both, fixed and random effects. Specifically, this approach simultaneously models an overall sample mean trajectory (fixed effect) and subject-specific (random) effects that vary randomly about the sample mean trajectory.</p>
+<p>It is this “mixture” of fixed and random effects for which these models derive their name. In turn, LMMs provide better prediction, more precise and generalizable effect estimates, reduced Type I errors (i.e., false positives), and improved statistical power.</p>
+<section id="brief-overview" class="level4">
+<h4 class="anchored" data-anchor-id="brief-overview">Brief Overview</h4>
+<p>Core assumptions of LMM is that the residuals and random effects are independent and identically distributed. This assumption states that the observations in a data set must be independent; that is, they cannot be correlated with one another. Violations of distributional assumptions introduce bias into the model and the impact of missing random effects components on model estimates leads to increased prediction error and attenuate overall model validity. As standard regression techniques (e.g., multiple regression) would violate the independence assumption, repeated measures ANOVA is commonly used for analyzing this type of data. However, xxxxxx.</p>
+<p>repeated-measures pose a problem to most standard statistical procedures such as ordinary least-squares regression or (between-subjects) ANOVA as those procedures assume that the data points are independent and identically distributed (henceforth iid). The independence assumption states that the probability of a data point taking on a specific value is independent of the values taken by all other data points.</p>
+<blockquote class="blockquote">
+<p>compared to violations of other assumptions, traditional statistical procedures are usually not robust to violations of the independence assumption (Judd et al., 2012; Kenny &amp; Judd, 1986), which can lead to reduced standard errors and in turn, notable increases in Type I (false positives) errors, potentially biasing/skewing results positively.</p>
+</blockquote>
+</section>
+<section id="normally-distributed-residuals" class="level4">
+<h4 class="anchored" data-anchor-id="normally-distributed-residuals">Normally distributed residuals</h4>
+<p>xxxxxxx</p>
+</section>
+<section id="linear-assocations" class="level4">
+<h4 class="anchored" data-anchor-id="linear-assocations">Linear Assocations</h4>
+<p>Linear relationship between explanatory/predictor variables and the response variable.</p>
+</section>
+<section id="non-independnce" class="level4">
+<h4 class="anchored" data-anchor-id="non-independnce">Non-Independnce</h4>
+<p>The assumption of non-independence asserts that observations in a dataset must be independent; that is, they cannot be correlated with one another. Unlike other assumptions, this one is important because xxxxxxxx not robust against xxxx it is. In longitudnal analyses, repeated observations from the same person are expected to be correlated–– that is, be more alike than two observations coming from two different participants–– and in turn, violate this assumption. THAT IS A participant’s rank in at one measurement occasion is predictive of their rank at another measurement occasion. Consider the hypothetical outlined above. When measuring response time across multiple measurement occasions, some individuals will generally demonstrate slower response times than others. That is, on average some participants will be slower than others (and vice-versa). The data points that reflect these response time values <em>within</em> a given individual will be correlated and non-independent. Compared to other model assumptions, standard statistical procedures are usually not robust to violations of the independence assumption (Judd et al., 2012; Kenny &amp; Judd, 1986). Therefore, it is important that these data are analyzed using a statistical test that takes the dependencies in the data into account. [LMM fits this criteria by explicitly capturing the dependency among data points via inclusion of a [random effects] parameters].</p>
+<p>Here, statistical independence is defined in terms of conditional probabilities. That is, the assumption of independence does not pertain to individual’s actual data points, but rather is concerned with the residuals or errors ϵi (i.e., conditional distribution) after adjusting for the statistical model (e.g., fixed effects; random effects. Specifically, this assumption is considered to not be violated if the residuals are <em>independent and identically distributed</em> (IID), follow a normal distribution with a mean of 0 and a standard deviation σϵ. IID ensures that errors are independent when (P(x|θ)=P(x|θ,􏱂 x). i i j􏱁ij) “their distribution, conditional upon knowing the value of the predictors and the error of any other case, is the same as the distribution conditional upon just knowing the value of the predictors”. That is, for any observation i, the probability that it takes on a specific value xi is the same regardless of the values taken on by all the other observations j 􏱁 i, and a statistical model with parameter vector θ: (P(x|θ)=P(x|θ,􏱂 x). i i j􏱁ij). LMM accomplishes this by explicitly capturing the dependency among data points via inclusion of a [random effects] parameters.</p>
+</section>
+<section id="fixed-vs-random-effects" class="level4">
+<h4 class="anchored" data-anchor-id="fixed-vs-random-effects">Fixed vs Random Effects</h4>
+<p>Traditional regression techniques estimate a group mean (fixed-effect) linear function to explain the relationship between a set of predictor values and an outcome. That is, the same regression line (both intercept and slope) is “fixed” to the group average trajectory for the entire sample. For example, in our hypothetical scenario, a traditional fixed-effects model estimates the mean intercept xx and slope xx of the reaction time trajectory. These analyses provides us information on the overall sample mean trajectory, such as xxxxxxx (see FIGURE X). LMM extends this traditional approach by simultaneously modeling an overall sample mean trajectory (fixed effect) <strong>and</strong> subject-specific (random) effects that vary randomly about this average trajectory. In our hypothetical example, inclusion of a subject-specific random intercept allows each participant’s reaction time trajectory to deviate from the mean-level (fixed-effect) trajectory. These deviations (random-effects) are assumed to follow a normal distribution with a mean of zero and an estimated variance parameter.</p>
+<p>repeated measures ANOVAs cannot simultaneously model between-person and within-person variability, so observations must be collapsed across xxxxx (groups or time?). However, aggregating data in this manner can be problematic as important information about variability within participants or conditions is lost. The results in a reduction of statistical power to detect true effects.</p>
+<p>This model shares considerable (conceptual and statistical) overlap with a traditional regression approach. A standard linear regression models the average (fixed) trajectory for some repeatedly measured outcome by estimating mean intercept and slope parameter values.</p>
+<p>This subject-specific (random) effect has a mean of zero and is normally distributed around the overall intercept (fixed effect) value.</p>
+<p>In multiple regression, in contrast, the same regression line (both intercept and slope) is applied to all participants, so predictions tend to be less accurate than in mixed-effects regression, and residual error tends to be larger.</p>
+</section>
+</section>
+<section id="explanation" class="level2">
+<h2 class="anchored" data-anchor-id="explanation">Explanation</h2>
+<section id="linear-mixed-model-with-random-intercept" class="level4">
+<h4 class="anchored" data-anchor-id="linear-mixed-model-with-random-intercept"><strong>Linear Mixed Model with Random Intercept:</strong></h4>
+<p>The random intercept LMM is similar (conceptually and statistically) to traditional (fixed-effect) linear regression. A key difference is that random intercept LMM extends the traditional fixed-effects approach by including a subject-specific random-effect that allows each participant to have their own unique intercept value, in addition to the overall mean-level (fixed-effect) intercept value. More formally: <span id="eq-stddev"><span class="math display">\[
+{Y} = b_{intercept} + b_{time}⋅time + \epsilon
+\tag{1}\]</span></span></p>
+<p>A standard linear fixed-effects regression model includes coefficients (<span class="math inline">\(b\)</span>) for the model intercept and the effect of time. The error term (<span class="math inline">\(\epsilon\)</span>) is assumed to be normally distributed with a mean of zero and a standard deviation&nbsp;(<span class="math inline">\(\sigma\)</span>). A random intercept LMM extends the standard fixed effects regression by including subject-specific random-effect for each participant. The random-effect is assumed to be normally distributed with a mean of zero and a standard deviation&nbsp;(<span class="math inline">\(\sigma\)</span>).</p>
+<p><span class="math display">\[
+{Y}  = b_{intercept} + b_{time}⋅time + (effect_{subject}+\epsilon)
+\]</span></p>
+<p>This equation can be rearranged such that the random-effect estimates subject-specific intercepts that are unique to each participant. This allows the model to simultaneously estimate 1) a fixed-intercept coefficient that represents the sample average intercept value; and 2) a random-effects variance parameter that allows each participant to have their own unique intercept that deviates from the average intercept value.</p>
+<p><span class="math display">\[
+{Y}  = (b_{intercept} + effect_{subject}) + b_{time}⋅time + \epsilon
+\]</span></p>
+Hypothetical Scenario: A study investigates trajectories of scores on a measure of happiness obtained across five measurement occasions in a sample of youth (i.e., repeated observations are clustered within participants). The study aims to characterize stability and change in happiness across assessments, while accounting for observations that are clustered within youth over time.
+<p></p>
+<p class="text-center" style="background-color: gray">
+The overall group-mean (fixed effects) trajectory is shown in blue. The faded lines represent each individual youth’s estimated trajectory. An examination of this figure shows happiness scores to be increasing across measurement occasions, however, there appears to be substantial variability in the youth’s initial happiness scores.
+</p>
+</section>
+<section id="linear-mixed-model-with-random-intercepts-slopes" class="level4">
+<h4 class="anchored" data-anchor-id="linear-mixed-model-with-random-intercepts-slopes">Linear Mixed Model with Random Intercepts &amp; Slopes</h4>
+<p>Extending the random intercept LMM to include a subject-specific random-slope parameter allows each participant to have their own unique intercept &amp; slope value. Relative to intercept-only LMM, this model estimates an addtional variance parameter that captures each participant’s variability around the overall mean-level (fixed-effect) slope value. More formally: <span class="math display">\[
+{Y} = (b_{intercept} + effect_{subject}) + (b_{time}⋅time + effect_{subject} +\epsilon)
+\]</span></p>
+<pre><code>A random intercept and slope LMM extends the intercept-only model by also including a subject-specific random-effect for each participant's slope value.This model simultaneously estimates 1) a fixed-intercept coefficient that represents the sample average intercept value; and 2) a random-effect (i.e., variance parameter around the intercept) that allows each participant to have their own unique intercept that deviates from the average intercept value; 3) a random-effect (i.e., variance parameter around the slope) that allows each participant to have their own unique slope that deviates from the average slope value</code></pre>
+<p class="text-center" style="background-color: aliceblue">
+<svg aria-hidden="true" role="img" viewbox="0 0 384 512" style="height:30px;width:22.5px;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M112.1 454.3c0 6.297 1.816 12.44 5.284 17.69l17.14 25.69c5.25 7.875 17.17 14.28 26.64 14.28h61.67c9.438 0 21.36-6.401 26.61-14.28l17.08-25.68c2.938-4.438 5.348-12.37 5.348-17.7L272 415.1h-160L112.1 454.3zM192 0C90.02 .3203 16 82.97 16 175.1c0 44.38 16.44 84.84 43.56 115.8c16.53 18.84 42.34 58.23 52.22 91.45c.0313 .25 .0938 .5166 .125 .7823h160.2c.0313-.2656 .0938-.5166 .125-.7823c9.875-33.22 35.69-72.61 52.22-91.45C351.6 260.8 368 220.4 368 175.1C368 78.8 289.2 .0039 192 0zM288.4 260.1c-15.66 17.85-35.04 46.3-49.05 75.89h-94.61c-14.01-29.59-33.39-58.04-49.04-75.88C75.24 236.8 64 206.1 64 175.1C64 113.3 112.1 48.25 191.1 48C262.6 48 320 105.4 320 175.1C320 206.1 308.8 236.8 288.4 260.1zM176 80C131.9 80 96 115.9 96 160c0 8.844 7.156 16 16 16S128 168.8 128 160c0-26.47 21.53-48 48-48c8.844 0 16-7.148 16-15.99S184.8 80 176 80z"></path></svg> Hypothetical Scenario: A study investigates trajectories of scores on a measure of happiness obtained across five measurement occasions in a sample of youth (i.e., repeated observations are clustered within participants). The study aims to characterize stability and change in happiness across assessments, while accounting for observations that are clustered within youth over time.
+</p>
+<p class="text-center" style="background-color: gray">
+The overall group-mean (fixed effects) trajectory is shown in blue. The faded lines represent each individual youth’s estimated trajectory. An examination of this figure shows happiness scores to be increasing across measurement occasions, however, there appears to be substantial variability in the youth’s initial happiness scores and in how these scores change across measurement occasions.
+</p>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p><span class="citation" data-cites="brown2021">(<a href="../references.html#ref-brown2021" role="doc-biblioref"><strong>brown2021?</strong></a>)</span></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../changeScores/change_scores_main.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Change Scores</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../signedRankSumTest/signed_ranksum_test_main.html" class="pagination-link">
+        <span class="nav-page-text">Signed Rank-Sum Test</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">
+        <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link active" href="../resources.html" aria-current="page">xxxxxx</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../resources.html">xxxxxx</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../resources.html">xxxxxx</a>
+  </li>  
+</ul>
+      </div>
+  </div>
+</footer>
+
+
+
+</body></html>

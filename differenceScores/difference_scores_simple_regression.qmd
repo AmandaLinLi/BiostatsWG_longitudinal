@@ -1,0 +1,66 @@
+# Difference Scores Simple Regression {.unnumbered}
+
+```{r}
+#| include: FALSE
+#Preliminary Setup
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#| class.source: 'fold-hide'
+#| message: FALSE
+#| warning: FALSE
+#| echo: FALSE
+
+# Install necessary packages (if not already installed)
+if (!("lme4" %in% installed.packages())) install.packages("lme4")
+if (!("lmerTest" %in% installed.packages())) install.packages("lmerTest")
+if (!("tidyverse" %in% installed.packages())) install.packages("tidyverse")
+if (!("ggpubr" %in% installed.packages())) install.packages("ggpubr")
+```
+
+```{r}
+#| class.source: 'fold-hide'
+#| message: FALSE
+#| warning: FALSE
+#| echo: FALSE
+
+#Load packages
+library(lme4)
+library(lmerTest)
+library(tidyverse)
+library(ggpubr)
+```
+
+```{r}
+#| class.source: 'fold-show'
+#| warning: FALSE
+#| echo: FALSE
+#| eval: FALSE
+
+# Compute difference score based on CBCL Externalizing subscale scores at baseline (t1) and 1-Year Follow-up (t2)
+df_wide$diffscore = df_wide$cbcl_extern_Year_1 - df_wide$cbcl_extern_Baseline
+
+#Compute statistical summaries for the difference score variable
+summary(df_wide$diffscore)
+
+```
+
+```{r}
+#| eval: FALSE
+#| warning: FALSE
+#| echo: FALSE
+
+#Simple linear regression is used to examine the relationship between a continuous predictor variable and the average difference score.
+
+#Regression model
+result <- lm(df_wide$diffscore ~ scrntme_wknd_Baseline, data = df_wide)
+summary(result)
+
+#Scatterplot to visualize relationship between a continuous predictor and a difference score
+scatterplot <- ggplot (df_wide, aes(x = diffscore, y = scrntme_wknd_Baseline)) + geom_point(size = 3) + geom_smooth(method = lm, se = F) +
+xlab("Difference Score (x)") +
+ylab("Screentime hours (y) Baseline")
+
+suppressWarnings(print(scatterplot))
+```
