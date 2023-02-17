@@ -261,5 +261,14 @@
   },
   "repeatedMeasuresAnova/rnova_single_group_design.qmd": {
     "rnova_single_group_design.html": "8d5223c8"
+  },
+  "dataWrangling/ex.1_dataWrangling.qmd": {
+    "ex.1_dataWrangling.html": "84105ab8"
+  },
+  "example1_blank.qmd": {
+    "example1_blank.html": "320aaa1d"
+  },
+  "differenceScores/_difference_scores_one_sample_ttest.qmd": {
+    "_difference_scores_one_sample_ttest.html": "1dd58d46"
   }
 }

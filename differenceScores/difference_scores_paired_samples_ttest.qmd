@@ -1,4 +1,4 @@
-# Difference Scores Paired Sample t-test
+# ex1.pairedsample {.unnumbered}
 
 ```{r}
 #| include: FALSE
@@ -7,7 +7,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-#| class.source: 'fold-hide'
 #| message: FALSE
 #| warning: FALSE
 
@@ -20,10 +19,8 @@ if (!("rstatix" %in% installed.packages())) install.packages("rstatix")
 ```
 
 ```{r}
-#| class.source: 'fold-hide'
 #| message: FALSE
 #| warning: FALSE
-#| echo: FALSE
 
 #Load packages
 library(rstatix)
@@ -34,13 +31,14 @@ library(ggpubr)
 ```
 
 ```{r}
-#| class.source: 'fold-hide'
-#| message: FALSE
 #| warning: FALSE
-#| echo: FALSE
+#| messages: FALSE
+
+df_long<- read_csv("/Users/shawes/Desktop/df_long.csv")
+df_wide<- read_csv("/Users/shawes/Desktop/df_wide.csv")
 
 # Compute difference score based on CBCL Externalizing subscale scores at baseline (t1) and 1-Year Follow-up (t2)
-df_wide$diffscore = df_wide$cbcl_extern_Year_1 - df_wide$cbcl_extern_Baseline
+df_wide$diffscore = df_wide$Externalizing_T1 - df_wide$Externalizing_T0
 
 #Compute statistical summaries for the difference score variable
 summary(df_wide$diffscore)
@@ -48,25 +46,23 @@ summary(df_wide$diffscore)
 ```
 
 ```{r}
-#| class.source: 'fold-hide'
 #| message: FALSE
 #| warning: FALSE
-#| echo: FALSE
 
 #Paired samples t-test is used to determine whether the average difference score on some outcome computed across two time points, differs between groups.
 
 stat.test <- df_long %>%
-  group_by(sex) %>%
+  group_by(Sex) %>%
   pairwise_t_test(
-    cbcl_extern ~ event, paired = FALSE, 
+    Externalizing ~ Event, paired = FALSE, 
     p.adjust.method = "bonferroni"
     ) #%>%
 stat.test
 
 # Box Plot Visualization based on variables used in paired samples t-test
 boxplot <- ggboxplot(
-  df_long, x = "sex", y = "cbcl_extern",
-  color = "event", palette = "jco"
+  df_long, x = "Sex", y = "Externalizing",
+  color = "Event", palette = "jco"
   )
 suppressWarnings(print(boxplot))
 
@@ -79,9 +75,9 @@ boxplot + stat_pvalue_manual(
 suppressWarnings(print(boxplot))
 
 #Scatterplot to visualize relationship between difference scores across groups
-scatterplot <- ggplot (df_wide, aes(x = cbcl_extern_Baseline, y = cbcl_extern_Year_1, shape = sex)) + geom_point(size = 3) + geom_smooth(method = lm, se = F) +
-xlab("CBCL Externalizing (x) Baseline") +
-ylab("CBCL Externalizing (x) 1-Year Follow-up")
+# scatterplot <- ggplot (df_wide, aes(x = Externalizing_T0, y = Externalizing_T1, shape = Sex)) + geom_point(size = 3) + geom_smooth(method = lm, se = F) +
+# xlab("CBCL Externalizing (x) Baseline") +
+# ylab("CBCL Externalizing (x) 1-Year Follow-up")
 
-suppressWarnings(print(scatterplot))
+# suppressWarnings(print(scatterplot))
 ```

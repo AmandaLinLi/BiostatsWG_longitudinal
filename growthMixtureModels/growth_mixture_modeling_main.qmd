@@ -1,4 +1,4 @@
-# 16. Growth Mixture Modeling
+# Growth Mixture Modeling
 
 #### Growth mixture models (GMM)
 

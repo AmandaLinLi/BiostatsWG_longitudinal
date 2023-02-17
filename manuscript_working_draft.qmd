@@ -1,5 +1,5 @@
 ---
-title: 'Biostats WG Manuscript'
+title: 'Main'
 subtitle: 'The Adolescent Brain Cognitive Development Study: Longitudinal Design and Analyses'
 # authors:
 #   - name: Samuel W. Hawes

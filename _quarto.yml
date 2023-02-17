@@ -6,73 +6,73 @@ book:
   author: "Biostatistics Working Group of the ABCD Study"
   chapters:
     - index.qmd
-    - part: "1. Manuscript"
+    - part: "Manuscript"
       chapters:
         - manuscript_working_draft.qmd
     - part: dataWrangling/data_wrangling.qmd
       chapters:
-        - dataWrangling/data_wrangling.qmd
+        - example1_blank.qmd
     # - part: pairedSamplesTtest/paired_samples_t-test_main.qmd
     #   chapters:
     #     - pairedSamplesTtest/paired_samples_t-test_main_example_1.qmd
     - part: repeatedMeasuresAnova/repeated_measures_anova_main.qmd
       chapters:
         - repeatedMeasuresAnova/repeated_measures_anova_main_example_1.qmd
-        - repeatedMeasuresAnova/rnova_single_group_design.qmd 
+        - repeatedMeasuresAnova/rnova_single_group_design.qmd
         #- rnova_single_group_design.qmd
         #- rnova_multiple_group_design.qmd
     - part: differenceScores/difference_scores_main.qmd
       chapters:
-      #- differenceScores/difference_scores_one_sample_ttest.qmd
-      #- differenceScores/difference_scores_paired_samples_ttest.qmd
-      - differenceScores/difference_scores_simple_regression.qmd
+        - differenceScores/difference_scores_one_sample_ttest.qmd
+        - differenceScores/difference_scores_paired_samples_ttest.qmd
+        - differenceScores/difference_scores_simple_regression.qmd
     - part: changeScores/change_scores_main.qmd
       chapters:
-      - changeScores/change_scores_ancova.qmd
-      - changeScores/change_scores_multiple_regression.qmd
+        - changeScores/change_scores_ancova.qmd
+        - changeScores/change_scores_multiple_regression.qmd
     - part: linearMixedModels/lmm_main.qmd
-      #chapters:
-      #- linearMixedModels/lmm_intercept_only.qmd
+      chapters:
+      - linearMixedModels/lmm_intercept_only.qmd
       #- linearMixedModels/lmm_intercept_and_slope.qmd
     - part: signedRankSumTest/signed_ranksum_test_main.qmd
       chapters:
-        - dataWrangling/data_wrangling.qmd
+        - example1_blank.qmd
     - part: marginalModels/marginal_models_main.qmd
       chapters:
-        - data_wrangling.qmd
+        - example1_blank.qmd
     - part: generalizedEstimatingEquations/generalized_estimating_equations_main.qmd
       chapters:
-        - data_wrangling.qmd
+        - example1_blank.qmd
     - part: generalizedLinearMixedModels/generalized_linear_mixed_models_main.qmd
       chapters:
-        - data_wrangling.qmd
+        - example1_blank.qmd
     - part: autoregressiveCLPM/autoregressive_cross-lagged_panel_models_main.qmd
       chapters:
-        - data_wrangling.qmd
+        - example1_blank.qmd
     - part: latentChangeScores/latent_change_scores_main.qmd
       chapters:
-        - data_wrangling.qmd
+        - example1_blank.qmd
     - part: latentGrowthCurves/latent_growth_curves_main.qmd
       chapters:
-        - data_wrangling.qmd
+        - example1_blank.qmd
     - part: multivariateLatentGrowthCurve/multivariate_latent_growth_curves_main.qmd
       chapters:
-        - data_wrangling.qmd
+        - example1_blank.qmd
     - part: latentTransitionAnalysis/latent_transition_analysis_main.qmd
       chapters:
-        - data_wrangling.qmd
+        - example1_blank.qmd
     - part: growthMixtureModels/growth_mixture_modeling_main.qmd
       chapters:
-        - data_wrangling.qmd
+        - example1_blank.qmd
     - part: latentStateTraitModels/latent_statetrait_models_main.qmd
       chapters:
-        - data_wrangling.qmd
+        - example1_blank.qmd
     - part: randomInterceptCLPM/random_intercept_cross-lagged_panel_models_main.qmd
       chapters:
-        - data_wrangling.qmd
+        - example1_blank.qmd
     - part: latentCurveModelStructuredResiduals/latent_curve_model_with_structured_residuals_main.qmd
       chapters:
-        - data_wrangling.qmd
+        - example1_blank.qmd
       #chapters:
       #- difference_scores_one_sample_ttest.qmd
       #- difference_scores_paired_samples_ttest.qmd
@@ -127,6 +127,7 @@ format:
   html:
     theme: cosmo
     code-copy: true
+    number-sections: true
     number-depth: 4
   pdf:
     documentclass: scrreprt

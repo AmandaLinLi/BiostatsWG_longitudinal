@@ -1,4 +1,4 @@
-# LMM: Intercept and Slope {.unnumbered}
+# ex.2-interceptandslope {.unnumbered}
 
 ids, event, site_id, fam_id, sex, age, mature_vg, vg_total, vg_group, cbcl_agg, cbcl_extern
 

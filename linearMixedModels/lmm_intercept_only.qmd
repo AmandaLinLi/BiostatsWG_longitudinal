@@ -1,4 +1,4 @@
-# LMM: Intercept Only {.unnumbered}
+# ex1.interceptonly {.unnumbered}
 
 <style>
 div.blue pre { background-color:lightblue; }
@@ -145,8 +145,8 @@ knitr::opts_chunk$set(echo = T, message=F, warning=F, error=F,
 #| messages: FALSE
 #| warning: FALSE
 
-df_long<- read_csv("./df_long.csv")
-df_long_sub<- read_csv("./df_long_sub.csv")
+df_long<- read_csv("/Users/shawes/Desktop/df_long.csv")
+df_long_sub<- read_csv("/Users/shawes/Desktop/df_long_sub.csv")
 
 ## Create a viewable 'datatable' of the primary dataframe (df)
 datatable(head(df_long, 50, rownames = FALSE),extensions = 'AutoFill','ColReorder', options = list(autoFill = TRUE,colReorder = TRUE,
@@ -187,13 +187,13 @@ descriptives_1  <- tableby.control(test=FALSE, total=FALSE,
                                                  )) #, Nmiss2 ='Missing'
 
 my_cont_labels <- list(
-  age = "Age",
-  vg_total = "Total # of Video Gaming Hrs",
-  cbcl_agg = "CBCL Aggression Scale"
+  Age = "Age",
+  Weekly_Gaming_Hours = "Weekly # of Video Gaming Hrs",
+  Externalizing = "CBCL Externalizing Scale"
 )
 
-tab_descriptives_1 <- tableby(event ~ age + vg_total + 
-                            cbcl_agg,
+tab_descriptives_1 <- tableby(Event ~ Age + Weekly_Gaming_Hours + 
+                            Externalizing,
                             data=df_long, control=descriptives_1)
 
 #summary(tab_descriptives_1, labelTranslations = my_cont_labels , text=TRUE, title = #"Continuous Outcomes", term.name = TRUE)
@@ -231,13 +231,13 @@ descriptives_2  <- tableby.control(test=FALSE, total=FALSE,
                                                  )) # , Nmiss2 ='Missing'
 
 my_cat_labels  <- list(
-  event = "Year",
-  sex = "Sex",
-  mature_vg = "Mature Video Games",
-  vg_group = "Video Gaming Group"
+  Event = "Year",
+  Sex = "Sex",
+  MatureVideoGames = "Mature Video Games",
+  DBD = "DBD"
   )
 
-tab_descriptives_2 <- tableby(event ~ sex + mature_vg + vg_group, 
+tab_descriptives_2 <- tableby(Event ~ Sex + MatureVideoGames + DBD, 
                             data=df_long, control=descriptives_2)
 
 #summary(tab_descriptives_2, labelTranslations = my_cat_labels , text=TRUE, title = #"Categorical Outcomes", term.name = TRUE)
@@ -271,7 +271,7 @@ tab_descriptives_2 %>%
 #| warning: FALSE
 
 ## Linear Mixed Model with a random intercept (LMM-ri)
-random_intercepts <- lmer(cbcl_agg ~ 1 + event + vg_total+ sex + (1|ids), data = df_long, REML=T)
+random_intercepts <- lmer(Externalizing ~ 1 + Event + DBD + Sex + (1|ids), data = df_long, REML=T)
 
 print(random_intercepts)
 ```
@@ -392,8 +392,8 @@ plot(means)
 
 # Basic ggplot2 barplot with mean
 p<-df_long %>%
-    filter(!is.na(vg_group)) %>% # filter on non-missing values  
-    ggplot(aes(x = mature_vg, y = cbcl_agg, fill = sex)) +
+    filter(!is.na(DBD)) %>% # filter on non-missing values  
+    ggplot(aes(x = MatureVideoGames, y = Externalizing, fill = Sex)) +
     geom_col(position = "dodge",
            stat = "summary",
            fun = "mean",
@@ -406,7 +406,7 @@ p<-df_long %>%
     #geom_text(aes(label = cu_traits), position = position_dodge(0.9), 
               #vjust = 2, size = 4, color = "#ffffff") +
     labs(title = "Behavior Problems by Video Game Groups", subtitle = "Simple bar chart",
-         caption = "Simple caption", x = "Video Game Group", y = "CBCL Aggression") +
+         caption = "Simple caption", x = "DBD Group", y = "CBCL Externalizing") +
               #coord_flip() +
     #geom_hline(yintercept = mean(df$cbcl_agg), linetype = "dashed", size = 1) +
     theme_minimal() +
@@ -432,17 +432,17 @@ p
 #|   This is a caption for my figure, 
 #|   using YAML formatting, etc.#| 
 
-#random_intercepts <- lmer(cbcl_agg ~ 1 + event + vg_total+ sex + (1|ids), data = df, #REML=T)
+#random_intercepts <- lmer(Externalizing ~ 1 + Event + DBD + Sex + (1|ids), data = df, #REML=T)
 
 ## LMM-ri plot of estimated random intercepts 
-model <- lmer(cbcl_agg ~ vg_total + (1 | sex), data = df_long_sub)
+model <- lmer(Externalizing ~ DBD + (1 | Sex), data = df_long)
 preds <- estimate_relation(model, include_random = TRUE)
 
 ## Adding fixed effect trajectory to LMM-ri plot 
 fixed_pred <- estimate_relation(model) # This time, include_random is FALSE (default)
 plot(preds, ribbon = list(alpha = 0)) + # Previous plot
-  geom_ribbon(data = fixed_pred, aes(x = vg_total, ymin = CI_low, ymax = CI_high), alpha = 0.4) +
-  geom_line(data = fixed_pred, aes(x = vg_total, y = Predicted), size = 2)
+  geom_ribbon(data = fixed_pred, aes(x = DBD, ymin = CI_low, ymax = CI_high), alpha = 0.4) +
+  geom_line(data = fixed_pred, aes(x = DBD, y = Predicted), size = 2)
 
 ######
 # ggplot(df_long_sub, aes(x = event, y = cbcl_agg, color=sex, shape=sex)) + 

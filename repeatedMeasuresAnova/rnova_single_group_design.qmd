@@ -1,1 +1,1 @@
-# rANOVA_Example 2 {.unnumbered}
+# ex2.ranova  {.unnumbered}

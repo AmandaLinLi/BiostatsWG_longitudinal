@@ -1,9 +1,8 @@
-# Difference Scores One Sample t-test
+# ex1.onesample {.unnumbered}
 
 ```{r}
 #| message: FALSE
 #| warning: FALSE
-#| echo: FALSE
 
 # Install necessary packages (if not already installed)
 if (!("lme4" %in% installed.packages())) install.packages("lme4")
@@ -13,10 +12,8 @@ if (!("ggpubr" %in% installed.packages())) install.packages("ggpubr")
 ```
 
 ```{r}
-#class.source: 'fold-hide'
 #| message: FALSE
 #| warning: FALSE
-#| echo: FALSE
 
 #Load packages
 library(lme4)
@@ -26,15 +23,13 @@ library(ggpubr)
 ```
 
 ```{r}
-#eval=FALSE
-#class.source = 'fold-show'
-#| warning=FALSE
-#| echo=FALSE
+#| warning: FALSE
+#| messages: FALSE
 
-df_long<- read_csv("./df_long.csv")
-df_wide<- read_csv("./df_wide.csv")
-str(df_long)
-hist(df_long$Weekly_Gaming_Hour)
+df_long<- read_csv("/Users/shawes/Desktop/df_long.csv")
+df_wide<- read_csv("/Users/shawes/Desktop/df_wide.csv")
+#str(df_long)
+#hist(df_long$Weekly_Gaming_Hour)
 # Compute difference score based on CBCL Externalizing subscale scores at baseline (t1) and 1-Year Follow-up (t2)
 df_wide$diffscore = df_wide$Externalizing_T1 - df_wide$Externalizing_T0
 
@@ -50,10 +45,8 @@ suppressWarnings(print(scatterplot))
 ```
 
 ```{r}
-#eval=FALSE
-#class.source = 'fold-show'
-#| warning=FALSE
-#| echo=FALSE
+#| warning: FALSE
+#| messages: FALSE
 
 #One-sample t-test to determine whether the average difference score is significantly different than 0.
 result <- t.test(df_wide$diffscore, mu = 0, alternative = "two.sided")

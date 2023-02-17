@@ -1,1 +1,1 @@
-# 8. Generalized Estimating Equations
+# Generalized Estimating Equations

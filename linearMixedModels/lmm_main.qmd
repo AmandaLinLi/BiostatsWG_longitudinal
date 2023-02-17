@@ -1,4 +1,4 @@
-# 6. Linear Mixed Models
+# Linear Mixed Models
 
 ## Overview
 **`Linear mixed-effects models (LMM)`** are an extension of the General Linear Model (GLM) that allow for analyzing complex data including clustered observations and repeated measurements. 

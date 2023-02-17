@@ -1,1 +1,1 @@
-# 14. Multivariate Latent Growth Curves
+# Multivariate Latent Growth Curves {.unnumbered}

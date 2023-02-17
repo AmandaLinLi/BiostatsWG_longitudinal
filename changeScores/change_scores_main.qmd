@@ -1,4 +1,4 @@
-# 5. Change Scores
+# Change Scores
 
 ## Overview
 This approach estimates a regression coefficient as an index change ($\Delta$\RES) in relation to some variable ($x$) by regressing the variable's value obtained at a follow-up measurement occasion (t2) on the value of the same variable obtained at a prior (e.g., baseline) occasion (t1). This estimated score ($\Delta$\RES = $x_{t2}$ adjusts for baseline scores while ignoring any group assignment. A common step 2 is for this $\Delta$\RES = $x_{t2}$ to be included in subsequent analysis, such as an examination of pre/post intervention effects (Kisbu-Sakarya et al., 2013).

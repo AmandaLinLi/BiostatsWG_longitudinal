@@ -1,4 +1,4 @@
-# 4. Difference Scores
+# Difference Scores
 
 ## Overview
 Difference scores are one of the earliest developed and most commonly used approaches for analyzing data collected across multiple measurement occasions[@castro-schilo2018; @jennings2016]. This approach computes a raw difference score as an index change in relation to some variable by subtracting the variable's value obtained at a prior measurement occasion from the value of the same variable obtained at a subsequent  occasion. This difference value is then be used as the outcome in a GLM to test for differences in the amount of change over time and between groups of interest.

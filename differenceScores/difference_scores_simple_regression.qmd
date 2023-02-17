@@ -1,4 +1,4 @@
-# Difference Scores Simple Regression {.unnumbered}
+# ex3.regression {.unnumbered}
 
 ```{r}
 #| include: FALSE
