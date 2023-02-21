@@ -29,7 +29,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../signedRankSumTest/signed_ranksum_test_main.html" rel="next">
+<link href="../linearMixedModels/lmm_intercept_only.html" rel="next">
 <link href="../changeScores/change_scores_multiple_regression.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -214,12 +214,17 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../differenceScores/difference_scores_one_sample_ttest.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">ex1.onesamplettest</span></a>
+  <a href="../differenceScores/difference_scores_one_sample_ttest.html" class="sidebar-item-text sidebar-link">ex1.onesample</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../differenceScores/difference_scores_simple_regression.html" class="sidebar-item-text sidebar-link">ex3.simpleregression</a>
+  <a href="../differenceScores/difference_scores_paired_samples_ttest.html" class="sidebar-item-text sidebar-link">ex1.pairedsample</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../differenceScores/difference_scores_simple_regression.html" class="sidebar-item-text sidebar-link">ex3.regression</a>
   </div>
 </li>
       </ul>
@@ -239,13 +244,25 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../changeScores/change_scores_multiple_regression.html" class="sidebar-item-text sidebar-link">ex2.multipleregression</a>
+  <a href="../changeScores/change_scores_multiple_regression.html" class="sidebar-item-text sidebar-link">ex2.regression</a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Linear Mixed Models</span>
+      <div class="sidebar-item-container"> 
+            <a href="../linearMixedModels/lmm_main.html" class="sidebar-item-text sidebar-link active">Linear Mixed Models</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../linearMixedModels/lmm_intercept_only.html" class="sidebar-item-text sidebar-link">ex1.interceptonly</a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
@@ -452,7 +469,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../tbd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">tbd.html</span></a>
+  <a href="../tbd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">tbd.html</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -487,7 +504,8 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#explanation" id="toc-explanation" class="nav-link" data-scroll-target="#explanation">Explanation</a></li>
+  <li><a href="#how-it-is-computed" id="toc-how-it-is-computed" class="nav-link" data-scroll-target="#how-it-is-computed">How it is computed</a></li>
+  <li><a href="#variants" id="toc-variants" class="nav-link" data-scroll-target="#variants">Variants</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
 </nav>
@@ -514,18 +532,22 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p><strong><code>Linear mixed-effects models (LMM)</code></strong> are an extension of the General Linear Model (GLM) that allow for analyzing complex data including clustered observations and repeated measurements.</p>
+<p><code>Linear mixed-effects models (LMM)</code> are an extension of the General Linear Model (GLM) that allow for analyzing complex data including clustered observations and repeated measurements.</p>
 <p><code><span>LMMs</span></code> offer a flexible framework for fitting longitudinal models and provide several benefits compared to traditional ANOVA and regression approaches. One particular advantage of the <code>LMM</code> framework is the ability to account for instances of non-independence among some subset(s) of observations in the data. A source of <span class="citation" data-cites="non-indep">(<a href="../references.html#ref-non-indep" role="doc-biblioref"><strong>non-indep?</strong></a>)</span> common to longitudinal designs is data that is collected from the same participants at multiple measurement occasions. This introduces a correlated error structure into the data, violating the independence assumption–– a critical assumption of many statistical tests that indicates the observations in a data set must be independent; that is, they cannot be correlated with one another <span class="citation" data-cites="non-indep">(see <a href="../references.html#ref-non-indep" role="doc-biblioref"><strong>non-indep?</strong></a> section of more info on assumption of indepencence xxxxx)</span>.</p>
 <p>LMM explicitly account for these dependencies among data by extending the general regression “fixed effects” model to allow both, fixed and random effects. Specifically, this approach simultaneously models an overall sample mean trajectory (fixed effect) and subject-specific (random) effects that vary randomly about the sample mean trajectory.</p>
 <p>It is this “mixture” of fixed and random effects for which these models derive their name. In turn, LMMs provide better prediction, more precise and generalizable effect estimates, reduced Type I errors (i.e., false positives), and improved statistical power.</p>
-<section id="brief-overview" class="level4">
-<h4 class="anchored" data-anchor-id="brief-overview">Brief Overview</h4>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Model Assumptions</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Notes_TBD</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>test test</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p>Core assumptions of LMM is that the residuals and random effects are independent and identically distributed. This assumption states that the observations in a data set must be independent; that is, they cannot be correlated with one another. Violations of distributional assumptions introduce bias into the model and the impact of missing random effects components on model estimates leads to increased prediction error and attenuate overall model validity. As standard regression techniques (e.g., multiple regression) would violate the independence assumption, repeated measures ANOVA is commonly used for analyzing this type of data. However, xxxxxx.</p>
 <p>repeated-measures pose a problem to most standard statistical procedures such as ordinary least-squares regression or (between-subjects) ANOVA as those procedures assume that the data points are independent and identically distributed (henceforth iid). The independence assumption states that the probability of a data point taking on a specific value is independent of the values taken by all other data points.</p>
 <blockquote class="blockquote">
 <p>compared to violations of other assumptions, traditional statistical procedures are usually not robust to violations of the independence assumption (Judd et al., 2012; Kenny &amp; Judd, 1986), which can lead to reduced standard errors and in turn, notable increases in Type I (false positives) errors, potentially biasing/skewing results positively.</p>
 </blockquote>
-</section>
 <section id="normally-distributed-residuals" class="level4">
 <h4 class="anchored" data-anchor-id="normally-distributed-residuals">Normally distributed residuals</h4>
 <p>xxxxxxx</p>
@@ -546,12 +568,25 @@ ul.task-list li input[type="checkbox"] {
 <p>This model shares considerable (conceptual and statistical) overlap with a traditional regression approach. A standard linear regression models the average (fixed) trajectory for some repeatedly measured outcome by estimating mean intercept and slope parameter values.</p>
 <p>This subject-specific (random) effect has a mean of zero and is normally distributed around the overall intercept (fixed effect) value.</p>
 <p>In multiple regression, in contrast, the same regression line (both intercept and slope) is applied to all participants, so predictions tend to be less accurate than in mixed-effects regression, and residual error tends to be larger.</p>
+<p class="text-center" style="background-color: aliceblue">
+<svg aria-hidden="true" role="img" viewbox="0 0 384 512" style="height:30px;width:22.5px;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M112.1 454.3c0 6.297 1.816 12.44 5.284 17.69l17.14 25.69c5.25 7.875 17.17 14.28 26.64 14.28h61.67c9.438 0 21.36-6.401 26.61-14.28l17.08-25.68c2.938-4.438 5.348-12.37 5.348-17.7L272 415.1h-160L112.1 454.3zM192 0C90.02 .3203 16 82.97 16 175.1c0 44.38 16.44 84.84 43.56 115.8c16.53 18.84 42.34 58.23 52.22 91.45c.0313 .25 .0938 .5166 .125 .7823h160.2c.0313-.2656 .0938-.5166 .125-.7823c9.875-33.22 35.69-72.61 52.22-91.45C351.6 260.8 368 220.4 368 175.1C368 78.8 289.2 .0039 192 0zM288.4 260.1c-15.66 17.85-35.04 46.3-49.05 75.89h-94.61c-14.01-29.59-33.39-58.04-49.04-75.88C75.24 236.8 64 206.1 64 175.1C64 113.3 112.1 48.25 191.1 48C262.6 48 320 105.4 320 175.1C320 206.1 308.8 236.8 288.4 260.1zM176 80C131.9 80 96 115.9 96 160c0 8.844 7.156 16 16 16S128 168.8 128 160c0-26.47 21.53-48 48-48c8.844 0 16-7.148 16-15.99S184.8 80 176 80z"></path></svg> Hypothetical Scenario: A study investigates trajectories of scores on a measure of happiness obtained across five measurement occasions in a sample of youth (i.e., repeated observations are clustered within participants). The study aims to characterize stability and change in happiness across assessments, while accounting for observations that are clustered within youth over time.
+</p>
+<p class="text-center" style="background-color: gray">
+The overall group-mean (fixed effects) trajectory is shown in blue. The faded lines represent each individual youth’s estimated trajectory. An examination of this figure shows happiness scores to be increasing across measurement occasions, however, there appears to be substantial variability in the youth’s initial happiness scores and in how these scores change across measurement occasions.
+</p>
 </section>
+</div>
+</div>
+</div>
 </section>
-<section id="explanation" class="level2">
-<h2 class="anchored" data-anchor-id="explanation">Explanation</h2>
+<section id="how-it-is-computed" class="level2">
+<h2 class="anchored" data-anchor-id="how-it-is-computed">How it is computed</h2>
+<p>xxxxxx xxxxxx xxxxxx</p>
+</section>
+<section id="variants" class="level2">
+<h2 class="anchored" data-anchor-id="variants">Variants</h2>
 <section id="linear-mixed-model-with-random-intercept" class="level4">
-<h4 class="anchored" data-anchor-id="linear-mixed-model-with-random-intercept"><strong>Linear Mixed Model with Random Intercept:</strong></h4>
+<h4 class="anchored" data-anchor-id="linear-mixed-model-with-random-intercept">Linear Mixed Model with Random Intercept:</h4>
 <p>The random intercept LMM is similar (conceptually and statistically) to traditional (fixed-effect) linear regression. A key difference is that random intercept LMM extends the traditional fixed-effects approach by including a subject-specific random-effect that allows each participant to have their own unique intercept value, in addition to the overall mean-level (fixed-effect) intercept value. More formally: <span id="eq-stddev"><span class="math display">\[
 {Y} = b_{intercept} + b_{time}⋅time + \epsilon
 \tag{1}\]</span></span></p>
@@ -563,24 +598,13 @@ ul.task-list li input[type="checkbox"] {
 <p><span class="math display">\[
 {Y}  = (b_{intercept} + effect_{subject}) + b_{time}⋅time + \epsilon
 \]</span></p>
-Hypothetical Scenario: A study investigates trajectories of scores on a measure of happiness obtained across five measurement occasions in a sample of youth (i.e., repeated observations are clustered within participants). The study aims to characterize stability and change in happiness across assessments, while accounting for observations that are clustered within youth over time.
-<p></p>
-<p class="text-center" style="background-color: gray">
-The overall group-mean (fixed effects) trajectory is shown in blue. The faded lines represent each individual youth’s estimated trajectory. An examination of this figure shows happiness scores to be increasing across measurement occasions, however, there appears to be substantial variability in the youth’s initial happiness scores.
-</p>
 </section>
 <section id="linear-mixed-model-with-random-intercepts-slopes" class="level4">
 <h4 class="anchored" data-anchor-id="linear-mixed-model-with-random-intercepts-slopes">Linear Mixed Model with Random Intercepts &amp; Slopes</h4>
 <p>Extending the random intercept LMM to include a subject-specific random-slope parameter allows each participant to have their own unique intercept &amp; slope value. Relative to intercept-only LMM, this model estimates an addtional variance parameter that captures each participant’s variability around the overall mean-level (fixed-effect) slope value. More formally: <span class="math display">\[
 {Y} = (b_{intercept} + effect_{subject}) + (b_{time}⋅time + effect_{subject} +\epsilon)
 \]</span></p>
-<pre><code>A random intercept and slope LMM extends the intercept-only model by also including a subject-specific random-effect for each participant's slope value.This model simultaneously estimates 1) a fixed-intercept coefficient that represents the sample average intercept value; and 2) a random-effect (i.e., variance parameter around the intercept) that allows each participant to have their own unique intercept that deviates from the average intercept value; 3) a random-effect (i.e., variance parameter around the slope) that allows each participant to have their own unique slope that deviates from the average slope value</code></pre>
-<p class="text-center" style="background-color: aliceblue">
-<svg aria-hidden="true" role="img" viewbox="0 0 384 512" style="height:30px;width:22.5px;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M112.1 454.3c0 6.297 1.816 12.44 5.284 17.69l17.14 25.69c5.25 7.875 17.17 14.28 26.64 14.28h61.67c9.438 0 21.36-6.401 26.61-14.28l17.08-25.68c2.938-4.438 5.348-12.37 5.348-17.7L272 415.1h-160L112.1 454.3zM192 0C90.02 .3203 16 82.97 16 175.1c0 44.38 16.44 84.84 43.56 115.8c16.53 18.84 42.34 58.23 52.22 91.45c.0313 .25 .0938 .5166 .125 .7823h160.2c.0313-.2656 .0938-.5166 .125-.7823c9.875-33.22 35.69-72.61 52.22-91.45C351.6 260.8 368 220.4 368 175.1C368 78.8 289.2 .0039 192 0zM288.4 260.1c-15.66 17.85-35.04 46.3-49.05 75.89h-94.61c-14.01-29.59-33.39-58.04-49.04-75.88C75.24 236.8 64 206.1 64 175.1C64 113.3 112.1 48.25 191.1 48C262.6 48 320 105.4 320 175.1C320 206.1 308.8 236.8 288.4 260.1zM176 80C131.9 80 96 115.9 96 160c0 8.844 7.156 16 16 16S128 168.8 128 160c0-26.47 21.53-48 48-48c8.844 0 16-7.148 16-15.99S184.8 80 176 80z"></path></svg> Hypothetical Scenario: A study investigates trajectories of scores on a measure of happiness obtained across five measurement occasions in a sample of youth (i.e., repeated observations are clustered within participants). The study aims to characterize stability and change in happiness across assessments, while accounting for observations that are clustered within youth over time.
-</p>
-<p class="text-center" style="background-color: gray">
-The overall group-mean (fixed effects) trajectory is shown in blue. The faded lines represent each individual youth’s estimated trajectory. An examination of this figure shows happiness scores to be increasing across measurement occasions, however, there appears to be substantial variability in the youth’s initial happiness scores and in how these scores change across measurement occasions.
-</p>
+<p>A random intercept and slope LMM extends the intercept-only model by also including a subject-specific random-effect for each participant’s slope value.This model simultaneously estimates 1) a fixed-intercept coefficient that represents the sample average intercept value; and 2) a random-effect (i.e., variance parameter around the intercept) that allows each participant to have their own unique intercept that deviates from the average intercept value; 3) a random-effect (i.e., variance parameter around the slope) that allows each participant to have their own unique slope that deviates from the average slope value</p>
 </section>
 </section>
 <section id="references" class="level2">
@@ -727,12 +751,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../changeScores/change_scores_multiple_regression.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">ex2.multipleregression</span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">ex2.regression</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../signedRankSumTest/signed_ranksum_test_main.html" class="pagination-link">
-        <span class="nav-page-text">Signed Rank-Sum Test</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../linearMixedModels/lmm_intercept_only.html" class="pagination-link">
+        <span class="nav-page-text">ex1.interceptonly</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -742,7 +766,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       <div class="nav-footer-center">
         <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link active" href="../resources.html" aria-current="page">xxxxxx</a>
+    <a class="nav-link" href="../resources.html">xxxxxx</a>
   </li>  
     <li class="nav-item">
     <a class="nav-link" href="../resources.html">xxxxxx</a>

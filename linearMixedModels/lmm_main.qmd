@@ -1,7 +1,7 @@
 # Linear Mixed Models
 
 ## Overview
-**`Linear mixed-effects models (LMM)`** are an extension of the General Linear Model (GLM) that allow for analyzing complex data including clustered observations and repeated measurements. 
+`Linear mixed-effects models (LMM)` are an extension of the General Linear Model (GLM) that allow for analyzing complex data including clustered observations and repeated measurements. 
 
 <code><span>LMMs</span></code> offer a flexible framework for fitting longitudinal models and provide several benefits compared to traditional ANOVA and regression approaches. One particular advantage of the <code>LMM</code> framework is the ability to account for instances of non-independence among some subset(s) of observations in the data. A source of @non-indep common to longitudinal designs is data that is collected from the same participants at multiple measurement occasions. This introduces a correlated error structure into the data, violating the independence assumption–– a critical assumption of many statistical tests that indicates the observations in a data set must be independent; that is, they cannot be correlated with one another [see @non-indep section of more info on assumption of indepencence xxxxx].
 
@@ -9,7 +9,12 @@ LMM explicitly account for these dependencies among data by extending the genera
 
 It is this "mixture" of fixed and random effects for which these models derive their name. In turn, LMMs provide better prediction, more precise and generalizable effect estimates, reduced Type I errors (i.e., false positives), and improved statistical power.
 
-#### Brief Overview
+::: {.panel-tabset}
+
+# Model Assumptions
+test test
+
+# Notes_TBD
 Core assumptions of LMM is that the residuals and random effects are independent and identically distributed. This assumption states that the observations in a data set must be independent; that is, they cannot be correlated with one another. Violations of distributional assumptions introduce bias into the model and the impact of missing random effects components on model estimates leads to increased prediction error and attenuate overall model validity. As standard regression techniques (e.g., multiple regression) would violate the independence assumption, repeated measures ANOVA is commonly used for analyzing this type of data. However, xxxxxx. 
 
 repeated-measures pose a problem to most standard statistical procedures such as ordinary least-squares regression or (between-subjects) ANOVA as those procedures assume that the data points are independent and identically distributed (henceforth iid). The independence assumption states that the probability of a data point taking on a specific value is independent of the values taken by all other data points.
@@ -40,15 +45,32 @@ This subject-specific (random) effect has a mean of zero and is normally distrib
 
 In multiple regression, in contrast, the same regression line (both intercept and slope) is applied to all participants, so predictions tend to be less accurate than in mixed-effects regression, and residual error tends to be larger.
 
-## Explanation
-#### **Linear Mixed Model with Random Intercept:**
+<p class="text-center" style="background-color: aliceblue">
+`r fontawesome::fa('lightbulb',height='30px',fill='steelblue')`
+Hypothetical Scenario:
+A study investigates trajectories of scores on a measure of happiness obtained across five measurement occasions in a sample of youth (i.e., repeated observations are clustered within participants). The study aims to characterize stability and change in happiness across assessments, while accounting for observations that are clustered within youth over time.
+</p>
+
+<p class="text-center" style="background-color: gray"> The overall group-mean (fixed effects) trajectory is shown in blue. The faded lines represent each individual youth's estimated trajectory. An examination of this figure shows happiness scores to be increasing across measurement occasions, however, there appears to be substantial variability in the youth's initial happiness scores and in how these scores change across measurement occasions.
+</p>
+
+:::
+
+## How it is computed
+xxxxxx
+xxxxxx
+xxxxxx
+
+## Variants
+
+#### Linear Mixed Model with Random Intercept:
 
 The random intercept LMM is similar (conceptually and statistically) to traditional (fixed-effect) linear regression. A key difference is that random intercept LMM extends the traditional fixed-effects approach by including a subject-specific random-effect that allows each participant to have their own unique intercept value, in addition to the overall mean-level (fixed-effect) intercept value. More formally: 
 $$
 {Y} = b_{intercept} + b_{time}⋅time + \epsilon
 $$ {#eq-stddev}
 
-  A standard linear fixed-effects regression model includes coefficients ($b$) for the model intercept and the effect of time. The error term ($\epsilon$) is assumed to be normally distributed with a mean of zero and a standard deviation ($\sigma$). A random intercept LMM extends the standard fixed effects regression by including subject-specific random-effect for each participant. The random-effect is assumed to be normally distributed with a mean of zero and a standard deviation ($\sigma$).
+A standard linear fixed-effects regression model includes coefficients ($b$) for the model intercept and the effect of time. The error term ($\epsilon$) is assumed to be normally distributed with a mean of zero and a standard deviation ($\sigma$). A random intercept LMM extends the standard fixed effects regression by including subject-specific random-effect for each participant. The random-effect is assumed to be normally distributed with a mean of zero and a standard deviation ($\sigma$).
 
 $$
 {Y}  = b_{intercept} + b_{time}⋅time + (effect_{subject}+\epsilon)
@@ -60,27 +82,13 @@ $$
 {Y}  = (b_{intercept} + effect_{subject}) + b_{time}⋅time + \epsilon
 $$
 
-Hypothetical Scenario:
-A study investigates trajectories of scores on a measure of happiness obtained across five measurement occasions in a sample of youth (i.e., repeated observations are clustered within participants). The study aims to characterize stability and change in happiness across assessments, while accounting for observations that are clustered within youth over time.</p>
-
-<p class="text-center" style="background-color: gray">The overall group-mean (fixed effects) trajectory is shown in blue. The faded lines represent each individual youth's estimated trajectory. An examination of this figure shows happiness scores to be increasing across measurement occasions, however, there appears to be substantial variability in the youth's initial happiness scores.</p>
-
 #### Linear Mixed Model with Random Intercepts & Slopes
 Extending the random intercept LMM to include a subject-specific random-slope parameter allows each participant to have their own unique intercept & slope value. Relative to intercept-only LMM, this model estimates an addtional variance parameter that captures each participant's variability around the overall mean-level (fixed-effect) slope value. More formally:
 $$
 {Y} = (b_{intercept} + effect_{subject}) + (b_{time}⋅time + effect_{subject} +\epsilon)
 $$
 
-    A random intercept and slope LMM extends the intercept-only model by also including a subject-specific random-effect for each participant's slope value.This model simultaneously estimates 1) a fixed-intercept coefficient that represents the sample average intercept value; and 2) a random-effect (i.e., variance parameter around the intercept) that allows each participant to have their own unique intercept that deviates from the average intercept value; 3) a random-effect (i.e., variance parameter around the slope) that allows each participant to have their own unique slope that deviates from the average slope value
-
-<p class="text-center" style="background-color: aliceblue">
-`r fontawesome::fa('lightbulb',height='30px',fill='steelblue')`
-Hypothetical Scenario:
-A study investigates trajectories of scores on a measure of happiness obtained across five measurement occasions in a sample of youth (i.e., repeated observations are clustered within participants). The study aims to characterize stability and change in happiness across assessments, while accounting for observations that are clustered within youth over time.
-</p>
-
-<p class="text-center" style="background-color: gray"> The overall group-mean (fixed effects) trajectory is shown in blue. The faded lines represent each individual youth's estimated trajectory. An examination of this figure shows happiness scores to be increasing across measurement occasions, however, there appears to be substantial variability in the youth's initial happiness scores and in how these scores change across measurement occasions.
-</p>
+A random intercept and slope LMM extends the intercept-only model by also including a subject-specific random-effect for each participant's slope value.This model simultaneously estimates 1) a fixed-intercept coefficient that represents the sample average intercept value; and 2) a random-effect (i.e., variance parameter around the intercept) that allows each participant to have their own unique intercept that deviates from the average intercept value; 3) a random-effect (i.e., variance parameter around the slope) that allows each participant to have their own unique slope that deviates from the average slope value
 
 ## References
 

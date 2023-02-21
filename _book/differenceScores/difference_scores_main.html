@@ -60,6 +60,13 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <script async="" src="https://hypothes.is/embed.js"></script>
+<script src="../site_libs/htmlwidgets-1.6.0/htmlwidgets.js"></script>
+<link href="../site_libs/tippyjs-3.2.0/themes/google.css" rel="stylesheet">
+<link href="../site_libs/tippyjs-3.2.0/themes/light-border.css" rel="stylesheet">
+<link href="../site_libs/tippyjs-3.2.0/themes/light.css" rel="stylesheet">
+<link href="../site_libs/tippyjs-3.2.0/themes/translucent.css" rel="stylesheet">
+<script src="../site_libs/tippyjs-3.2.0/tippy.all.min.js"></script>
+<script src="../site_libs/tippy-binding-0.1.0/tippy.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -259,7 +266,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../linearMixedModels/lmm_intercept_only.html" class="sidebar-item-text sidebar-link">LMM: Intercept Only</a>
+  <a href="../linearMixedModels/lmm_intercept_only.html" class="sidebar-item-text sidebar-link">ex1.interceptonly</a>
   </div>
 </li>
       </ul>
@@ -504,10 +511,11 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#explanation" id="toc-explanation" class="nav-link" data-scroll-target="#explanation">Explanation</a></li>
-  <li><a href="#explanation-of-model-code-plots" id="toc-explanation-of-model-code-plots" class="nav-link" data-scroll-target="#explanation-of-model-code-plots">Explanation of Model Code &amp; Plots</a>
+  <li><a href="#how-it-is-computed" id="toc-how-it-is-computed" class="nav-link" data-scroll-target="#how-it-is-computed">How it is computed</a></li>
+  <li><a href="#variants" id="toc-variants" class="nav-link" data-scroll-target="#variants">Variants</a>
   <ul class="collapse">
-  <li><a href="#model-code" id="toc-model-code" class="nav-link" data-scroll-target="#model-code">Model code</a></li>
+  <li><a href="#single-group-designs" id="toc-single-group-designs" class="nav-link" data-scroll-target="#single-group-designs">Single Group Designs</a></li>
+  <li><a href="#multiple-group-designs" id="toc-multiple-group-designs" class="nav-link" data-scroll-target="#multiple-group-designs">Multiple Group Designs</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -534,12 +542,19 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>Difference scores are one of the earliest developed and most commonly used approaches for analyzing data collected across multiple measurement occasions<span class="citation" data-cites="castro-schilo2018 jennings2016">(<a href="../references.html#ref-castro-schilo2018" role="doc-biblioref"><strong>castro-schilo2018?</strong></a>; <a href="../references.html#ref-jennings2016" role="doc-biblioref"><strong>jennings2016?</strong></a>)</span>. This approach computes a raw difference score as an index change in relation to some variable by subtracting the variable’s value obtained at a prior measurement occasion from the value of the same variable obtained at a subsequent occasion. This difference value is then be used as the outcome in a GLM to test for differences in the amount of change over time and between groups of interest.</p>
+<p><br> Difference scores are one of the earliest developed approaches for analyzing data collected across multiple measurement occasions <span class="citation" data-cites="castro-schilo2018 jennings2016">(<a href="../references.html#ref-castro-schilo2018" role="doc-biblioref"><strong>castro-schilo2018?</strong></a>; <a href="../references.html#ref-jennings2016" role="doc-biblioref"><strong>jennings2016?</strong></a>)</span>. This method is most often used to compare scores on a continuous dependent variable assessed at precisely two measurement occassions, such as in a pre/post-test design (<em>more sophisticated analytic techniques are often reached for when 3+ timepoints of data are available</em>). Specifically, a raw difference score is computed as an index of change in relation to some variable by subtracting the variable’s value obtained at a prior measurement occasion from the value of the same variable obtained at a subsequent occasion. This difference value can then be used as the outcome in a GLM to test for differences in the amount of change over time and between groups.</p>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Model Assumptions</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Notes_TBD</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Temp</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Model Assumptions</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Notes_TBD</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>test test</p>
+
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Non-independence means that a portion of the variance in the data is due to the individual differences that existed at the first point in time, not due to intervention-caused differences across the two points in time</p>
+<p>Type of (Outcome) Variable: The scale of measurement for the dependent variable is continuous (interval).</p>
+<p>Normal Distribution: The dependent variable is normally distributed in the population, or a sufficiently large sample size was drawn to allow approximation of the normal distribution.</p>
+<p>Independent Observations: Individuals within each sample and between the two groups are independent of each other—random selection indicates that the chances of any one “unit” being sampled are independent of the chances for any other being sampled.</p>
+<p>Homogeneity of Variance: Variance is the same for the two groups, as indicated by equal standard deviations in the two samples.</p>
 <!-- NOTES
 approach- each method is presented according to the following triplet: 
 (1) when to apply it and what is it doing
@@ -547,85 +562,66 @@ approach- each method is presented according to the following triplet:
 (3) how to present, visualize, and interpret the results
 -->
 </div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>Since the data being compared at exactly two points in time is paired (non-independent), the paired t-test analysis is appropriate. With the exception of this aspect of (non)independence in paired, longitudinal data, the underlying assumptions for this type of analysis are exactly the same as for the independent samples t-test:</p>
-<p>non-independence means that a portion of the variance in the data is due to the individual differences that existed at the first point in time, not due to intervention-caused differences across the two points in time</p>
-<p>Type of (Outcome) Variable: The scale of measurement for the dependent variable is continuous (interval). Normal Distribution: The dependent variable is normally distributed in the population, or a sufficiently large sample size was drawn to allow approximation of the normal distribution. Note: the “rule of thumb” is that neither group should be smaller than 6, and ideally has more. Independent Observations: Individuals within each sample and between the two groups are independent of each other—random selection indicates that the chances of any one “unit” being sampled are independent of the chances for any other being sampled. Homogeneity of Variance: Variance is the same for the two groups, as indicated by equal standard deviations in the two samples.</p>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+div class=“bd-callout bd-callout-info”&gt; h3 id=“dealing-with-specificity”, style=“color:light”&gt; test
+
+<div class="cell">
+<div class="cell-output-display">
+<span class="tippy html-widget html-fill-item-overflow-hidden html-fill-item" height="464px" id="htmlwidget-58591ecf5a393e5b2cb1" width="100%"></span>
+<script type="application/json" data-for="htmlwidget-58591ecf5a393e5b2cb1">{"x":{"opts":{"placement":"right","theme":"light","content":"Hi, I'm the tooltip!"},"text":"Hover me!"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="cell-output-display">
+<span class="tippy html-widget html-fill-item-overflow-hidden html-fill-item" height="464px" id="htmlwidget-c7f213e0f43e777be5cb" width="100%"></span>
+<script type="application/json" data-for="htmlwidget-c7f213e0f43e777be5cb">{"x":{"opts":{"trigger":"click","theme":"light","animation":"scale","duration":1000,"placement":"bottom","content":"Hi, I'm the tooltip!"},"text":"Click me!"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-</div>
-<div class="bd-callout bd-callout-info">
-<h3 id="dealing-with-specificity" ,="" style="color:light" class="anchored"> test </h3>
-<blockquote class="blockquote">
-<p>!Important Note. These models (t-test, ANOVA, and regression) are equivalent and all are subsumed by the GLM framework. More specifically, ANOVA is a special case of regression analysis where all the predictor variables are categorical. For the two-group case, the ANOVA model can be written as the following regression model <span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>=<span class="math inline">\(β_0\)</span> + <span class="math inline">\(β_1\)</span> <em>C</em> + <span class="math inline">\(\epsilon\)</span> (<span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>) where <span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span> is the difference between Time 2 (<span class="math inline">\(_{t2}\)</span>) and Time 1 (<span class="math inline">\(_{t1}\)</span>) scores, <span class="math inline">\(β_0\)</span> is the intercept or average predicted value of the difference across time for individuals in group = 0, ’‘<span class="math inline">\(β_1\)</span>’ is the regression coefficient for <em>C</em> indicating the difference in difference scores between between group = 0 and group = 1, and <span class="math inline">\(\epsilon\)</span>(<span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>) is the residual (i.e., error) score (normally distributed with zero mean) that captures all other factors not accounted for by the grouping predictor. Typically, the effect of interest is “<span class="math inline">\(β_1\)</span>”, which represents the difference between the average difference scores of the two groups. ___</p>
-</blockquote>
+<hr>
 <blockquote class="blockquote">
 <p><strong>Key Considerations &amp; Limitations</strong> + Imbalanced baseline scores + If baseline scores are imbalanced across groups, effect estimates of the mean difference score may become biased (via regression to the mean). This can lead individual studies to produce different conclusions regarding equivalent models. + Reliability and Stability + Increased stability (over time) can lead to decreased reliability of difference scores. That is, the stronger the Time 1–Time 2 correlation, the less variability in the difference score there is to detect (can’t predict/detect what’s not there). + See Cronbach and Furby (1970)<span class="citation" data-cites="cronbach1970">(<a href="../references.html#ref-cronbach1970" role="doc-biblioref"><strong>cronbach1970?</strong></a>)</span>; but also Jennings &amp; Cribbie, 2016<span class="citation" data-cites="jennings2016">(<a href="../references.html#ref-jennings2016" role="doc-biblioref"><strong>jennings2016?</strong></a>)</span>; Rogosa, Brandt, &amp; Zimowski, 1982<span class="citation" data-cites="rogosa1982">(<a href="../references.html#ref-rogosa1982" role="doc-biblioref"><strong>rogosa1982?</strong></a>)</span>; Wright, 2006<span class="citation" data-cites="wright2006">(<a href="../references.html#ref-wright2006" role="doc-biblioref"><strong>wright2006?</strong></a>)</span> + Raw Scores + Prestandardizing variables discards important variance information and as such, raw scores should be used when computing difference scores + Types of change + A concern more broadly with studies that include only two measurement occasions is that only rank-order changes in levels of a variable can be measured <span class="citation" data-cites="king2018">(<a href="../references.html#ref-king2018" role="doc-biblioref"><strong>king2018?</strong></a>)</span>.</p>
 </blockquote>
-</div></section>
-<section id="explanation" class="level2">
-<h2 class="anchored" data-anchor-id="explanation">Explanation</h2>
-<section id="difference-scores" class="level5">
-<h5 class="anchored" data-anchor-id="difference-scores">Difference Scores</h5>
-<p>In a repeated measures design, a difference score <span class="math inline">\((\Delta)\)</span> can be calculated by subtracting pairs of values on some variable (<span class="math inline">\(x\)</span>) produced by the same individual across two (or more) timepoints <span class="math inline">\((x_{t1}, x_{t2})\)</span>. First, compute the difference (<span class="math inline">\(\Delta\)</span>) between the score (<span class="math inline">\(x\)</span>) obtained at baseline (<span class="math inline">\(x_{t1}\)</span>) and follow-up (<span class="math inline">\(x_{t2}\)</span>) for each individual (<span class="math inline">\((\Delta = x_{t2} − x_{t1})\)</span>). This difference value (<span class="math inline">\(\Delta\)</span> = <span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>) can then be used as the outcome in a GLM to test for differences in the amount of change over time and between groups of interest.</p>
+<hr>
+</div>
+</div>
+</div>
 </section>
-<section id="sec-equation" class="level4">
-<h4 class="anchored" data-anchor-id="sec-equation"><strong>Single-Group Repeated Measures Design:</strong></h4>
-<p>The most basic repeated measures design the involves a single-group repeated measures design. In this design, we have n repeated measures of the response on each of N subjects.</p>
-<section id="paired-samples-t-test" class="level5">
-<h5 class="anchored" data-anchor-id="paired-samples-t-test">(Paired Samples T-test)</h5>
-<p>The paired samples t-test can be used to determine whether the difference between some pair of values produced by the same individual across two measurement occasions, differs significantly from 0. The t-testp is a special case of the one-sample t-test, with the exception that this model needs to be modified to account for the statistical dependence among repeated observations obtained on the same subject, other than the issue of non-independence the underlying assumptions for the t-testp is exactly the same as for the independent samples t-test.</p>
-<p>To compute the t-testp (<span class="math inline">\((\Delta = x_{t2} − x_{t1})\)</span>) the <em>sample average of differences</em> value obtained from the formula provided in step 1 (<span class="math inline">\((\Delta = x_{t2} − x_{t1})\)</span>) will be used as the numerator in your calculation of the t-value. The denominator in this computation is a variance estimate (i.e., the sample standard error), which accounts for the covariance between initial levels and change. A significant t-statistic indicates that change <span class="math inline">\((\Delta)\)</span> from T1 to T2 is significantly greater than 0.</p>
+<section id="how-it-is-computed" class="level2">
+<h2 class="anchored" data-anchor-id="how-it-is-computed">How it is computed</h2>
+<p>In a repeated measures design, a difference score <span class="math inline">\((\Delta)\)</span> can be calculated by subtracting pairs of values on some variable (<span class="math inline">\(x\)</span>) produced by the same individual across two (or more) timepoints <span class="math inline">\((x_{t1}, x_{t2})\)</span>. First, compute the difference (<span class="math inline">\(\Delta\)</span>) between the score (<span class="math inline">\(x\)</span>) obtained at baseline (<span class="math inline">\(x_{t1}\)</span>) and follow-up (<span class="math inline">\(x_{t2}\)</span>) for each individual <span class="math inline">\((\Delta = x_{t2} − x_{t1})\)</span>. This difference value (<span class="math inline">\(\Delta\)</span> = <span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>) can then be used as the outcome in a GLM to test for differences in the amount of change over time and between groups of interest.</p>
 <blockquote class="blockquote">
-<p>Hypothetical Scenario: Table 1. Raw and difference scores before and after training.</p>
+<p>These models (t-test, ANOVA, and regression) are equivalent and all are subsumed by the GLM framework. More specifically, ANOVA is a special case of regression analysis where all the predictor variables are categorical. For the two-group case, the ANOVA model can be written as the following regression model <span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>=<span class="math inline">\(β_0\)</span> + <span class="math inline">\(β_1\)</span> <em>C</em> + <span class="math inline">\(\epsilon\)</span> (<span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>) where <span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span> is the difference between Time 2 (<span class="math inline">\(_{t2}\)</span>) and Time 1 (<span class="math inline">\(_{t1}\)</span>) scores, <span class="math inline">\(β_0\)</span> is the intercept or average predicted value of the difference across time for individuals in group = 0, ’‘<span class="math inline">\(β_1\)</span>’ is the regression coefficient for <em>C</em> indicating the difference in difference scores between between group = 0 and group = 1, and <span class="math inline">\(\epsilon\)</span>(<span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>) is the residual (i.e., error) score (normally distributed with zero mean) that captures all other factors not accounted for by the grouping predictor. Typically, the effect of interest is “<span class="math inline">\(β_1\)</span>”, which represents the difference between the average difference scores of the two groups.</p>
 </blockquote>
-<p>Table 1 shows scores on a quiz that five employees received before they took a training course and after they took the course. The difference between these scores (i.e.&nbsp;the score after minus the score before) represents improvement in the employees’ ability. This third column is what we look at when assessing whether or not our training was effective. We want to see positive scores, which indicate that the employees’ performance went up.</p>
+<section id="glm-equation" class="level4">
+<h4 class="anchored" data-anchor-id="glm-equation">GLM Equation:</h4>
+<p><span class="math inline">\(RS{_n}{_2} - RS{_n}{_1} = \gamma_0 + \gamma_1 Cn + e_{n(RS2-RS1)}\)</span> where RSn2 - RSn1 is the difference between Time 2 and Time 1 scores, g0 is the intercept or average predicted value of the difference across time in relationship satisfaction for those who did not cohabit prior to marriage (Cn 1⁄4 0), g1 is the regression coefficient for Cn indicating the difference in change between Time 1 and Time 2 between those who cohabited and those who did not, and en(RS2􏰫RS1) is the residual score that captures all other factors not accounted for by the cohabited predictor. Importantly, if the key predictor, Cn, was continuous (e.g., number of months couples lived together before marriage), the model in Equation 2 would no longer be called repeated measures ANOVA, but Sofia could compute the difference score variable herself and run a simple linear regression with Cn as the sole predictor to assess whether increases in time cohabiting prior to marriage predict change in relationship satisfaction.</p>
 </section>
-<section id="ranova" class="level5">
-<h5 class="anchored" data-anchor-id="ranova">(rANOVA)</h5>
+</section>
+<section id="variants" class="level2">
+<h2 class="anchored" data-anchor-id="variants">Variants</h2>
+<section id="single-group-designs" class="level3">
+<h3 class="anchored" data-anchor-id="single-group-designs">Single Group Designs</h3>
+<section id="sec-psttest" class="level4">
+<h4 class="anchored" data-anchor-id="sec-psttest">Paired Samples T-test</h4>
+<p>The paired samples t-test can be used to determine whether the difference between some pair of values produced by the same individual across two measurement occasions, differs significantly from 0. The paired samples t-test is a special case of the one-sample t-test, with the exception that this model needs to be modified to account for the statistical dependence among repeated observations obtained on the same subject, other than the issue of non-independence, the underlying assumptions for the paired samples t-test is exactly the same as for the independent samples t-test.</p>
+<p>To compute the paired samples t-test <span class="math inline">\((\Delta = x_{t2} − x_{t1})\)</span> the <em>sample average of differences</em> value obtained from the formula provided in step 1 <span class="math inline">\((\Delta = x_{t2} − x_{t1})\)</span> will be used as the numerator for calculation of the t-value. The denominator in this computation is a variance estimate (i.e., the sample standard error), which accounts for the covariance between initial levels and change. A significant t-statistic indicates that change <span class="math inline">\((\Delta)\)</span> from T1 to T2 is significantly different than 0.</p>
+<p>xxx Since the data being compared at exactly two points in time is paired (non-independent), the paired t-test analysis is appropriate. With the exception of this aspect of (non)independence in paired, longitudinal data, the underlying assumptions for this type of analysis are exactly the same as for the independent samples t-test: xxx</p>
+</section>
+<section id="sec-ranova" class="level4">
+<h4 class="anchored" data-anchor-id="sec-ranova">Repeated Measures ANOVA</h4>
 <p>The repeated-measures (within-subjects) ANOVA is an extension of the paired-samples t-test that is used to determine whether mean scores on some outcome measured at three or more occasions differs significantly across measurement occasions.</p>
 </section>
 </section>
-<section id="basic-t-testpanova" class="level4">
-<h4 class="anchored" data-anchor-id="basic-t-testpanova"><strong>Basic T-testp/ANOVA:</strong></h4>
-<p>can be extended for multiple groups and 3+ timepoints 1) <strong>T-test</strong>/<strong>ANOVA</strong>: + A t-test can be performed using a grouping variable to examine whether the disparity in the mean difference value differs significantly between two groups. An ANOVA can be used if the grouping variable includes more than 2 groups.</p>
-<p>The basic one-way repeated measure ANOVA can be extended (e.g., two-way, three-way) to evaluate whether or not a significant interaction effect exists between two or more factors (groups/levels) of some within-subjects variable.</p>
-<pre><code>+ Example based on hypothetical 
-    + First we compute the difference ($\Delta$) between the score on the measure of screen time ($x$) assessed at baseline ($x_{t1}$) and follow-up ($x_{t2}$). 
-    + The result of this formula ($\Delta$=$x_{t2}$ - $x_{t1}$) can then be used as an outcome to test the effect of group on  the difference score ($\Delta_{boys}$,  $\Delta_{girls}$ ). 
-    + Figure x.</code></pre>
-<blockquote class="blockquote">
-<p>GLM Equation: <span class="math inline">\(RS{_n}{_2} - RS{_n}{_1} = \gamma_0 + \gamma_1 Cn + e_{n(RS2-RS1)}\)</span></p>
-</blockquote>
-<p>where RSn2 􏰫 RSn1 is the difference between Time 2 and Time 1 scores, g0 is the intercept or average predicted value of the difference across time in relationship satis- faction for those who did not cohabit prior to marriage (Cn 1⁄4 0), g1 is the regression coefficient for Cn indicating the difference in change between Time 1 and Time 2 between those who cohabited and those who did not, and en(RS2􏰫RS1) is the residual score that captures all other factors not accounted for by the cohabited predictor. Importantly, if the key predictor, Cn, was continuous (e.g., number of months couples lived together before marriage), the model in Equation 2 would no longer be called repeated measures ANOVA, but Sofia could compute the difference score variable herself and run a simple linear regression with Cn as the sole predictor to assess whether increases in time cohabiting prior to marriage predict change in relationship satisfaction.</p>
-<blockquote class="blockquote">
-<p>Hypothetical Scenario: A study investigates sex differences on a measure of screen time by examining change in screen time scores obtained across two measurement occasions for boys and girls. The study aims to determine whether sex has an effect on changes in screen time across assessments.</p>
-</blockquote>
+<section id="multiple-group-designs" class="level3">
+<h3 class="anchored" data-anchor-id="multiple-group-designs">Multiple Group Designs</h3>
+<section id="basic-t-test-anova" class="level4">
+<h4 class="anchored" data-anchor-id="basic-t-test-anova">Basic T-test &amp; Anova:</h4>
+<p>A t-test can be performed using a grouping variable to examine whether the disparity in the mean difference value differs significantly between two groups. An ANOVA can be used if the grouping variable includes more than 2 groups. The basic one-way repeated measure ANOVA can be extended (e.g., two-way, three-way) to evaluate whether or not a significant interaction effect exists between two or more factors (groups/levels) of some within-subjects variable. Here, the difference (<span class="math inline">\(\Delta\)</span>) between the score on some measure (<span class="math inline">\(x\)</span>) assessed at baseline (<span class="math inline">\(x_{t1}\)</span>) and follow-up (<span class="math inline">\(x_{t2}\)</span>) can then be used as an outcome to test the effect of group (e.g., <span class="math inline">\(\Delta_{boys}\)</span>, <span class="math inline">\(\Delta_{girls}\)</span> ) on the difference score.</p>
 </section>
 <section id="basic-regression" class="level4">
-<h4 class="anchored" data-anchor-id="basic-regression"><strong>Basic Regression:</strong></h4>
-<ol start="2" type="1">
-<li><strong>Regression</strong>:</li>
-</ol>
-<ul>
-<li>A simple regression analysis can be performed using a grouping variable as a predictor of change (<span class="math inline">\(\Delta\)</span>) in an outcome across groups. A significant effect for the grouping variable indicates that average <span class="math inline">\(\Delta\)</span> is significantly different across groups.
-<ul>
-<li>Example based on hypothetical
-<ul>
-<li>First we compute the difference (<span class="math inline">\(\Delta\)</span>) between the score on the measure of screen time (<span class="math inline">\(x\)</span>) assessed at baseline (<span class="math inline">\(x_{t1}\)</span>) and follow-up (<span class="math inline">\(x_{t2}\)</span>).</li>
-<li>The result of this formula (<span class="math inline">\(\Delta\)</span>=<span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>) can be included as the outcome variable in a regression model that analyzes the role of the grouping variable (0 = boy; 1 = girl) on changes in screen time across measurement occassions.</li>
-</ul></li>
-<li>Figure x. :::</li>
-</ul></li>
-</ul>
-</section>
-</section>
-<section id="explanation-of-model-code-plots" class="level2">
-<h2 class="anchored" data-anchor-id="explanation-of-model-code-plots">Explanation of Model Code &amp; Plots</h2>
-<section id="model-code" class="level3">
-<h3 class="anchored" data-anchor-id="model-code">Model code</h3>
+<h4 class="anchored" data-anchor-id="basic-regression">Basic Regression:</h4>
+<p>A simple regression analysis can be performed using a grouping variable as a predictor of change <span class="math inline">\(\Delta\)</span> in an outcome across groups. A significant effect for the grouping variable indicates that average <span class="math inline">\(\Delta\)</span> is significantly different across groups. First, compute the difference (<span class="math inline">\(\Delta\)</span>) between a score on some measure (<span class="math inline">\(x\)</span>) assessed at baseline (<span class="math inline">\(x_{t1}\)</span>) and follow-up (<span class="math inline">\(x_{t2}\)</span>). The result of this formula (<span class="math inline">\(\Delta\)</span>=<span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>) can be included as the outcome variable in a regression model that analyzes the role of the grouping variable (e.g., 0 = boy; 1 = girl) on changes in scores on the measure across follow-ups. :::</p>
 
 
+</section>
 </section>
 </section>
 

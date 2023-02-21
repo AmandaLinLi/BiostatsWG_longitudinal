@@ -75,6 +75,7 @@ example-text after code block
 ## Load packages
 library(tidyverse)
 library(arrow)
+library(tippy)
 ```
 </div>
 
