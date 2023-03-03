@@ -1,9 +1,5 @@
 # Difference Scores
 
-
-
-
-
 ## Overview
 <br>
 Difference scores are one of the earliest developed approaches for analyzing data collected across multiple measurement occasions [@castro-schilo2018; @jennings2016]. 
@@ -40,12 +36,16 @@ h3 id="dealing-with-specificity", style="color:light"> test </h3>
 ```{r echo = FALSE}
 library(tippy)
 
-tippy("Hover me!", tooltip = "Hi, I'm the tooltip!", placement = "right",
-theme = "light")
+tippy("Hover me!",
+    tooltip = "Hi, I'm the tooltip!", placement = "right",
+    theme = "light"
+)
 
-tippy("Click me!", tooltip = "Hi, I'm the tooltip!", trigger = "click",
-theme = "light", animation = "scale",
-duration = 1000, placement = "bottom")
+tippy("Click me!",
+    tooltip = "Hi, I'm the tooltip!", trigger = "click",
+    theme = "light", animation = "scale",
+    duration = 1000, placement = "bottom"
+)
 ```
 ___
 

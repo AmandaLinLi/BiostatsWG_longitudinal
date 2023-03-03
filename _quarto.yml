@@ -12,18 +12,10 @@ book:
     - part: dataWrangling/data_wrangling.qmd
       chapters:
         - example1_blank.qmd
-    # - part: pairedSamplesTtest/paired_samples_t-test_main.qmd
-    #   chapters:
-    #     - pairedSamplesTtest/paired_samples_t-test_main_example_1.qmd
-    - part: repeatedMeasuresAnova/repeated_measures_anova_main.qmd
-      chapters:
-        - repeatedMeasuresAnova/repeated_measures_anova_main_example_1.qmd
-        - repeatedMeasuresAnova/rnova_single_group_design.qmd
-        #- rnova_single_group_design.qmd
-        #- rnova_multiple_group_design.qmd
     - part: differenceScores/difference_scores_main.qmd
       chapters:
         - differenceScores/difference_scores_one_sample_ttest.qmd
+        - differenceScores/difference_scores_one_sample_ttestr.qmd
         - differenceScores/difference_scores_paired_samples_ttest.qmd
         - differenceScores/difference_scores_simple_regression.qmd
     - part: changeScores/change_scores_main.qmd
@@ -32,7 +24,7 @@ book:
         - changeScores/change_scores_multiple_regression.qmd
     - part: linearMixedModels/lmm_main.qmd
       chapters:
-      - linearMixedModels/lmm_intercept_only.qmd
+        - linearMixedModels/lmm_intercept_only.qmd
       #- linearMixedModels/lmm_intercept_and_slope.qmd
     - part: signedRankSumTest/signed_ranksum_test_main.qmd
       chapters:

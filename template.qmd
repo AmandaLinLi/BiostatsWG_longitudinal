@@ -1,0 +1,81 @@
+## Example Title
+
+Add brief overview.
+
+###############################
+
+## Preliminary Setup
+### Load Libraries
+```{r pckg-install}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
+
+## Install required packages (if not already installed)
+## Example of installing the tidyverse package:
+if (!("tidyverse" %in% installed.packages())) install.packages("tidyverse")
+```
+
+### Load Packages
+```{r pckg-load}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
+#| class.source: fold-hide
+
+## Load required packages
+## Example of loading the tidyverse package:
+
+library(tidyverse)
+```
+
+### Configure Knitr Options
+```{r config}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
+
+knitr::opts_chunk$set(echo = T, message=F, warning=F, error=F, 
+                        comment=NA, cache=T, code_folding=T,
+                        R.options=list(width=220), fig.align='center', 
+                        out.width='75%', fig.asp=.75)
+  ```
+</div>
+
+### Descriptives Table
+
+```{r data-table}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
+
+df_long<- read_csv("filepath")
+
+```
+
+### Data Wrangling
+
+### Model Code
+```{r model-output}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
+#| code-summary: testing
+
+## Output and reports extending from the LMM-ri analyses
+
+```
+
+### Model Output
+
+### Model Report/Discussion
+
+### Interpretation
+
+### Mock Write-up
+
+## References
+
+[@brown2021]
+[@Singmann2019]
+

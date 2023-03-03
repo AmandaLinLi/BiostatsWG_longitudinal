@@ -270,5 +270,8 @@
   },
   "differenceScores/_difference_scores_one_sample_ttest.qmd": {
     "_difference_scores_one_sample_ttest.html": "1dd58d46"
+  },
+  "differenceScores/difference_scores_one_sample_ttestr.qmd": {
+    "difference_scores_one_sample_ttestr.html": "e0553c39"
   }
 }
