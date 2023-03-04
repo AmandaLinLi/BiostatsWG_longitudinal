@@ -1,0 +1,413 @@
+# ex1r.onesample {.unnumbered}
+
+<style>
+div.blue pre { background-color:lightblue; }
+div.blue pre.r { background-color:lightgrey; }
+
+.nav-tabs > li.active:nth-child(1) > a {
+  background-color: ##964B00;
+}
+
+.nav-tabs > li > a {
+  background-color: ##FFFF00;
+  color: blue;
+}
+
+main-container {
+   max-width: unset;
+}
+.descriptives {
+   overflow: auto; /*do not use `resize`*/
+}
+
+.tableby {
+   overflow: auto;
+}
+
+.descriptives {
+   overflow: auto;
+   resize: both;
+}
+
+table, th, td {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  vertical-align: middle;
+}
+</style>
+
+## Linear Mixed Model with a Random-Intercept (LMM:ri)
+<p>
+The **`LMM:ri`** is similar to traditional (fixed-effect) linear regression extending on this approach by including a subject-specific random-effect that allows each participant to have their own unique intercept value, in addition to the overall mean-level (fixed-effect) intercept value
+
+In this example, we will use the **`LMM:ri`** to analyze trajectories of scores on the externalizing subscale of the child behavior checklist (CBCL) obtained across three measurement occasions in a sample of youth taking part in the ABCD Study. Our primary aim is to characterize stability and change in CBCL externalizing scores across assessments, while accounting for observations that are clustered within youth over time. To do so, we will use the **`LMM:ri`** to simultaneously model an overall sample mean trajectory (fixed effect) and subject-specific (random) effects that vary randomly about the sample mean trajectory. 
+</p>
+
+## Preliminary Setup
+::: {.panel-tabset}
+### Load Libraries {.tabset .tabset-fade .tabset-pills}
+example-text before code block
+<div class = "blue">
+```{r pckg-install}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
+
+## Install necessary packages (if not already installed)
+if (!("lme4" %in% installed.packages())) install.packages("lme4")
+if (!("lmerTest" %in% installed.packages())) install.packages("lmerTest")
+if (!("tidyverse" %in% installed.packages())) install.packages("tidyverse")
+if (!("arrow" %in% installed.packages())) install.packages("arrow")
+if (!("afex" %in% installed.packages())) install.packages("afex")
+if (!("janitor" %in% installed.packages())) install.packages("janitor")
+if (!("skimr" %in% installed.packages())) install.packages("skimr")
+if (!("sdamr" %in% installed.packages())) install.packages("sdamr")
+if (!("formatR" %in% installed.packages())) install.packages("formatR")
+if (!("report" %in% installed.packages())) install.packages("report")
+if (!("easystats" %in% installed.packages())) install.packages("easystats")
+if (!("emmeans" %in% installed.packages())) install.packages("emmeans")
+if (!("poorman" %in% installed.packages())) install.packages("poorman")
+if (!("parameters" %in% installed.packages())) install.packages("parameters")
+if (!("modelbased" %in% installed.packages())) install.packages("modelbased")
+if (!("DT" %in% installed.packages())) install.packages("DT")
+if (!("data.table" %in% installed.packages())) install.packages("data.table")
+if (!("arsenal" %in% installed.packages())) install.packages("arsenal")
+if (!("kableExtra" %in% installed.packages())) install.packages("kableExtra")
+if (!("equatiomatic" %in% installed.packages())) install.packages("equatiomatic")
+if (!("gtsummary" %in% installed.packages())) install.packages("gtsummary")
+if (!("ggpubr" %in% installed.packages())) install.packages("ggpubr")
+```
+</div>
+example-text after code block
+
+### Load Packages
+<div class = "blue">
+```{r pckg-load}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
+#| class.source: fold-hide
+
+## Load packages
+library(lme4)
+library(lmerTest)
+library(tidyverse)
+library(arrow)
+library(afex)
+library(janitor)
+library(skimr)
+library(sdamr)
+library(formatR)
+library(report)
+library(easystats)
+library(emmeans)
+library(poorman)
+library(parameters)
+library(modelbased)
+library(DT)
+library(data.table)
+library(arsenal)
+library(kableExtra)
+library(equatiomatic)
+library(gtsummary)
+library(ggpubr)
+```
+</div>
+
+### Config Options
+<div class = "blue">
+```{r config}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
+
+knitr::opts_chunk$set(echo = T, message=F, warning=F, error=F, 
+                        comment=NA, cache=T, code_folding=T,
+                        R.options=list(width=220), fig.align='center', 
+                        out.width='75%', fig.asp=.75)
+```
+</div>
+:::
+
+zzzzz
+
+## Descriptives Overview
+::: {.panel-tabset}
+### Read Data {.tabset .tabset-fade .tabset-pills}
+<div class = "blue">
+```{r read-data}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
+
+df_long<- read_csv("/Users/shawes/Desktop/df_long.csv")
+df_long_sub<- read_csv("/Users/shawes/Desktop/df_long_sub.csv")
+df_wide <- read_csv("/Users/shawes/Desktop/df_wide.csv")
+
+```
+</div>
+
+### Data Table
+<div class = "blue">
+```{r data-table}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
+
+## Create a viewable 'datatable' of the primary dataframe (df)
+
+datatable(head(df_long, 50, rownames = FALSE),extensions = 'AutoFill','ColReorder', options = list(autoFill = TRUE,colReorder = TRUE,
+  columnDefs = list(list(className = 'dt-center', targets = 10)),
+  order = list(list(3, 'asc'), list(4, 'desc')),
+  pageLength = 10,
+  lengthMenu = c(10, 15, 20),
+  initComplete = JS(
+    "function(settings, json) {",
+    "$(this.api().table().header()).css({'background-color': '#808080', 'color': '#fff'});",
+    "}")
+))
+
+## Not run: 
+# Specify table size by pixels
+#kable(cbind(df_long, df_long), "html") %>%
+#    kable_styling() %>%
+#    scroll_box(width = "100%", height = "500px")
+```
+</div>
+
+### Descriptives 1
+<div class = "blue">
+```{r descriptives}
+#| messages: FALSE
+#| echo: TRUE
+#| warning: FALSE
+#| results: "asis"
+
+## Create a descriptives table of study variables by measurement occasion 
+descriptives_1  <- tableby.control(test=FALSE, total=FALSE,
+                               numeric.test="kwt", cat.test="chisq",
+                               numeric.stats=c("N", "meansd", "median", "range" 
+                                               ), #"Nmiss2"
+                               cat.stats=c("countpct"), #"Nmiss2"
+                               stats.labels=list(N='Count', meansd="Mean (SD)", median
+                                                 ='Median', range='Min - Max'
+                                                 )) #, Nmiss2 ='Missing'
+
+my_cont_labels <- list(
+  Age = "Age",
+  Weekly_Gaming_Hours = "Weekly # of Video Gaming Hrs",
+  Externalizing = "CBCL Externalizing Scale"
+)
+
+tab_descriptives_1 <- tableby(Event ~ Age + Weekly_Gaming_Hours + 
+                            Externalizing,
+                            data=df_long, control=descriptives_1)
+
+#summary(tab_descriptives_1, labelTranslations = my_cont_labels , text=TRUE, title = #"Continuous Outcomes", term.name = TRUE)
+
+# Push table object through kable and kable_styling
+tab_descriptives_1 %>%
+  summary(text=TRUE, digits.pct=1, digits=1) %>%
+  kable(caption = "Continuous Outcomes") %>%
+  kable_styling(bootstrap_options = "striped", full_width = FALSE, html_font = "Cambria",
+                font_size = 15,
+                position = "center", fixed_thead = T) %>%
+  row_spec(2:3,  bold = F, extra_css = 'vertical-align: middle !important;') %>%
+  column_spec(1, width = "20em", background = "light grey", bold = T, border_right = T) %>%
+  column_spec(2, width = "20em", border_right = T) %>%
+  column_spec(3, width = "20em", border_right = T) %>%
+  footnote(general = "Here is a general comments of the table. ") %>%
+  scroll_box(width = "75%", height = "500px")
+```
+</div>
+
+<div class = "blue">
+```{r catvar-table}
+#| messages: FALSE
+#| warning: FALSE
+#| results: "asis"
+
+## Create a descriptives table of study variables by measurement occasion 
+descriptives_2  <- tableby.control(test=FALSE, total=FALSE,
+                               numeric.test="kwt", cat.test="chisq",
+                               numeric.stats=c("N", "meansd", "median", "range"
+                                               ), # "Nmiss2"
+                               cat.stats=c("countpct"), # "Nmiss2"
+                               stats.labels=list(N='Count', meansd="Mean (SD)", median
+                                                 ='Median', range='Min - Max'
+                                                 )) # , Nmiss2 ='Missing'
+
+my_cat_labels  <- list(
+  Event = "Year",
+  Sex = "Sex",
+  MatureVideoGames = "Mature Video Games",
+  DBD = "DBD"
+  )
+
+tab_descriptives_2 <- tableby(Event ~ Sex + MatureVideoGames + DBD, 
+                            data=df_long, control=descriptives_2)
+
+#summary(tab_descriptives_2, labelTranslations = my_cat_labels , text=TRUE, title = #"Categorical Outcomes", term.name = TRUE)
+
+# Push table object through kable and kable_styling
+tab_descriptives_2 %>%
+  summary(text=TRUE, digits.pct=1, digits=1) %>%
+  kable(caption = "Categorical Outcomes") %>%
+  kable_styling(bootstrap_options = "striped", full_width = FALSE, font_size = 15,
+                position = "center", fixed_thead = T) %>%
+  row_spec(2:3,  bold = F, extra_css = 'vertical-align: middle !important;') %>%
+  column_spec(1, width = "20em", background = "light grey", bold = T, border_right = T) %>%
+  column_spec(2, width = "20em", border_right = T) %>%
+  #column_spec(3, width = "20em", border_right = T) %>%
+  footnote(general = "Here is a general comments of the table. ") %>%
+  scroll_box(width = "75%", height = "500px")
+
+```
+</div>
+
+### Descriptives 2
+<div class = "blue">
+```{r}
+#|  warning: FALSE
+#|  messages: FALSE
+
+df_long <- read_csv("/Users/shawes/Desktop/df_long.csv")
+df_wide <- read_csv("/Users/shawes/Desktop/df_wide.csv")
+# str(df_long)
+# hist(df_long$Weekly_Gaming_Hour)
+# Compute difference score based on CBCL Externalizing subscale scores at baseline (t1) and 1-Year Follow-up (t2)
+df_wide$diffscore <- df_wide$Externalizing_T1 - df_wide$Externalizing_T0
+
+# Compute statistical summaries for the difference score variable
+summary(df_wide$diffscore)
+
+# Scatterplot to visualize relationship between t1 & t2 data used to create difference score
+scatterplot <- ggplot(df_wide, aes(x = Externalizing_T0, y = Externalizing_T1)) +
+    geom_point(size = 3) +
+    geom_smooth(method = lm, se = F) +
+    xlab("CBCL Externalizing (x) Baseline") +
+    ylab("CBCL Externalizing (x) 1-Year Follow-up")
+
+suppressWarnings(print(scatterplot))
+```
+</div>
+:::
+
+### Results
+<div class = "blue"> 
+::: {.panel-tabset}
+### Build Model {.tabset .tabset-fade .tabset-pills}
+<div class = "blue">
+```{r build-model}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
+
+## Linear Mixed Model with a random intercept (LMM-ri)
+random_intercepts <- lmer(Externalizing ~ 1 + Event + DBD + Sex + (1|ids), data = df_long, REML=T)
+
+print(random_intercepts)
+```
+</div>
+
+> The code snippet above tells R to run a linear mixed model using lmer
+> from the lme4 library. The left side of the "\~" symbol specifies the
+> dependent variable; the right side specifies days as the independent
+> variable(s). The code (1 \| Subject) specifies a random intercept for
+> each subject.
+
+### ogdiffscoresection
+<div class = "blue">
+zzz
+
+```{r}
+#| warning: FALSE
+#| messages: FALSE
+
+# One-sample t-test to determine whether the average difference score is significantly different than 0.
+result <- t.test(df_wide$diffscore, mu = 0, alternative = "two.sided")
+# Print the results
+#result
+
+# boxplot
+#library(ggpubr)
+#diffscore_boxplot <- ggboxplot(df_wide$diffscore,
+    #ylab = "Externalizing Difference Score", xlab = #FALSE,
+    #ggtheme = theme_minimal()
+#)
+
+#suppressWarnings(print(diffscore_boxplot))
+
+# Shapiro-Wilk test and normality (Q-Q) plot (visualization of correlation between a given sample and the normal distribution)
+#shapiro.test(df_wide$diffscore[0:5000])
+
+#library("ggpubr")
+#qqplot <- ggqqplot(df_wide$diffscore,
+#    ylab = "Externalizing Difference Score", xlab = #FALSE,
+#    ggtheme = theme_minimal()
+#)
+
+#suppressWarnings(print(qqplot))
+```
+</div>
+
+### Model Outputs
+<div class = "blue">
+```{r model-output}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
+#| code-summary: testing
+
+## Output and reports extending from the LMM-ri analyses
+summary(random_intercepts)
+confint(random_intercepts, level = 0.95, method = "Wald")
+report(random_intercepts)
+report_performance(random_intercepts)
+report_statistics(random_intercepts)
+random <- estimate_grouplevel(random_intercepts)
+```
+</div>
+
+### Model Report
+<div class = "blue">
+```{r mod-report}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
+
+#df_long %>%
+#  report() %>%
+#  summary()
+```
+</div>
+:::
+
+### Text
+<div class = "blue"> 
+::: {.panel-tabset}
+### Interpretation {.tabset .tabset-fade .tabset-pills}
+<div class = "blue">
+```{r interpretation}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
+
+# safsafd
+
+```
+</div>
+
+### Write-up
+<div class = "blue">
+```{r write-up}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
+
+## sfsfafsac
+
+```
+</div>
+
+:::
