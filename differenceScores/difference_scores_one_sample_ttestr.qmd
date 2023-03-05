@@ -129,8 +129,6 @@ knitr::opts_chunk$set(echo = T, message=F, warning=F, error=F,
 </div>
 :::
 
-zzzzz
-
 ## Descriptives Overview
 ::: {.panel-tabset}
 ### Read Data {.tabset .tabset-fade .tabset-pills}
@@ -172,6 +170,36 @@ datatable(head(df_long, 50, rownames = FALSE),extensions = 'AutoFill','ColReorde
 #kable(cbind(df_long, df_long), "html") %>%
 #    kable_styling() %>%
 #    scroll_box(width = "100%", height = "500px")
+```
+</div>
+
+### Descriptives 1r
+<div class = "blue">
+
+## Diagnostics
+```{r}
+#| class.source: 'fold-hide'
+#| message: FALSE
+#| warning: FALSE
+#echo: FALSE
+
+#Summary statistics
+#summary<-df_long %>%
+#group_by(event) %>%
+#get_summary_stats(cbcl_extern, type = "mean_sd")
+#data.frame(summary)
+
+# Outlier detection
+#outlier<-df_long %>%
+#group_by(event) %>%
+#identify_outliers(cbcl_extern)
+#data.frame(outlier)
+
+# Normality Checking
+# normality<-df_long %>%
+# group_by(event) %>%
+# shapiro_test(df_long$cbcl_extern[0:5000])
+# data.frame(normality)
 ```
 </div>
 
@@ -299,14 +327,36 @@ suppressWarnings(print(scatterplot))
 ### Build Model {.tabset .tabset-fade .tabset-pills}
 <div class = "blue">
 ```{r build-model}
-#| echo: TRUE
-#| messages: FALSE
+#| class.source: 'fold-hide'
+#| message: FALSE
 #| warning: FALSE
+#| echo: TRUE
 
-## Linear Mixed Model with a random intercept (LMM-ri)
-random_intercepts <- lmer(Externalizing ~ 1 + Event + DBD + Sex + (1|ids), data = df_long, REML=T)
+# The objective is to identify any significant difference between time points exist or not.
 
-print(random_intercepts)
+# perform the 1-factor repeated measures anova
+# the notation for specification of the error is not intrinsically
+# obvious. some reading in R and S model specification is required.
+# always best to use "sum to zero" contrasts for ANOVA
+
+#fitplot <- aov(cbcl_extern~event + Error(event), data=df_long)
+#summary(fitplot)
+
+#contrasts(df_long$event) <- contr.sum
+#fitplot <- aov(cbcl_extern ~ event + Error(event),data=df_long)
+#summary(fitplot)
+
+#report the means of each level
+#print(model.tables(fitplot,"means"),digits=3)
+
+# report deviation effects for each level
+#print(model.tables(fitplot,"effects", n=TRUE),digits=3)
+
+#str(fit.1)
+#qqPlot(resid(fitplot[[3]]),id=FALSE)
+
+#hist(fit.1[[3]]$residuals)
+
 ```
 </div>
 
@@ -369,17 +419,16 @@ random <- estimate_grouplevel(random_intercepts)
 ```
 </div>
 
-### Model Report
+### Plots/Tables
 <div class = "blue">
 ```{r mod-report}
 #| echo: TRUE
 #| messages: FALSE
 #| warning: FALSE
 
-#df_long %>%
-#  report() %>%
-#  summary()
+
 ```
+zzsss
 </div>
 :::
 
@@ -396,6 +445,36 @@ random <- estimate_grouplevel(random_intercepts)
 # safsafd
 
 ```
+
+The estimated correlation between x and y was "r cor(x,y)`.
+There are "r nrow(my_data)` individuals.
+
+From the fixed effects section of the model summary, we can conclude
+that there is strong evidence that RT increased significantly over time
+(i.e., \# of years). On average for each additional year, RT increased
+by 10.46 (b = 10.46, SE = 0.80, p \< .001).We are 95% confident that the
+average increase was between 8.89 and 12.04.
+
+In the above, we estimate that the average intercept across all
+participants is 251.4. Results from the random effects section below
+show that the variance of the intercept for Subject is 1378.2. Taking
+the square root, the standard deviation of the intercept is thus 37.1.
+
+We can calculate the 95% coverage interval as 251.4 ± 1.96\*37.1. The
+lower bound of the 95% coverage interval is thus 178.7 and the upper
+bound is 324.1. We therefore estimated that 95% of the participants have
+an intercept between 178.7 and 324.1. This means that 95% of the
+participants have a reaction time between 178.7 and 324.1 at Day 0. This
+is not to be confused with the 95% confidence interval of the intercept.
+The 95% confidence interval is (232.3, 270.5), and this indicates that
+we are 95% confident that the average intercept is somewhere between
+232.3 and 270.5.
+
+In this model, we have accounted for the repeated measures design
+(observations nested within individuals) by including a random intercept
+for each participants. Each individual has his/her own intercept. The
+effect of time(Year) on RT is assumed to be the same across individuals.
+This assumption can be relaxed by fitting a random slope model.
 </div>
 
 ### Write-up
@@ -408,6 +487,22 @@ random <- estimate_grouplevel(random_intercepts)
 ## sfsfafsac
 
 ```
+
+A random slope model is used to test if sleep deprivation affects
+reaction time. To account for the repeated measures design, a random
+intercept was specified for participants. The random slope for days of
+sleep deprivation was included in the model to allow the effect of sleep
+deprivation to vary across participants. Results are shown in Table 1.
+Using a significant level of 0.05, results indicate that sleep
+deprivation significantly increased reaction time. On average, each
+additional day of sleep deprivation increased reaction time by 10.47ms
+(b = 10.47, 95% CI = \[7.44, 13.50\], p \< .001). Model fit comparison
+between model with and without random slope for sleep deprivation shows
+that the effect of sleep deprivation varied across participants, χ2(2)=
+42.14, p \< .001. The 95% coverage interval for the random slope of
+sleep deprivation is (-1.14, 22.07), indicating that the effect of sleep
+deprivation was between -1.14 and 22.07 for 95% of the participants.
+
 </div>
 
 :::
