@@ -15,7 +15,6 @@ book:
     - part: differenceScores/difference_scores_main.qmd
       chapters:
         - differenceScores/difference_scores_one_sample_ttest.qmd
-        - differenceScores/difference_scores_one_sample_ttestr.qmd
         - differenceScores/difference_scores_paired_samples_ttest.qmd
         - differenceScores/difference_scores_simple_regression.qmd
     - part: changeScores/change_scores_main.qmd
@@ -119,6 +118,7 @@ format:
   html:
     theme: cosmo
     code-copy: true
+    code-folding: hide
     number-sections: true
     number-depth: 4
   pdf:

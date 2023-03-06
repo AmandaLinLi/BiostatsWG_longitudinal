@@ -1,0 +1,20 @@
+
+## 1-factor repeated measures anova framework
+fitplot <- aov(Externalizing~Event + Error(Event), data=df_long)
+summary(fitplot)
+
+#contrasts(df_long$Event) <- contr.sum
+fitplot <- aov(Externalizing ~ Event + Error(Event),data=df_long)
+summary(fitplot)
+
+# report the means of each level
+print(model.tables(fitplot,"means"),digits=3)
+
+# report deviation effects for each level
+print(model.tables(fitplot,"effects", n=TRUE),digits=3)
+
+str(fitplot)
+
+#qqPlot(resid(fitplot[[3]]),id=FALSE)
+
+hist(fitplot[[3]]$residuals)

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ex1.onesample</title>
+<title>Difference Scores: Example 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -92,7 +92,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../differenceScores/difference_scores_one_sample_ttestr.html" rel="next">
+<link href="../differenceScores/difference_scores_paired_samples_ttest.html" rel="next">
 <link href="../differenceScores/difference_scores_main.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -124,6 +124,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 }</script>
 <script async="" src="https://hypothes.is/embed.js"></script>
 
+<script src="../site_libs/htmlwidgets-1.6.0/htmlwidgets.js"></script>
+<link href="../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="../site_libs/datatables-binding-0.26/datatables.js"></script>
+<script src="../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="../site_libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="../site_libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="../site_libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<link href="../site_libs/dt-ext-autofill-1.12.1/css/autoFill.dataTables.min.css" rel="stylesheet">
+<script src="../site_libs/dt-ext-autofill-1.12.1/js/dataTables.autoFill.min.js"></script>
+<link href="../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="../site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -150,7 +165,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>  
   <li class="nav-item dropdown  compact">
     <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      <i class="bi bi-download" role="img">
+      <i class="bi bi-download" role="img" aria-label="Download">
 </i> 
  <span class="menu-text"></span>
     </a>
@@ -169,7 +184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>
   <li class="nav-item dropdown  compact">
     <a class="nav-link dropdown-toggle" href="#" id="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      <i class="bi bi-share" role="img">
+      <i class="bi bi-share" role="img" aria-label="Share">
 </i> 
  <span class="menu-text"></span>
     </a>
@@ -193,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">ex1.onesample</h1>
+      <h1 class="quarto-secondary-nav-title">Difference Scores: Example 1</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -256,12 +271,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../differenceScores/difference_scores_one_sample_ttest.html" class="sidebar-item-text sidebar-link active">ex1.onesample</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../differenceScores/difference_scores_one_sample_ttestr.html" class="sidebar-item-text sidebar-link">ex1r.onesample</a>
+  <a href="../differenceScores/difference_scores_one_sample_ttest.html" class="sidebar-item-text sidebar-link active">Difference Scores: Example 1</a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -546,14 +556,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#paired-samples-t-test" id="toc-paired-samples-t-test" class="nav-link active" data-scroll-target="#paired-samples-t-test">Paired Samples t-test</a></li>
+  <li><a href="#preliminary-setup" id="toc-preliminary-setup" class="nav-link" data-scroll-target="#preliminary-setup">Preliminary Setup</a></li>
+  <li><a href="#descriptives-overview" id="toc-descriptives-overview" class="nav-link" data-scroll-target="#descriptives-overview">Descriptives Overview</a>
+  <ul class="collapse">
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#text" id="toc-text" class="nav-link" data-scroll-target="#text">Text</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">ex1.onesample</h1>
+<h1 class="title d-none d-lg-block">Difference Scores: Example 1</h1>
 </div>
 
 
@@ -568,93 +590,652 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install necessary packages (if not already installed)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"lme4"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"lme4"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"lmerTest"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"lmerTest"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"tidyverse"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"ggpubr"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"ggpubr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load packages</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+
+<style>
+div.blue pre { background-color:lightblue; }
+div.blue pre.r { background-color:lightgrey; }
+
+.nav-tabs > li.active:nth-child(1) > a {
+  background-color: ##964B00;
+}
+
+.nav-tabs > li > a {
+  background-color: ##FFFF00;
+  color: blue;
+}
+
+main-container {
+   max-width: unset;
+}
+.descriptives {
+   overflow: auto; /*do not use `resize`*/
+}
+
+.tableby {
+   overflow: auto;
+}
+
+.descriptives {
+   overflow: auto;
+   resize: both;
+}
+
+table, th, td {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  vertical-align: middle;
+}
+</style>
+<section id="paired-samples-t-test" class="level2">
+<h2 class="anchored" data-anchor-id="paired-samples-t-test">Paired Samples t-test</h2>
+<p>
+</p><p>The paired samples t-test can be used to determine whether the difference between a pair of values obtained on a continuous outcome produced by the same individual across two measurement occasions (e.g., pre/post-test design), differs significantly from 0 Specifically, a raw difference score is computed as an index of change in relation to some continuous outcome by subtracting the variable’s value obtained at a prior measurement occasion from the value of the same variable obtained at a subsequent occasion. This difference value is then used in a one sample t-test to determine whether the average difference score differs significantly from 0 (i.e., was the amount of change [average difference score] significantly different than zero).</p>
+<p>[The paired samples t-test is a special case of the one-sample t-test, with the exception that this model needs to be modified to account for the statistical dependence among repeated observations obtained on the same subject, other than the issue of non-independence, the underlying assumptions for the paired samples t-test is exactly the same as for the independent samples t-test.]</p>
+In this example, we will use the paired samples t-test to analyze scores on the externalizing subscale of the child behavior checklist (CBCL) obtained across two measurement occasions in a sample of youth taking part in the ABCD Study. Our primary aim is to determine whether there is evidence of change in CBCL externalizing scores from T1 to T2, while accounting for observations that are clustered within youth over time.
+<p></p>
+</section>
+<section id="preliminary-setup" class="level2">
+<h2 class="anchored" data-anchor-id="preliminary-setup">Preliminary Setup</h2>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Install Packages</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Load Packages</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Config Options</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tabset tabset-fade tabset-pills tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="blue">
+<blockquote class="blockquote">
+<p><strong>This code installs the r packages necessary for this example, if they are not already installed</strong></p>
+</blockquote>
 <div class="cell" data-messages="false">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_long<span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/Users/shawes/Desktop/df_long.csv"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_wide<span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/Users/shawes/Desktop/df_wide.csv"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#str(df_long)</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#hist(df_long$Weekly_Gaming_Hour)</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute difference score based on CBCL Externalizing subscale scores at baseline (t1) and 1-Year Follow-up (t2)</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>df_wide<span class="sc">$</span>diffscore <span class="ot">=</span> df_wide<span class="sc">$</span>Externalizing_T1 <span class="sc">-</span> df_wide<span class="sc">$</span>Externalizing_T0</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Compute statistical summaries for the difference score variable</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_wide<span class="sc">$</span>diffscore)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
--36.0000  -2.0000   0.0000  -0.2574   1.0000  38.0000       12 </code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"lme4"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"lme4"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"lmerTest"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"lmerTest"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"tidyverse"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"arrow"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"arrow"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"afex"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"afex"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"janitor"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"janitor"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"skimr"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"skimr"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"sdamr"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"sdamr"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"formatR"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"formatR"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"report"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"report"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"easystats"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"easystats"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"emmeans"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"emmeans"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"poorman"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"poorman"</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"parameters"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"parameters"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"modelbased"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"modelbased"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"DT"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"DT"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"data.table"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"data.table"</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"arsenal"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"arsenal"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"kableExtra"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"kableExtra"</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"equatiomatic"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"equatiomatic"</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"gtsummary"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"gtsummary"</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"ggpubr"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"ggpubr"</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"rstatix"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"rstatix"</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"datarium"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"datarium"</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"car"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"car"</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span>(<span class="st">"ez"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>())) <span class="fu">install.packages</span>(<span class="st">"ez"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Scatterplot to visualize relationship between t1 &amp; t2 data used to create difference score</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>scatterplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span> (df_wide, <span class="fu">aes</span>(<span class="at">x =</span> Externalizing_T0, <span class="at">y =</span> Externalizing_T1)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">se =</span> F) <span class="sc">+</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">"CBCL Externalizing (x) Baseline"</span>) <span class="sc">+</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ylab</span>(<span class="st">"CBCL Externalizing (x) 1-Year Follow-up"</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">print</span>(scatterplot))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="blue">
+<blockquote class="blockquote">
+<p><strong>This code loads the r libraries necessary for this example</strong></p>
+</blockquote>
+<div class="cell" data-messages="false">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r fold-hide code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arrow)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(afex)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sdamr)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(formatR)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(report)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(easystats)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(poorman)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parameters)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelbased)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(arsenal)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(equatiomatic)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datarium)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ez)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="blue">
+<blockquote class="blockquote">
+<p><strong>This code configures knitr code chunk options</strong></p>
+</blockquote>
+<div class="cell" data-messages="false">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> T, <span class="at">message=</span>F, <span class="at">warning=</span>F, <span class="at">error=</span>F, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">comment=</span><span class="cn">NA</span>, <span class="at">cache=</span>T, <span class="at">code_folding=</span>T,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">R.options=</span><span class="fu">list</span>(<span class="at">width=</span><span class="dv">220</span>), <span class="at">fig.align=</span><span class="st">'center'</span>, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">out.width=</span><span class="st">'75%'</span>, <span class="at">fig.asp=</span>.<span class="dv">75</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="descriptives-overview" class="level2">
+<h2 class="anchored" data-anchor-id="descriptives-overview">Descriptives Overview</h2>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Read and View Data</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Descriptives I</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Descriptives II</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false">Diagnostics</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tabset tabset-fade tabset-pills tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="blue">
+<blockquote class="blockquote">
+<p><strong>This code reads in and shows the data to be used in the current example</strong></p>
+</blockquote>
+<div class="cell" data-layout-align="center" data-messages="false" data-hash="difference_scores_one_sample_ttest_cache/html/read-data_17a9b42de0f419b865b5c854e88ff075">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_long<span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/Users/shawes/Desktop/df_long.csv"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df_long_sub<span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/Users/shawes/Desktop/df_long_sub.csv"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df_wide <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/Users/shawes/Desktop/df_wide.csv"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># str(df_long)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Create a viewable 'datatable' of the primary dataframe (df)</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(df_long, <span class="dv">50</span>, <span class="at">rownames =</span> <span class="cn">FALSE</span>),<span class="at">extensions =</span> <span class="st">'AutoFill'</span>,<span class="st">'ColReorder'</span>, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">autoFill =</span> <span class="cn">TRUE</span>,<span class="at">colReorder =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">columnDefs =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="at">className =</span> <span class="st">'dt-center'</span>, <span class="at">targets =</span> <span class="dv">10</span>)),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">order =</span> <span class="fu">list</span>(<span class="fu">list</span>(<span class="dv">3</span>, <span class="st">'asc'</span>), <span class="fu">list</span>(<span class="dv">4</span>, <span class="st">'desc'</span>)),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">pageLength =</span> <span class="dv">10</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">lengthMenu =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>),</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">initComplete =</span> <span class="fu">JS</span>(</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"function(settings, json) {"</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"$(this.api().table().header()).css({'background-color': '#808080', 'color': '#fff'});"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"}"</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="difference_scores_one_sample_ttest_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a633bb19ad96ea70fcb9" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a633bb19ad96ea70fcb9">{"x":{"filter":"none","vertical":false,"extensions":["AutoFill"],"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50"],["NDAR_INV003RTV85","NDAR_INV003RTV85","NDAR_INV003RTV85","NDAR_INV00CY2MDM","NDAR_INV00CY2MDM","NDAR_INV00CY2MDM","NDAR_INV00HEV6HB","NDAR_INV00HEV6HB","NDAR_INV00HEV6HB","NDAR_INV00LH735Y","NDAR_INV00LH735Y","NDAR_INV00LH735Y","NDAR_INV00LJVZK2","NDAR_INV00LJVZK2","NDAR_INV00LJVZK2","NDAR_INV00NPMHND","NDAR_INV00NPMHND","NDAR_INV00U4FTRU","NDAR_INV00U4FTRU","NDAR_INV00U4FTRU","NDAR_INV00UMK5VC","NDAR_INV00UMK5VC","NDAR_INV014RTM1V","NDAR_INV014RTM1V","NDAR_INV014RTM1V","NDAR_INV0182J779","NDAR_INV0182J779","NDAR_INV0182J779","NDAR_INV0191C80U","NDAR_INV0191C80U","NDAR_INV019DXLU4","NDAR_INV019DXLU4","NDAR_INV019DXLU4","NDAR_INV01AJ15N9","NDAR_INV01AJ15N9","NDAR_INV01AJ15N9","NDAR_INV01ELX9L6","NDAR_INV01ELX9L6","NDAR_INV01ELX9L6","NDAR_INV01RGTWD2","NDAR_INV01RGTWD2","NDAR_INV01RGTWD2","NDAR_INV01TXCDJN","NDAR_INV01TXCDJN","NDAR_INV01TXCDJN","NDAR_INV021403LF","NDAR_INV021403LF","NDAR_INV021403LF","NDAR_INV022ZVCT8","NDAR_INV022ZVCT8"],["Year_1","Baseline","Year_2","Year_2","Baseline","Year_1","Year_1","Baseline","Year_2","Baseline","Year_2","Year_1","Year_2","Baseline","Year_1","Year_1","Baseline","Year_2","Baseline","Year_1","Baseline","Year_1","Year_1","Baseline","Year_2","Baseline","Year_2","Year_1","Baseline","Year_2","Baseline","Year_2","Year_1","Baseline","Year_2","Year_1","Year_2","Year_1","Baseline","Baseline","Year_1","Year_2","Baseline","Year_1","Year_2","Year_1","Baseline","Year_2","Year_1","Year_2"],["site06","site06","site06","site20","site20","site20","site12","site12","site12","site03","site03","site03","site11","site11","site11","site17","site17","site04","site04","site04","site12","site12","site17","site17","site17","site06","site06","site06","site04","site04","site19","site19","site19","site16","site16","site16","site04","site04","site04","site02","site02","site02","site20","site20","site20","site05","site05","site05","site16","site16"],[8781,8781,8781,5355,5355,5355,2257,2257,2257,6069,6069,6069,8315,8315,8315,4152,4152,2464,2464,2464,1861,1861,4153,4153,4153,8782,8782,8782,2466,2466,7061,7061,7061,883,883,883,2465,2465,2465,11327,11327,11327,5908,5908,5908,470,470,470,864,864],["Female","Female","Female","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Female","Female","Female","Female","Female","Female","Female","Male","Male","Male","Female","Female","Female","Male","Male","Female","Female","Female","Male","Male","Male","Female","Female","Female","Female","Female","Female","Female","Female","Female","Male","Male","Male","Female","Female"],["White","White",null,null,"White","White","Black","Black",null,"Hispanic",null,"Hispanic",null,"Other","Other","White","White",null,"Other","Other","Black","Black","White","White",null,"White",null,"White","Other",null,"White",null,"White","White",null,"White",null,"Black","Black","White","White",null,"Black","Black",null,"White","White",null,"White",null],[null,10,null,null,10,null,null,10,null,9,null,null,null,10,null,null,9,null,10,null,9,null,null,9,null,9,null,null,9,null,10,null,null,10,null,null,null,null,9,9,null,null,9,null,null,null,9,null,null,null],[null,5,null,null,6,null,null,999,null,4,null,null,null,1,null,null,4,null,6,null,4,null,null,7,null,8,null,null,5,null,9,null,null,7,null,null,null,null,4,6,null,null,4,null,null,null,6,null,null,null],[null,13,null,null,15,null,null,13,null,13,null,null,null,11,null,null,16,null,12,null,13,null,null,19,null,21,null,null,18,null,18,null,null,18,null,null,null,null,8,18,null,null,17,null,null,null,19,null,null,null],[null,51,null,null,40,null,null,52,null,40,null,null,null,36,null,null,41,null,49,null,47,null,null,null,null,63,null,null,38,null,19,null,null,44,null,null,null,null,45,43,null,null,47,null,null,null,41,null,null,null],[null,52,null,40,51,null,null,40,41,39,51,null,41,44,null,null,35,39,34,null,37,null,null,null,46,40,null,null,37,45,30,37,null,38,34,null,65,null,49,41,null,52,54,null,45,null,47,55,null,52],[null,3,null,null,null,null,null,null,null,null,null,null,null,null,null,null,2,null,null,null,3,null,null,null,null,1,null,null,null,null,4,null,4,null,null,null,null,null,3,null,null,null,1,null,null,null,null,null,null,null],[null,null,null,null,2,1,2,3,null,1,null,null,null,3,2,null,null,null,null,null,null,null,2,2,null,null,null,null,2,null,null,null,null,2,null,null,null,null,null,null,null,null,null,null,null,2,2,null,null,null],[1,1,1,1,1,1,1,1,2,1,1,2,2,2,2,1,1,1,1,2,2,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,2,1,1,1],[7,7,null,null,7,9,28,3.5,null,11,null,28,null,28,4,26,3.5,null,28,3,23,16,7,1.75,null,4.5,null,7,28,null,10.5,null,8,2.25,null,9,null,28,4.5,2.25,7,null,7,1,null,11,9,null,2.25,null],[7,7,7,7,7,9,28,3.5,28,11,11,28,18,28,4,26,3.5,0,28,3,23,16,7,1.75,0,4.5,2,7,28,14,10.5,0,8,2.25,28,9,28,28,4.5,2.25,7,0,7,1,16,11,9,20,2.25,4],["no","no",null,"yes","yes","yes","no","no","no","no","no","no","no","yes","yes","no","no","yes","yes","yes","no","no","no","no","no","yes","yes","yes","yes","no","no","no","yes","no","no","no",null,"no","no","yes","yes","yes","no","no","no","yes","no","no","yes","no"],["no","no","no","yes","no","no","no","no","no","no","no","no","no","yes","no","no","no","no","yes","no","no","no","no","no","no","no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no","no","no","no","no","no","no","no","no","no","no"],[5,5,5,9,7,7,6,5,8,4,4,4,8,9,7,4,6,7,8,7,4,4,4,4,4,6,7,6,5,4,4,4,4,4,4,4,9,10,7,7,6,4,4,4,4,6,4,5,4,4],[0,0,null,20,15,18,5,5,9,2,3,2,8,14,9,3,3,null,17,18,1,0,0,0,0,5,null,8,2,2,0,6,10,5,1,0,null,7,5,11,10,9,0,0,0,4,3,3,5,4],[1,1,null,25,18,22,10,7,14,2,3,2,11,20,12,3,3,null,21,25,2,0,0,0,0,7,null,10,2,2,0,7,12,5,1,0,null,11,8,13,13,11,0,0,0,4,3,3,5,5],[1,1,null,9,5,8,5,6,5,4,0,1,0,2,9,23,23,null,17,17,6,5,0,0,1,5,null,5,9,4,4,7,14,4,3,3,null,9,9,8,10,13,3,0,0,6,3,1,7,8],[1,0,null,2,1,4,1,0,1,0,0,1,0,0,1,5,9,null,8,9,0,1,0,0,0,2,null,3,0,0,2,3,5,0,1,0,null,0,2,2,1,3,2,0,0,1,0,0,1,3],[0,0,null,9,9,9,4,5,4,1,2,1,5,7,6,1,2,null,5,6,0,0,0,0,0,3,null,5,1,1,0,3,4,3,1,0,null,3,4,6,5,4,0,0,0,4,3,2,4,2],[0,0,null,10,8,9,3,1,6,0,0,0,3,8,4,0,0,null,5,9,2,0,0,0,0,1,null,1,1,0,0,0,3,0,0,0,null,5,3,3,4,3,0,0,0,0,0,0,0,0]],"container":"<table class=\"ColReorder\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>ids<\/th>\n      <th>Event<\/th>\n      <th>SiteID<\/th>\n      <th>FamilyID<\/th>\n      <th>Sex<\/th>\n      <th>Race<\/th>\n      <th>Age<\/th>\n      <th>ParentIncome<\/th>\n      <th>ParentEducation<\/th>\n      <th>IQ<\/th>\n      <th>FlankerTest<\/th>\n      <th>PubertalDevelopment_F<\/th>\n      <th>PubertalDevelopment_M<\/th>\n      <th>MatureVideoGames<\/th>\n      <th>TotalGamingHours<\/th>\n      <th>Weekly_Gaming_Hours<\/th>\n      <th>DBD<\/th>\n      <th>DBDcu<\/th>\n      <th>CU_Traits<\/th>\n      <th>Aggression<\/th>\n      <th>Externalizing<\/th>\n      <th>Internalizing<\/th>\n      <th>Depression<\/th>\n      <th>OppositionalDefiant<\/th>\n      <th>ConductDisorder<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoFill":true,"colReorder":true,"columnDefs":[{"className":"dt-center","targets":10},{"className":"dt-right","targets":[4,7,8,9,11,12,13,14,15,16,19,20,21,22,23,24,25]},{"orderable":false,"targets":0}],"order":[[3,"asc"],[4,"desc"]],"pageLength":10,"lengthMenu":[10,15,20],"initComplete":"function(settings, json) {\n$(this.api().table().header()).css({'background-color': '#808080', 'color': '#fff'});\n}","autoWidth":false,"orderClasses":false}},"evals":["options.initComplete"],"jsHooks":[]}</script>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Not run: </span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify table size by pixels</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#kable(cbind(df_long, df_long), "html") %&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#    kable_styling() %&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    scroll_box(width = "100%", height = "500px")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div class="cell" data-messages="false">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#One-sample t-test to determine whether the average difference score is significantly different than 0.</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">t.test</span>(df_wide<span class="sc">$</span>diffscore, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>result </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="blue">
+<blockquote class="blockquote">
+<p><strong>This code provides descriptive information for continuous outcomes</strong></p>
+</blockquote>
+<div class="cell" data-layout-align="center" data-messages="false" data-hash="difference_scores_one_sample_ttest_cache/html/descriptives_be8a206e16fe9b9bd46895d405ed2d49">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Create a descriptives table of study variables by measurement occasion </span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>descriptives_1  <span class="ot">&lt;-</span> <span class="fu">tableby.control</span>(<span class="at">test=</span><span class="cn">FALSE</span>, <span class="at">total=</span><span class="cn">FALSE</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">numeric.test=</span><span class="st">"kwt"</span>, <span class="at">cat.test=</span><span class="st">"chisq"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">numeric.stats=</span><span class="fu">c</span>(<span class="st">"N"</span>, <span class="st">"meansd"</span>, <span class="st">"median"</span>, <span class="st">"range"</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                                               ), <span class="co">#"Nmiss2"</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">cat.stats=</span><span class="fu">c</span>(<span class="st">"countpct"</span>), <span class="co">#"Nmiss2"</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">stats.labels=</span><span class="fu">list</span>(<span class="at">N=</span><span class="st">'Count'</span>, <span class="at">meansd=</span><span class="st">"Mean (SD)"</span>, median</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                                                 <span class="ot">=</span><span class="st">'Median'</span>, <span class="at">range=</span><span class="st">'Min - Max'</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                                                 )) <span class="co">#, Nmiss2 ='Missing'</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>my_cont_labels <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">Age =</span> <span class="st">"Age"</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">Weekly_Gaming_Hours =</span> <span class="st">"Weekly # of Video Gaming Hrs"</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">Externalizing =</span> <span class="st">"CBCL Externalizing Scale"</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>tab_descriptives_1 <span class="ot">&lt;-</span> <span class="fu">tableby</span>(Event <span class="sc">~</span> Age <span class="sc">+</span> Weekly_Gaming_Hours <span class="sc">+</span> </span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                            Externalizing,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>                            <span class="at">data=</span>df_long, <span class="at">control=</span>descriptives_1)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(tab_descriptives_1, labelTranslations = my_cont_labels , text=TRUE, title = #"Continuous Outcomes", term.name = TRUE)</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Push table object through kable and kable_styling</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>tab_descriptives_1 <span class="sc">%&gt;%</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(<span class="at">text=</span><span class="cn">TRUE</span>, <span class="at">digits.pct=</span><span class="dv">1</span>, <span class="at">digits=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Continuous Outcomes"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">"striped"</span>, <span class="at">full_width =</span> <span class="cn">FALSE</span>, <span class="at">html_font =</span> <span class="st">"Cambria"</span>,</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>                <span class="at">font_size =</span> <span class="dv">15</span>,</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>                <span class="at">position =</span> <span class="st">"center"</span>, <span class="at">fixed_thead =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>,  <span class="at">bold =</span> F, <span class="at">extra_css =</span> <span class="st">'vertical-align: middle !important;'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">1</span>, <span class="at">width =</span> <span class="st">"20em"</span>, <span class="at">background =</span> <span class="st">"light grey"</span>, <span class="at">bold =</span> T, <span class="at">border_right =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">2</span>, <span class="at">width =</span> <span class="st">"20em"</span>, <span class="at">border_right =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">3</span>, <span class="at">width =</span> <span class="st">"20em"</span>, <span class="at">border_right =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">footnote</span>(<span class="at">general =</span> <span class="st">"Here is a general comments of the table. "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"75%"</span>, <span class="at">height =</span> <span class="st">"500px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:75%; "><table class="table table-striped" style="font-size: 15px; font-family: Cambria; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
+<caption style="font-size: initial !important;">Continuous Outcomes</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;">  </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> Baseline (N=6513) </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> Year_1 (N=6258) </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> Year_2 (N=5745) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> Age </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;">  </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;">  </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;vertical-align: middle !important;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Count </td>
+   <td style="text-align:left;vertical-align: middle !important;width: 20em; border-right:1px solid;"> 6507 </td>
+   <td style="text-align:left;vertical-align: middle !important;width: 20em; border-right:1px solid;"> 0 </td>
+   <td style="text-align:left;vertical-align: middle !important;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;vertical-align: middle !important;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Mean (SD) </td>
+   <td style="text-align:left;vertical-align: middle !important;width: 20em; border-right:1px solid;"> 9.5 (0.5) </td>
+   <td style="text-align:left;vertical-align: middle !important;width: 20em; border-right:1px solid;"> NA </td>
+   <td style="text-align:left;vertical-align: middle !important;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Median </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 9.0 </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Min - Max </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 8.0 - 11.0 </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> NA </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> Weekly_Gaming_Hours </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;">  </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;">  </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Count </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 6427 </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 6207 </td>
+   <td style="text-align:left;"> 5411 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Mean (SD) </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 11.3 (8.3) </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 13.3 (8.3) </td>
+   <td style="text-align:left;"> 14.3 (10.6) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Median </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 9.0 </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 11.0 </td>
+   <td style="text-align:left;"> 14.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Min - Max </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 0.0 - 28.0 </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 0.0 - 28.0 </td>
+   <td style="text-align:left;"> 0.0 - 28.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> Externalizing </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;">  </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;">  </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Count </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 6510 </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 6246 </td>
+   <td style="text-align:left;"> 4444 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Mean (SD) </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 5.1 (6.5) </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 4.8 (6.2) </td>
+   <td style="text-align:left;"> 4.4 (6.1) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Median </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 3.0 </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 3.0 </td>
+   <td style="text-align:left;"> 2.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Min - Max </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 0.0 - 49.0 </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 0.0 - 47.0 </td>
+   <td style="text-align:left;"> 0.0 - 50.0 </td>
+  </tr>
+</tbody>
+<tfoot>
+<tr><td style="padding: 0; " colspan="100%"><span style="font-style: italic;">Note: </span></td></tr>
+<tr><td style="padding: 0; " colspan="100%">
+<sup></sup> Here is a general comments of the table. </td></tr>
+</tfoot>
+</table></div>
+
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="blue">
+<blockquote class="blockquote">
+<p><strong>This code provide descriptive information for categorical outcomes</strong></p>
+</blockquote>
+<div class="cell" data-layout-align="center" data-messages="false" data-hash="difference_scores_one_sample_ttest_cache/html/catvar-table_051d74883a3fa9cc713b04715b73d63c">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r fold-hide code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Create a descriptives table of study variables by measurement occasion </span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>descriptives_2  <span class="ot">&lt;-</span> <span class="fu">tableby.control</span>(<span class="at">test=</span><span class="cn">FALSE</span>, <span class="at">total=</span><span class="cn">FALSE</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">numeric.test=</span><span class="st">"kwt"</span>, <span class="at">cat.test=</span><span class="st">"chisq"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">numeric.stats=</span><span class="fu">c</span>(<span class="st">"N"</span>, <span class="st">"meansd"</span>, <span class="st">"median"</span>, <span class="st">"range"</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                                               ), <span class="co"># "Nmiss2"</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">cat.stats=</span><span class="fu">c</span>(<span class="st">"countpct"</span>), <span class="co"># "Nmiss2"</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">stats.labels=</span><span class="fu">list</span>(<span class="at">N=</span><span class="st">'Count'</span>, <span class="at">meansd=</span><span class="st">"Mean (SD)"</span>, median</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                                                 <span class="ot">=</span><span class="st">'Median'</span>, <span class="at">range=</span><span class="st">'Min - Max'</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                                                 )) <span class="co"># , Nmiss2 ='Missing'</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>my_cat_labels  <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">Event =</span> <span class="st">"Year"</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sex =</span> <span class="st">"Sex"</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">MatureVideoGames =</span> <span class="st">"Mature Video Games"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">DBD =</span> <span class="st">"DBD"</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>tab_descriptives_2 <span class="ot">&lt;-</span> <span class="fu">tableby</span>(Event <span class="sc">~</span> Sex <span class="sc">+</span> MatureVideoGames <span class="sc">+</span> DBD, </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                            <span class="at">data=</span>df_long, <span class="at">control=</span>descriptives_2)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(tab_descriptives_2, labelTranslations = my_cat_labels , text=TRUE, title = #"Categorical Outcomes", term.name = TRUE)</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Push table object through kable and kable_styling</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>tab_descriptives_2 <span class="sc">%&gt;%</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(<span class="at">text=</span><span class="cn">TRUE</span>, <span class="at">digits.pct=</span><span class="dv">1</span>, <span class="at">digits=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Categorical Outcomes"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">"striped"</span>, <span class="at">full_width =</span> <span class="cn">FALSE</span>, <span class="at">font_size =</span> <span class="dv">15</span>,</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>                <span class="at">position =</span> <span class="st">"center"</span>, <span class="at">fixed_thead =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>,  <span class="at">bold =</span> F, <span class="at">extra_css =</span> <span class="st">'vertical-align: middle !important;'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">1</span>, <span class="at">width =</span> <span class="st">"20em"</span>, <span class="at">background =</span> <span class="st">"light grey"</span>, <span class="at">bold =</span> T, <span class="at">border_right =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">2</span>, <span class="at">width =</span> <span class="st">"20em"</span>, <span class="at">border_right =</span> T) <span class="sc">%&gt;%</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">#column_spec(3, width = "20em", border_right = T) %&gt;%</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">footnote</span>(<span class="at">general =</span> <span class="st">"Here is a general comments of the table. "</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"75%"</span>, <span class="at">height =</span> <span class="st">"500px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:75%; "><table class="table table-striped" style="font-size: 15px; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
+<caption style="font-size: initial !important;">Categorical Outcomes</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;">  </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> Baseline (N=6513) </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> Year_1 (N=6258) </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;position: sticky; top:0; background-color: #FFFFFF;"> Year_2 (N=5745) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> Sex </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;">  </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;vertical-align: middle !important;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Female </td>
+   <td style="text-align:left;vertical-align: middle !important;width: 20em; border-right:1px solid;"> 2132 (32.7%) </td>
+   <td style="text-align:left;vertical-align: middle !important;"> 2048 (32.7%) </td>
+   <td style="text-align:left;vertical-align: middle !important;"> 1872 (32.6%) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;vertical-align: middle !important;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Male </td>
+   <td style="text-align:left;vertical-align: middle !important;width: 20em; border-right:1px solid;"> 4381 (67.3%) </td>
+   <td style="text-align:left;vertical-align: middle !important;"> 4210 (67.3%) </td>
+   <td style="text-align:left;vertical-align: middle !important;"> 3873 (67.4%) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> MatureVideoGames </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;">  </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Count </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 6506 </td>
+   <td style="text-align:left;"> 6250 </td>
+   <td style="text-align:left;"> 5724 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Mean (SD) </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 1.2 (0.4) </td>
+   <td style="text-align:left;"> 1.2 (0.4) </td>
+   <td style="text-align:left;"> 1.2 (0.4) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Median </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 1.0 </td>
+   <td style="text-align:left;"> 1.0 </td>
+   <td style="text-align:left;"> 1.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  Min - Max </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 1.0 - 2.0 </td>
+   <td style="text-align:left;"> 1.0 - 2.0 </td>
+   <td style="text-align:left;"> 1.0 - 2.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> DBD </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;">  </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  no </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 5207 (80.5%) </td>
+   <td style="text-align:left;"> 4861 (78.7%) </td>
+   <td style="text-align:left;"> 3639 (79.8%) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;width: 20em; font-weight: bold;background-color: light grey !important;border-right:1px solid;"> -  yes </td>
+   <td style="text-align:left;width: 20em; border-right:1px solid;"> 1258 (19.5%) </td>
+   <td style="text-align:left;"> 1319 (21.3%) </td>
+   <td style="text-align:left;"> 922 (20.2%) </td>
+  </tr>
+</tbody>
+<tfoot>
+<tr><td style="padding: 0; " colspan="100%"><span style="font-style: italic;">Note: </span></td></tr>
+<tr><td style="padding: 0; " colspan="100%">
+<sup></sup> Here is a general comments of the table. </td></tr>
+</tfoot>
+</table></div>
+
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<section id="diagnostics-1" class="level2 blue">
+<h2 class="anchored" data-anchor-id="diagnostics-1">Diagnostics</h2>
+<div class="cell" data-layout-align="center" data-hash="difference_scores_one_sample_ttest_cache/html/unnamed-chunk-1_cabecee521704d48887301278992a040">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r fold-hide code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df_long<span class="sc">$</span>Weekly_Gaming_Hours)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="difference_scores_one_sample_ttest_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r fold-hide code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Summary statistics</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>summary<span class="ot">&lt;-</span>df_long <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(Event) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">get_summary_stats</span>(Externalizing, <span class="at">type =</span> <span class="st">"mean_sd"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Event      variable    n  mean    sd
+1 Baseline Externalizing 6510 5.106 6.464
+2   Year_1 Externalizing 6246 4.780 6.227
+3   Year_2 Externalizing 4444 4.443 6.054</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r fold-hide code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Outlier detection</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#outlier&lt;-df_long %&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#group_by(Event) %&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#identify_outliers(Externalizing)</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#data.frame(outlier)</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Normality Checking</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#normality&lt;-df_long_sub %&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#group_by(Event) %&gt;%</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#shapiro_test(df_long_sub$Externalizing[0:5000])</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#data.frame(normality)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</div>
+</div>
+</div>
+<section id="results" class="level3">
+<h3 class="anchored" data-anchor-id="results">Results</h3>
+<div class="blue">
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Build Model</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Model Outputs</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tabset tabset-fade tabset-pills tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="blue">
+<div class="cell" data-layout-align="center" data-hash="difference_scores_one_sample_ttest_cache/html/build-model_d722d10806eaf9077444eacc46db6e40">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r fold-hide code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># (!!! replace "Externalizing_T0")</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute difference score based on CBCL Externalizing subscale scores at baseline (t1) and 1-Year Follow-up (t2)</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>df_wide<span class="sc">$</span>diffscore <span class="ot">&lt;-</span> df_wide<span class="sc">$</span>Externalizing_T1 <span class="sc">-</span> df_wide<span class="sc">$</span>Externalizing_T0</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sample t-test to determine whether the average difference score is significantly different than 0.</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">t.test</span>(df_wide<span class="sc">$</span>Externalizing_T0, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     One Sample t-test
 
-data:  df_wide$diffscore
-t = -4.3794, df = 5636, p-value = 1.212e-05
+data:  df_wide$Externalizing_T0
+t = 59.144, df = 5647, p-value &lt; 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- -0.3726310 -0.1421819
+ 4.844541 5.176705
 sample estimates:
- mean of x 
--0.2574064 </code></pre>
+mean of x 
+ 5.010623 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#boxplot</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>diffscore_boxplot <span class="ot">&lt;-</span> <span class="fu">ggboxplot</span>(df_wide<span class="sc">$</span>diffscore, </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">"Externalizing Difference Score"</span>, <span class="at">xlab =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>())</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">print</span>(diffscore_boxplot))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>The code snippet above tells R to run a linear mixed model using lmer from the lme4 library. The left side of the “~” symbol specifies the dependent variable; the right side specifies days as the independent variable(s). The code (1 | Subject) specifies a random intercept for each subject.</p>
+</blockquote>
+<p>In a repeated measures design, a difference score <span class="math inline">\((\Delta)\)</span> can be calculated by subtracting pairs of values on some variable (<span class="math inline">\(x\)</span>) produced by the same individual across two (or more) timepoints <span class="math inline">\((x_{t1}, x_{t2})\)</span>. First, compute the difference (<span class="math inline">\(\Delta\)</span>) between the score (<span class="math inline">\(x\)</span>) obtained at baseline (<span class="math inline">\(x_{t1}\)</span>) and follow-up (<span class="math inline">\(x_{t2}\)</span>) for each individual <span class="math inline">\((\Delta = x_{t2} − x_{t1})\)</span>. This difference value (<span class="math inline">\(\Delta\)</span> = <span class="math inline">\(x_{t2}\)</span> - <span class="math inline">\(x_{t1}\)</span>) can then be used as the outcome in a GLM to test for differences in the amount of change over time and between groups of interest.</p>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="blue">
+<div class="cell" data-layout-align="center" data-messages="false" data-hash="difference_scores_one_sample_ttest_cache/html/model-output_a86488e9b801bc75c4a2e139ffd1e00b">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute statistical summaries for the difference score variable</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df_wide<span class="sc">$</span>diffscore)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's 
+-36.0000  -2.0000   0.0000  -0.2574   1.0000  38.0000       12 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplot to visualize relationship between t1 &amp; t2 data used to create difference score</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>scatterplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df_wide, <span class="fu">aes</span>(<span class="at">x =</span> Externalizing_T0, <span class="at">y =</span> Externalizing_T1)) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">se =</span> F) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">"CBCL Externalizing (x) Baseline"</span>) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">"CBCL Externalizing (x) 1-Year Follow-up"</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">print</span>(scatterplot))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="difference_scores_one_sample_ttest_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="difference_scores_one_sample_ttest_files/figure-html/model-output-1.png" class="img-fluid figure-img" style="width:75.0%"></p>
+</figure>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Shapiro-Wilk test and normality (Q-Q) plot (visualization of correlation between a given sample and the normal distribution)</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(df_wide<span class="sc">$</span>diffscore[<span class="dv">0</span><span class="sc">:</span><span class="dv">5000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">### boxplot</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>diffscore_boxplot <span class="ot">&lt;-</span> <span class="fu">ggboxplot</span>(df_wide<span class="sc">$</span>Externalizing_T0,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Externalizing Difference Score"</span>, <span class="at">xlab =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>()</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">print</span>(diffscore_boxplot))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="difference_scores_one_sample_ttest_files/figure-html/model-output-2.png" class="img-fluid figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Shapiro-Wilk test and normality (Q-Q) plot (visualization of correlation between a given sample and the normal distribution)</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(df_wide<span class="sc">$</span>Externalizing_T0[<span class="dv">0</span><span class="sc">:</span><span class="dv">5000</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
 
-data:  df_wide$diffscore[0:5000]
-W = 0.88497, p-value &lt; 2.2e-16</code></pre>
+data:  df_wide$Externalizing_T0[0:5000]
+W = 0.76155, p-value &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggpubr"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>qqplot <span class="ot">&lt;-</span> <span class="fu">ggqqplot</span>(df_wide<span class="sc">$</span>diffscore, </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Externalizing Difference Score"</span>, <span class="at">xlab =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>())</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">print</span>(qqplot))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>qqplot <span class="ot">&lt;-</span> <span class="fu">ggqqplot</span>(df_wide<span class="sc">$</span>Externalizing_T0,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"Externalizing Difference Score"</span>, <span class="at">xlab =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>()</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">print</span>(qqplot)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="difference_scores_one_sample_ttest_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="difference_scores_one_sample_ttest_files/figure-html/model-output-3.png" class="img-fluid figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Output and reports extending from one-sample t-test difference score</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(xxxx)</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#confint(xxxxx, level = 0.95, #method = "Wald")</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#report(xxxxx)</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#report_performance(xxxxxx)</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#report_statistics(xxxxx)</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#random &lt;- estimate_grouplevel(xxxx)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>This output shows xxxxxxxx. Briefly walk through each metric</p>
+</div>
+</div>
+</div>
+</div></section>
+<section id="text" class="level3">
+<h3 class="anchored" data-anchor-id="text">Text</h3>
+<div class="blue">
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Interpretation</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Write-up</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tabset tabset-fade tabset-pills tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="blue">
+<div class="cell" data-layout-align="center" data-messages="false" data-hash="difference_scores_one_sample_ttest_cache/html/interpretation_307b69c9e240ef3edaf0af7c6c988e38">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># safsafd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The estimated correlation between x and y was “r cor(x,y)<code>. There are "r nrow(my_data)</code> individuals.</p>
+<p>From the fixed effects section of the model summary, we can conclude that there is strong evidence that RT increased significantly over time (i.e., # of years). On average for each additional year, RT increased by 10.46 (b = 10.46, SE = 0.80, p &lt; .001).We are 95% confident that the average increase was between 8.89 and 12.04.</p>
+<p>In the above, we estimate that the average intercept across all participants is 251.4. Results from the random effects section below show that the variance of the intercept for Subject is 1378.2. Taking the square root, the standard deviation of the intercept is thus 37.1.</p>
+<p>We can calculate the 95% coverage interval as 251.4 ± 1.96*37.1. The lower bound of the 95% coverage interval is thus 178.7 and the upper bound is 324.1. We therefore estimated that 95% of the participants have an intercept between 178.7 and 324.1. This means that 95% of the participants have a reaction time between 178.7 and 324.1 at Day 0. This is not to be confused with the 95% confidence interval of the intercept. The 95% confidence interval is (232.3, 270.5), and this indicates that we are 95% confident that the average intercept is somewhere between 232.3 and 270.5.</p>
+<p>In this model, we have accounted for the repeated measures design (observations nested within individuals) by including a random intercept for each participants. Each individual has his/her own intercept. The effect of time(Year) on RT is assumed to be the same across individuals. This assumption can be relaxed by fitting a random slope model.</p>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="blue">
+<div class="cell" data-layout-align="center" data-messages="false" data-hash="difference_scores_one_sample_ttest_cache/html/write-up_d4d24db0ec9c3e49994a65b5b1b88408">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="do">## sfsfafsac</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>A random slope model is used to test if sleep deprivation affects reaction time. To account for the repeated measures design, a random intercept was specified for participants. The random slope for days of sleep deprivation was included in the model to allow the effect of sleep deprivation to vary across participants. Results are shown in Table 1. Using a significant level of 0.05, results indicate that sleep deprivation significantly increased reaction time. On average, each additional day of sleep deprivation increased reaction time by 10.47ms (b = 10.47, 95% CI = [7.44, 13.50], p &lt; .001). Model fit comparison between model with and without random slope for sleep deprivation shows that the effect of sleep deprivation varied across participants, χ2(2)= 42.14, p &lt; .001. The 95% coverage interval for the random slope of sleep deprivation is (-1.14, 22.07), indicating that the effect of sleep deprivation was between -1.14 and 22.07 for 95% of the participants.</p>
+</div>
+</div>
 </div>
 </div>
 
 
+</div></section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -797,8 +1378,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../differenceScores/difference_scores_one_sample_ttestr.html" class="pagination-link">
-        <span class="nav-page-text">ex1r.onesample</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../differenceScores/difference_scores_paired_samples_ttest.html" class="pagination-link">
+        <span class="nav-page-text">ex1.pairedsample</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -808,7 +1389,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       <div class="nav-footer-center">
         <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link active" href="../resources.html" aria-current="page">xxxxxx</a>
+    <a class="nav-link" href="../resources.html">xxxxxx</a>
   </li>  
     <li class="nav-item">
     <a class="nav-link" href="../resources.html">xxxxxx</a>
