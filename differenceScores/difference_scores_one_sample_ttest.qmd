@@ -43,6 +43,9 @@ The paired samples t-test can be used to determine whether the difference betwee
  [The paired samples t-test is a special case of the one-sample t-test, with the exception that this model needs to be modified to account for the statistical dependence among repeated observations obtained on the same subject, other than the issue of non-independence, the underlying assumptions for the paired samples t-test is exactly the same as for the independent samples t-test.] 
 
 In this example, we will use the paired samples t-test to analyze scores on the externalizing subscale of the child behavior checklist (CBCL) obtained across two measurement occasions in a sample of youth taking part in the ABCD Study. Our primary aim is to determine whether there is evidence of change in CBCL externalizing scores from T1 to T2, while accounting for observations that are clustered within youth over time.
+
+We want to know, if the average externalizing scores of the participants changes across measurement occasions xxxxx....
+
 </p>
 
 ## Preliminary Setup
@@ -152,11 +155,17 @@ knitr::opts_chunk$set(echo = T, message=F, warning=F, error=F,
 #| messages: FALSE
 #| warning: FALSE
 
+## Read data
 df_long<- read_csv("/Users/shawes/Desktop/df_long.csv")
 df_long_sub<- read_csv("/Users/shawes/Desktop/df_long_sub.csv")
 df_wide <- read_csv("/Users/shawes/Desktop/df_wide.csv")
 
-# str(df_long)
+```
+
+```{r view-data}
+#| echo: TRUE
+#| messages: FALSE
+#| warning: FALSE
 
 ## Create a viewable 'datatable' of the primary dataframe (df)
 datatable(head(df_long, 50, rownames = FALSE),extensions = 'AutoFill','ColReorder', options = list(autoFill = TRUE,colReorder = TRUE,
@@ -169,12 +178,6 @@ datatable(head(df_long, 50, rownames = FALSE),extensions = 'AutoFill','ColReorde
     "$(this.api().table().header()).css({'background-color': '#808080', 'color': '#fff'});",
     "}")
 ))
-
-## Not run: 
-# Specify table size by pixels
-#kable(cbind(df_long, df_long), "html") %>%
-#    kable_styling() %>%
-#    scroll_box(width = "100%", height = "500px")
 
 ```
 </div>
@@ -314,6 +317,10 @@ data.frame(summary)
 ::: {.panel-tabset}
 ### Build Model {.tabset .tabset-fade .tabset-pills}
 <div class = "blue">
+
+> The code snippet below tells R to compute a difference score by subtracting each participant's Externalizing score at T2 from their Externalizing score at T1. Next, a one-sample t-test is computed to examine whether change as represented by the difference score is different than zero (indicating evidence of change in the construct over time).  
+The t.test function is provided by base R. and it accepts three arguments in the above code: 1) the DV (Externalizing); 2) mu = 0 (specify theoretical mean); alternative = "two.sided" (test of alternative hypothesis);  
+
 ```{r build-model}
 #| class.source: 'fold-hide'
 #| message: FALSE
@@ -327,19 +334,22 @@ df_wide$diffscore <- df_wide$Externalizing_T1 - df_wide$Externalizing_T0
 
 # One-sample t-test to determine whether the average difference score is significantly different than 0.
 result <- t.test(df_wide$Externalizing_T0, mu = 0, alternative = "two.sided")
+
+```
+
+```{r build-model}
+#| class.source: 'fold-hide'
+#| message: FALSE
+#| warning: FALSE
+#| echo: TRUE
+
 # Print the results
 result
 
 ```
 </div>
 
-> The code snippet above tells R to run a linear mixed model using lmer
-> from the lme4 library. The left side of the "\~" symbol specifies the
-> dependent variable; the right side specifies days as the independent
-> variable(s). The code (1 \| Subject) specifies a random intercept for
-> each subject.
-
-In a repeated measures design, a difference score $(\Delta)$ can be calculated by subtracting pairs of values on some variable ($x$) produced by the same individual across two (or more) timepoints $(x_{t1}, x_{t2})$. First, compute the difference ($\Delta$) between the score ($x$) obtained at baseline ($x_{t1}$) and follow-up ($x_{t2}$) for each individual $(\Delta = x_{t2} − x_{t1})$. This difference value ($\Delta$ = $x_{t2}$ - $x_{t1}$) can then be used as the outcome in a GLM to test for differences in the amount of change over time and between groups of interest. 
+The output from our model shows xxxxxx.
 
 ### Model Outputs
 <div class = "blue">
